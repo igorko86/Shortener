@@ -17,8 +17,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-dotenv && react-scripts start",
-    "build": "react-dotenv && react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "eslint-fix": "eslint --ext '.js,.jsx,.ts,.tsx' src --fix",
     "prettify": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
   },
