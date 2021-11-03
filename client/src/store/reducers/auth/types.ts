@@ -1,14 +1,20 @@
 export interface IAuthState {
   isAuth: boolean;
+  isLoading: boolean;
 }
 
-enum AuthActions {
+export enum AuthActionEnum {
   SET_IS_AUTH = 'SET_IS_AUTH',
+  SET_IS_LOADING = 'SET_IS_LOADING',
 }
 
-interface SetAuthAction {
-  action: AuthActions.SET_IS_AUTH;
+export interface ISetAuthAction {
+  type: AuthActionEnum.SET_IS_AUTH;
+  payload: boolean;
+}
+export interface ISetIsLoading {
+  type: AuthActionEnum.SET_IS_LOADING;
   payload: boolean;
 }
 
-export type AuthAction = SetAuthAction;
+export type AuthAction = ISetAuthAction | ISetIsLoading;

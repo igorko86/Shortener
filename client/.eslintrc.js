@@ -14,7 +14,7 @@ module.exports = {
     },
     createDefaultProgram: true,
     ecmaVersion: 2021,
-    project: 'tsconfig.json',
+    project: './tsconfig.json',
     sourceType: 'module',
   },
   extends: [
