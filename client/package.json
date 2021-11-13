@@ -5,6 +5,8 @@
   "dependencies": {
     "antd": "^4.16.13",
     "axios": "^0.21.4",
+    "dnd-core": "^14.0.1",
+    "immutability-helper": "^3.1.1",
     "rc-field-form": "^1.21.2",
     "react": "^17.0.2",
     "react-dnd": "^14.0.4",
@@ -48,6 +50,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^26.0.24",
     "@types/node": "^12.20.25",
     "@types/react": "^17.0.22",

@@ -1,20 +1,22 @@
 import { FC } from 'react';
 import { Layout } from 'antd';
+import { ThemeProvider } from 'styled-components';
 
 import AppRouter from 'components/AppRouter';
 import AppHeader from 'components/AppHeader';
+import { theme } from './theme';
 
-const { Content, Footer } = Layout;
 const App: FC = () => {
-  console.log('HERE');
   return (
-    <Layout className="layout">
-      <AppHeader />
-      <Content>
-        <AppRouter />
-      </Content>
-      <Footer>Footer</Footer>
-    </Layout>
+    <ThemeProvider theme={theme}>
+      <Layout>
+        <AppHeader />
+        <div>SUB HEADER</div>
+        <Layout>
+          <AppRouter />
+        </Layout>
+      </Layout>
+    </ThemeProvider>
   );
 };
 

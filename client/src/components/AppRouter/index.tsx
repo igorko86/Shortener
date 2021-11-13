@@ -3,11 +3,11 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { AppPath } from 'shared/common/enum';
 import { privateRoutes, publicRoutes } from 'routes';
-import { useTypedSelector } from 'shared/hooks/useTypedSelector';
+import { useAppSelector } from 'shared/hooks/storeHooks';
 import { authSelector } from 'store/reducers/auth/selectors';
 
 const AppRouter: FC = () => {
-  let { isAuth } = useTypedSelector(authSelector);
+  let { isAuth } = useAppSelector(authSelector);
   isAuth = true;
   return isAuth ? (
     <Switch>
