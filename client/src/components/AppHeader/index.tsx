@@ -13,8 +13,10 @@ const AppHeader: FC = () => {
           <div style={{ border: '1px solid red' }}>LGOG</div>
         </Col>
         <Col span={8} offset={10}>
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['item1']}>
-            <Menu.Item key="item1">item1</Menu.Item>
+          <Menu theme="dark" mode="horizontal">
+            <Menu.Item key="item1">
+              <Link to={AppPath.CREATE_CARD}>Create Card</Link>
+            </Menu.Item>
             <Menu.Item key="item2">item2</Menu.Item>
             <Menu.Item key="item3">item3</Menu.Item>
           </Menu>

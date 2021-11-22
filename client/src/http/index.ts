@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: `${process.env.SERVER_URL}/api`,
+  baseURL: `${process.env.REACT_APP_SERVER_URL}/api`,
 });
 
 $api.interceptors.request.use((config) => {
