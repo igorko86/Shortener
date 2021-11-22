@@ -1,68 +1,68 @@
 import bcrypt from 'bcrypt';
 
-import { Company } from '../db/entites/Company';
+import { Tutor } from '../db/entites/Tutor';
 import mailService from './mail.service';
 import tokenService from './token.service';
-import { ICompanyData, IRequestCompany, ITokenInfo } from './types.services';
+import { ITutorData, IRequestCompany, ITokenInfo } from './types.services';
 import apiErrorService from './apiError.service';
 import ApiErrorService from './apiError.service';
 import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants.service';
 import { Token } from '../db/entites/Token';
 
 class AuthService {
-  async registrationCompany(data: IRequestCompany) {
-    const { name: companyName, email: companyEmail, password } = data;
-    const company = await Company.findOne({ email: companyEmail });
+  async registrationTutor(data: IRequestCompany) {
+    const { name: tutorName, email: tutorEmail, password } = data;
+    const tutor = await Tutor.findOne({ email: tutorEmail });
 
-    if (company) {
-      throw apiErrorService.badRequest(`Company with such "${companyEmail}" email exists`);
+    if (tutor) {
+      throw apiErrorService.badRequest(`Company with such "${tutorEmail}" email exists`);
     }
 
     const hashPassword = bcrypt.hashSync(String(password), 10);
-    const newCompany = Company.create({
-      email: companyEmail,
+    const newTutor = Tutor.create({
+      email: tutorEmail,
       password: hashPassword,
-      name: companyName,
+      name: tutorName,
     });
-    const savedCompany = await newCompany.save();
-    const { id, email } = savedCompany;
+    const savedTutor = await newTutor.save();
+    const { id, email } = savedTutor;
     const activationLink = `${process.env.SERVER_URL}/api/auth/activation/${id}`;
 
     await mailService.sendActivationMail(email, activationLink);
   }
 
-  async activateCompany(id: string) {
-    const company = await Company.findOne(id);
+  async activateTutor(id: string) {
+    const tutor = await Tutor.findOne(id);
 
-    if (!company || company.isActive) {
+    if (!tutor || tutor.isActive) {
       throw ApiErrorService.badRequest(ACTIVATION_LINK_ERROR);
     }
-    company.isActive = true;
+    tutor.isActive = true;
 
-    await company.save();
+    await tutor.save();
   }
 
-  async login(email: string, password: string): Promise<ICompanyData> {
-    const company = await Company.findOne({ email });
+  async login(email: string, password: string): Promise<ITutorData> {
+    const tutor = await Tutor.findOne({ email });
 
-    if (!company) {
-      throw ApiErrorService.badRequest(`Company with such "${email}" email doesn't exist`);
-    } else if (!company.isActive) {
+    if (!tutor) {
+      throw ApiErrorService.badRequest(`Tutor with such "${email}" email doesn't exist`);
+    } else if (!tutor.isActive) {
       throw ApiErrorService.badRequest(ACTIVATE_ERROR);
     }
 
-    const isPassEquals = await bcrypt.compare(String(password), String(company.password));
+    const isPassEquals = await bcrypt.compare(String(password), String(tutor.password));
 
     if (!isPassEquals) {
       throw ApiErrorService.badRequest(PASSWORD_ERROR);
     }
-    const tokens = await tokenService.generateSaveTokens(company);
-    const { id, email: companyEmail, name } = company;
+    const tokens = await tokenService.generateSaveTokens(tutor);
+    const { id, email: tutorEmail, name } = tutor;
 
     return {
-      company: {
+      tutor: {
         id,
-        email: companyEmail,
+        email: tutorEmail,
         name,
       },
       ...tokens,
@@ -73,33 +73,30 @@ class AuthService {
     await tokenService.removeToken(refreshToken);
   }
 
-  async refresh(tokenInfo: ITokenInfo): Promise<ICompanyData> {
+  async refresh(tokenInfo: ITokenInfo): Promise<ITutorData> {
     if (!tokenInfo) {
       throw ApiErrorService.unauthorized();
     }
 
     const { token: refreshToken, id: refreshTokenId } = tokenInfo;
-    const companyData = tokenService.validateToken(refreshToken, process.env.JWT_REFRESH_SECRET as unknown as string);
+    const tutorData = tokenService.validateToken(refreshToken, process.env.JWT_REFRESH_SECRET as unknown as string);
     const tokenFromDB = Token.findOne({ refreshToken, id: refreshTokenId });
 
-    if (!companyData || !tokenFromDB) {
+    if (!tutorData || !tokenFromDB) {
       throw ApiErrorService.unauthorized();
     }
 
-    const company = await Company.findOne(companyData.id);
+    const tutor = await Tutor.findOne(tutorData.id);
 
-    if (!company) {
+    if (!tutor) {
       throw ApiErrorService.unauthorized();
     }
 
-    const tokens = await tokenService.generateSaveTokens(company, tokenInfo);
-    const { id, email, name } = company;
+    const tokens = await tokenService.generateSaveTokens(tutor, tokenInfo);
 
     return {
-      company: {
-        id,
-        email,
-        name,
+      tutor: {
+        ...tutor,
       },
       ...tokens,
     };

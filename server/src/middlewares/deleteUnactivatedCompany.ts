@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { createQueryBuilder } from 'typeorm';
 
-import { Company } from '../db/entites/Company';
+import { Tutor } from '../db/entites/Tutor';
 
-export const deleteUnactivatedCompany = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteUnactivatedTutors = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await createQueryBuilder('company')
+    await createQueryBuilder('tutor')
       .delete()
-      .from(Company, 'company')
+      .from(Tutor, 'tutor')
       .where('isActive = false')
       .andWhere("created_at <= now() - interval '20 hours'")
       .execute();

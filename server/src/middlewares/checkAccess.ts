@@ -7,7 +7,7 @@ export const checkAccess = (req: Request, res: Response, next: NextFunction) => 
   try {
     const authorizationHeader = req.headers.authorization;
 
-    if (!authorizationHeader) {
+    if (!authorizationHeader || !req.cookies.refreshToken) {
       throw ApiErrorService.unauthorized();
     }
     const [, accessToken] = authorizationHeader.split(' ');
@@ -16,9 +16,9 @@ export const checkAccess = (req: Request, res: Response, next: NextFunction) => 
       throw ApiErrorService.unauthorized();
     }
 
-    const companyData = tokenService.validateToken(accessToken, process.env.JWT_ACCESS_SECRET as unknown as string);
+    const tutorData = tokenService.validateToken(accessToken, process.env.JWT_ACCESS_SECRET as unknown as string);
 
-    if (!companyData) {
+    if (!tutorData) {
       throw ApiErrorService.unauthorized();
     }
 

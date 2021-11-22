@@ -1,7 +1,8 @@
 import { createConnection } from 'typeorm';
 
-import { Company } from './entites/Company';
+import { Tutor } from './entites/Tutor';
 import { Token } from './entites/Token';
+import { LibraryCard } from './entites/LibraryCard';
 
 export const connectDB = async () => {
   const host = process.env.DB_HOST as unknown as string;
@@ -18,7 +19,7 @@ export const connectDB = async () => {
       username,
       password,
       database,
-      entities: [Company, Token],
+      entities: [Tutor, Token, LibraryCard],
       synchronize: true,
     });
     console.log('Connected to postgres');

@@ -3,14 +3,14 @@ export interface IGenerateTokensResult {
   refreshToken: string;
 }
 
-export interface ICompany {
+export interface ITutor {
   id: string;
   name: string;
   email: string;
 }
 
-export interface ICompanyData extends IGenerateTokensResult {
-  company: ICompany;
+export interface ITutorData extends IGenerateTokensResult {
+  tutor: ITutor;
   refreshTokenId: string;
 }
 
@@ -23,4 +23,10 @@ export interface IRequestCompany {
 export interface ITokenInfo {
   id: string;
   token: string;
+}
+
+export interface IRequestCard {
+  title: string;
+  description: string;
+  htmlContent: string;
 }

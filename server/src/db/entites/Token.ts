@@ -10,8 +10,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Person } from '../common/Persone';
-import { Trans } from './Trans';
-import { Company } from './Company';
+import { LibraryCard } from './LibraryCard';
+import { Tutor } from './Tutor';
 
 @Entity('token')
 export class Token extends BaseEntity {
@@ -24,13 +24,13 @@ export class Token extends BaseEntity {
   refreshToken: string;
 
   @Column({
-    name: 'company_id',
+    name: 'tutor_id',
   })
-  companyId: string;
+  tutorId: string;
 
-  @ManyToOne(() => Company, (company) => company.tokens)
+  @ManyToOne(() => Tutor, (tutor) => tutor.tokens)
   @JoinColumn({
-    name: 'company_id',
+    name: 'tutor_id',
   })
-  company: Company;
+  tutor: Tutor;
 }

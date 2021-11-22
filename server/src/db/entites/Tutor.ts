@@ -3,19 +3,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   OneToMany,
-  OneToOne,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Person } from '../common/Persone';
-import { Trans } from './Trans';
 import { Token } from './Token';
 
-@Entity('company')
-export class Company extends BaseEntity {
+@Entity('tutor')
+export class Tutor extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -39,6 +34,6 @@ export class Company extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamptz', name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(() => Token, (token) => token.company)
+  @OneToMany(() => Token, (token) => token.tutor)
   tokens: Token[];
 }

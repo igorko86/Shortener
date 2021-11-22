@@ -7,6 +7,10 @@ import { VALIDATION_ERROR } from '../services/constants.service';
 import { ITokenInfo } from '../services/types.services';
 
 class AuthController {
+  constructor() {
+    this.refresh = this.refresh.bind(this);
+    this.login = this.login.bind(this);
+  }
   async register(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
@@ -14,7 +18,7 @@ class AuthController {
       if (!errors.isEmpty()) {
         return next(ApiErrorService.badRequest(VALIDATION_ERROR, errors.array()));
       }
-      await authService.registrationCompany(req.body);
+      await authService.registrationTutor(req.body);
 
       return res.json({
         message: `Company "${req.body.name}" has been registered successfully`,
@@ -27,11 +31,11 @@ class AuthController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
-      const companyData = await authService.login(email, password);
+      const { refreshToken, refreshTokenId, ...tutor } = await authService.login(email, password);
 
-      this.#setCookie({ token: companyData.refreshToken, id: companyData.refreshTokenId }, res);
+      this.#setCookie({ token: refreshToken, id: refreshTokenId }, res);
 
-      return res.status(200).json(companyData);
+      return res.status(200).json(tutor);
     } catch (error) {
       next(error);
     }
@@ -52,8 +56,8 @@ class AuthController {
     try {
       const id = req.params.link;
 
-      await authService.activateCompany(id);
-      res.redirect(process.env.CLIENT_URL as unknown as string);
+      await authService.activateTutor(id);
+      res.redirect(process.env.CLIENT_URL as unknown as string); // TODO change current URL for success URL
     } catch (error) {
       next(error);
     }
@@ -61,10 +65,11 @@ class AuthController {
 
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
-      const companyData = await authService.refresh(req.cookies.refreshToken);
-      this.#setCookie({ token: companyData.refreshToken, id: companyData.refreshTokenId }, res);
+      const { refreshToken, refreshTokenId, ...tutor } = await authService.refresh(req.cookies.refreshToken);
 
-      return res.status(200).json(companyData);
+      this.#setCookie({ token: refreshToken, id: refreshTokenId }, res);
+
+      return res.status(200).json(tutor);
     } catch (error) {
       next(error);
     }
@@ -74,6 +79,7 @@ class AuthController {
     res.cookie('refreshToken', value, {
       maxAge: process.env.COOKIE_EXPIRES as unknown as number,
       httpOnly: true,
+      // secure: true // TODO uncomment on prod
     });
   }
 }
