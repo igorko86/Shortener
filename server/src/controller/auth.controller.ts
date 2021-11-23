@@ -31,11 +31,11 @@ class AuthController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
-      const { refreshToken, refreshTokenId, ...tutor } = await authService.login(email, password);
+      const { refreshToken, refreshTokenId, ...loginData } = await authService.login(email, password);
 
       this.#setCookie({ token: refreshToken, id: refreshTokenId }, res);
 
-      return res.status(200).json(tutor);
+      return res.status(200).json(loginData);
     } catch (error) {
       next(error);
     }
@@ -57,7 +57,7 @@ class AuthController {
       const id = req.params.link;
 
       await authService.activateTutor(id);
-      res.redirect(process.env.CLIENT_URL as unknown as string); // TODO change current URL for success URL
+      res.redirect(process.env.CLIENT_URL as unknown as string);
     } catch (error) {
       next(error);
     }
@@ -65,11 +65,11 @@ class AuthController {
 
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
-      const { refreshToken, refreshTokenId, ...tutor } = await authService.refresh(req.cookies.refreshToken);
+      const { refreshToken, refreshTokenId, ...refreshData } = await authService.refresh(req.cookies.refreshToken);
 
       this.#setCookie({ token: refreshToken, id: refreshTokenId }, res);
 
-      return res.status(200).json(tutor);
+      return res.status(200).json(refreshData);
     } catch (error) {
       next(error);
     }

@@ -3,11 +3,12 @@ import bcrypt from 'bcrypt';
 import { Tutor } from '../db/entites/Tutor';
 import mailService from './mail.service';
 import tokenService from './token.service';
-import { ITutorData, IRequestCompany, ITokenInfo } from './types.services';
+import { ITutorData, IRequestCompany, ITokenInfo, ITutor } from './types.services';
 import apiErrorService from './apiError.service';
 import ApiErrorService from './apiError.service';
 import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants.service';
 import { Token } from '../db/entites/Token';
+import TutorDto from '../dtos/tutor.dto';
 
 class AuthService {
   async registrationTutor(data: IRequestCompany) {
@@ -57,14 +58,10 @@ class AuthService {
       throw ApiErrorService.badRequest(PASSWORD_ERROR);
     }
     const tokens = await tokenService.generateSaveTokens(tutor);
-    const { id, email: tutorEmail, name } = tutor;
+    const tutorDto = new TutorDto(tutor);
 
     return {
-      tutor: {
-        id,
-        email: tutorEmail,
-        name,
-      },
+      tutor: tutorDto as unknown as ITutor,
       ...tokens,
     };
   }
@@ -93,11 +90,10 @@ class AuthService {
     }
 
     const tokens = await tokenService.generateSaveTokens(tutor, tokenInfo);
+    const tutorDto = new TutorDto(tutor);
 
     return {
-      tutor: {
-        ...tutor,
-      },
+      tutor: tutorDto as unknown as ITutor,
       ...tokens,
     };
   }

@@ -19,7 +19,7 @@ class TokenService {
     };
   }
 
-  async #saveToken(tokenInfo: ITokenInfo, tutor: Tutor) {
+  async #saveRefreshToken(tokenInfo: ITokenInfo, tutor: Tutor) {
     if (tokenInfo.id) {
       const token = await Token.findOne({ tutorId: tutor.id, id: tokenInfo.id });
 
@@ -56,7 +56,7 @@ class TokenService {
       id: tokenInfo ? tokenInfo.id : '',
     };
 
-    const savedRefreshToken = await this.#saveToken(newTokenInfo, tutor);
+    const savedRefreshToken = await this.#saveRefreshToken(newTokenInfo, tutor);
 
     return { ...tokens, refreshTokenId: savedRefreshToken.id };
   }
