@@ -3,13 +3,16 @@ import { FC } from 'react';
 import { Card } from 'antd';
 import { useDrag } from 'react-dnd';
 // Internal
+import { ILibraryCard } from 'store/reducers/library/types';
 import { ItemTypeCard } from '../Plan';
 
 interface IProps {
-  id: string;
+  card: ILibraryCard;
 }
 
-const LibraryCard: FC<IProps> = ({ id }) => {
+const LibraryCard: FC<IProps> = ({ card }) => {
+  const { id, title, description } = card;
+
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypeCard.LIBRARY_CARD,
     item: { id },
@@ -26,8 +29,9 @@ const LibraryCard: FC<IProps> = ({ id }) => {
         cursor: 'move',
       }}
     >
-      <Card title={`Type: ${ItemTypeCard.LIBRARY_CARD}`}>
-        <p>Card content {id}</p>
+      <Card title={title}>
+        <p>{id}</p>
+        <p>{description}</p>
       </Card>
     </div>
   );

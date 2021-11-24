@@ -1,3 +1,3 @@
-import { RootState } from '../../index';
+import { AppState } from '../../index';
 
-export const libraryCardsSelector = ({ library }: RootState) => library.libraryCards;
+export const libraryCardsSelector = ({ library }: AppState) => library.libraryCards;

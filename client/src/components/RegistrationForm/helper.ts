@@ -9,11 +9,11 @@ export enum FormItem {
 }
 
 const rules = {
-  [FormItem.NAME]: [{ required: true, message: 'Please input your name of the Tutor!', whitespace: true }],
+  [FormItem.NAME]: [{ required: true, message: 'Please input your name !', whitespace: true }],
   [FormItem.EMAIL]: [
     {
       type: 'email',
-      message: 'The input is not valid E-mail!',
+      message: 'The email is not valid!',
     },
     {
       required: true,
@@ -44,7 +44,7 @@ const rules = {
 
 export const config: Record<FormItem, any> = {
   [FormItem.NAME]: {
-    name: 'companyName',
+    name: 'tutorName',
     label: 'Tutor Name',
     tooltip: 'What do you want others to call you?',
     required: true,

@@ -1,25 +1,21 @@
 export interface ILibraryState {
-  libraryCards: ILibraryCards[];
+  libraryCards: ILibraryCard[];
 }
 
 export enum LibraryActionEnum {
   SET_LIBRARY_CARDS = 'SET_LIBRARY_CARDS',
-  SET_IS_LOADING = 'SET_IS_LOADING',
 }
 
-export interface ISetLibraryCardsAction {
+export interface ISetLibraryCards {
   type: LibraryActionEnum.SET_LIBRARY_CARDS;
-  payload: ILibraryCards[];
-}
-export interface ISetIsLoading {
-  type: LibraryActionEnum.SET_IS_LOADING;
-  payload: boolean;
+  payload: ILibraryCard[];
 }
 
-export type AuthAction = ISetLibraryCardsAction | ISetIsLoading;
+export type LibraryActions = ISetLibraryCards;
 
-export interface ILibraryCards {
+export interface ILibraryCard {
   id: string;
   title: string;
   description: string;
+  htmlContent: string;
 }

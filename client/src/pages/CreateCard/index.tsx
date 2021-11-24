@@ -3,15 +3,15 @@ import { FC } from 'react';
 import { Button, Form, Input } from 'antd';
 // Internal
 import Editor from 'components/Editor';
-import LibraryService from 'shared/services/Library';
+import LibraryService from 'shared/services/LibraryService';
 
 const CreateCard: FC = () => {
   const [form] = Form.useForm();
 
   const handleSubmit = (values: any) => {
-    console.log(values);
-    LibraryService.createCard(values).then((r) => console.log(r));
-    form.resetFields();
+    LibraryService.createLibraryCard(values).then((r) => console.log(r));
+
+    // form.resetFields();
   };
 
   return (

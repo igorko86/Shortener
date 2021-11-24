@@ -1,8 +1,28 @@
-import { ILibraryCards, LibraryActionEnum } from './types';
+import LibraryService from 'shared/services/LibraryService';
+import { ILibraryCard, LibraryActionEnum } from './types';
+import { AppDispatch } from '../../interfaces';
 
-export const authActionCreators = {
-  setLibraryCards: (libraryCards: ILibraryCards[]) => ({
+export const libraryActions = {
+  setLibraryCards: (libraryCards: ILibraryCard[]) => ({
     type: LibraryActionEnum.SET_LIBRARY_CARDS,
     payload: libraryCards,
   }),
+};
+
+export const libraryThunks = {
+  getLibraryCards: () => async (dispatch: AppDispatch) => {
+    try {
+      const libraryCards = await LibraryService.getLibraryCards();
+
+      dispatch(libraryActions.setLibraryCards(libraryCards));
+      return null;
+    } catch {
+      return null;
+    }
+  },
+};
+
+export default {
+  ...libraryActions,
+  ...libraryThunks,
 };

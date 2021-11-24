@@ -4,13 +4,13 @@ import { validationResult } from 'express-validator';
 import authService from '../services/auth.service';
 import ApiErrorService from '../services/apiError.service';
 import { VALIDATION_ERROR } from '../services/constants.service';
-import { ITokenInfo } from '../services/types.services';
 
 class AuthController {
   constructor() {
     this.refresh = this.refresh.bind(this);
     this.login = this.login.bind(this);
   }
+
   async register(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
@@ -21,7 +21,7 @@ class AuthController {
       await authService.registrationTutor(req.body);
 
       return res.json({
-        message: `Company "${req.body.name}" has been registered successfully`,
+        message: `"${req.body.name}" has been registered successfully`,
       });
     } catch (error) {
       next(error);
@@ -31,9 +31,9 @@ class AuthController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
-      const { refreshToken, refreshTokenId, ...loginData } = await authService.login(email, password);
+      const { refreshToken, ...loginData } = await authService.login(email, password);
 
-      this.#setCookie({ token: refreshToken, id: refreshTokenId }, res);
+      this.#setCookie(refreshToken, res);
 
       return res.status(200).json(loginData);
     } catch (error) {
@@ -43,7 +43,7 @@ class AuthController {
 
   async logout(req: Request, res: Response, next: NextFunction) {
     try {
-      await authService.logout(req.cookies.refreshToken.token);
+      await authService.logout(req.cookies.refreshToken);
       res.clearCookie('refreshToken');
 
       return res.status(200).json({ message: 'Logout is successful' });
@@ -65,9 +65,9 @@ class AuthController {
 
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
-      const { refreshToken, refreshTokenId, ...refreshData } = await authService.refresh(req.cookies.refreshToken);
+      const { refreshToken, ...refreshData } = await authService.refresh(req.cookies.refreshToken);
 
-      this.#setCookie({ token: refreshToken, id: refreshTokenId }, res);
+      this.#setCookie(refreshToken, res);
 
       return res.status(200).json(refreshData);
     } catch (error) {
@@ -75,7 +75,7 @@ class AuthController {
     }
   }
 
-  #setCookie(value: ITokenInfo, res: Response) {
+  #setCookie(value: string, res: Response) {
     res.cookie('refreshToken', value, {
       maxAge: process.env.COOKIE_EXPIRES as unknown as number,
       httpOnly: true,

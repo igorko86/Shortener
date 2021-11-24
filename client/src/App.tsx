@@ -11,7 +11,6 @@ const App: FC = () => {
     <ThemeProvider theme={theme}>
       <Layout>
         <AppHeader />
-        <div>SUB HEADER</div>
         <Layout>
           <AppRouter />
         </Layout>

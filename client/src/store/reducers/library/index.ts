@@ -1,27 +1,10 @@
-import { AuthAction, LibraryActionEnum, ILibraryState } from './types';
+import { LibraryActionEnum, ILibraryState, LibraryActions } from './types';
 
-const mockLibraryCards = [
-  {
-    id: 'libraryCardId-1',
-    title: 'Title',
-    description: 'description',
-  },
-  {
-    id: 'libraryCardId-2',
-    title: 'Title',
-    description: 'description',
-  },
-  {
-    id: 'libraryCardId-3',
-    title: 'Title',
-    description: 'description',
-  },
-];
 const initialState: ILibraryState = {
-  libraryCards: [...mockLibraryCards],
+  libraryCards: [],
 };
 
-const libraryReducer = (state = initialState, action: AuthAction): ILibraryState => {
+const libraryReducer = (state = initialState, action: LibraryActions): ILibraryState => {
   switch (action.type) {
     case LibraryActionEnum.SET_LIBRARY_CARDS:
       return { ...state, libraryCards: action.payload };

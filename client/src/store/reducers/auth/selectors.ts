@@ -1,3 +1,4 @@
-import { RootState } from '../../index';
+import { AppState } from '../../index';
 
-export const authSelector = (state: RootState) => state.auth;
+export const isAuthSelector = ({ auth }: AppState) => auth.isAuth;
+export const tutorSelector = ({ auth }: AppState) => auth.tutor;

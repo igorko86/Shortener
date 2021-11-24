@@ -11,7 +11,7 @@ const RegistrationForm: FC<IProps> = ({ onSubmit }) => {
   const [form] = Form.useForm();
 
   return (
-    <Form onFinish={onSubmit} layout="vertical" form={form} name="register" scrollToFirstError>
+    <Form onFinish={onSubmit} layout="vertical" form={form} name="register" scrollToFirstError autoComplete="off">
       <Form.Item {...config[FormItem.NAME]}>
         <Input />
       </Form.Item>

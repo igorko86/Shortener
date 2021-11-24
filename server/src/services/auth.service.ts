@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { Tutor } from '../db/entites/Tutor';
 import mailService from './mail.service';
 import tokenService from './token.service';
-import { ITutorData, IRequestCompany, ITokenInfo, ITutor } from './types.services';
+import { ITutorData, IRequestCompany, ITutor } from './types.services';
 import apiErrorService from './apiError.service';
 import ApiErrorService from './apiError.service';
 import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants.service';
@@ -70,14 +70,16 @@ class AuthService {
     await tokenService.removeToken(refreshToken);
   }
 
-  async refresh(tokenInfo: ITokenInfo): Promise<ITutorData> {
-    if (!tokenInfo) {
+  async refresh(currentRefreshToken: string): Promise<ITutorData> {
+    if (!currentRefreshToken) {
       throw ApiErrorService.unauthorized();
     }
 
-    const { token: refreshToken, id: refreshTokenId } = tokenInfo;
-    const tutorData = tokenService.validateToken(refreshToken, process.env.JWT_REFRESH_SECRET as unknown as string);
-    const tokenFromDB = Token.findOne({ refreshToken, id: refreshTokenId });
+    const tutorData = tokenService.validateToken(
+      currentRefreshToken,
+      process.env.JWT_REFRESH_SECRET as unknown as string
+    );
+    const tokenFromDB = await Token.findOne({ refreshToken: currentRefreshToken });
 
     if (!tutorData || !tokenFromDB) {
       throw ApiErrorService.unauthorized();
@@ -89,7 +91,7 @@ class AuthService {
       throw ApiErrorService.unauthorized();
     }
 
-    const tokens = await tokenService.generateSaveTokens(tutor, tokenInfo);
+    const tokens = await tokenService.generateSaveTokens(tutor);
     const tutorDto = new TutorDto(tutor);
 
     return {

@@ -1,14 +1,22 @@
 // External
+import { useEffect } from 'react';
 import { List } from 'antd';
 // Internal
 import LibraryCard from 'components/LibraryCard/intex';
 import { useAppSelector } from 'shared/hooks/storeHooks';
+import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { libraryCardsSelector } from 'store/reducers/library/selectors';
 // styles
 import { DivListArea } from './styles';
 
 const Library = () => {
   const libraryCards = useAppSelector(libraryCardsSelector);
+  const { getLibraryCards } = useActionCreator();
+
+  useEffect(() => {
+    getLibraryCards();
+  }, []);
+
   return (
     <DivListArea>
       <h3>Library</h3>
@@ -24,10 +32,10 @@ const Library = () => {
         }}
         dataSource={libraryCards}
       >
-        {libraryCards.map(({ id }) => {
+        {libraryCards.map((card) => {
           return (
-            <List.Item key={id}>
-              <LibraryCard id={id} />
+            <List.Item key={card.id}>
+              <LibraryCard card={card} />
             </List.Item>
           );
         })}

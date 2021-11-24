@@ -11,18 +11,12 @@ export interface ITutor {
 
 export interface ITutorData extends IGenerateTokensResult {
   tutor: ITutor;
-  refreshTokenId: string;
 }
 
 export interface IRequestCompany {
   name: string;
   email: string;
   password: string;
-}
-
-export interface ITokenInfo {
-  id: string;
-  token: string;
 }
 
 export interface IRequestCard {

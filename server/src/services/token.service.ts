@@ -1,14 +1,16 @@
 import jwt from 'jsonwebtoken';
 
 import { Token } from '../db/entites/Token';
-import { IGenerateTokensResult, ITokenInfo, ITutor } from './types.services';
+import { IGenerateTokensResult, ITutor } from './types.services';
 import { Tutor } from '../db/entites/Tutor';
+import TutorDto from '../dtos/tutor.dto';
 
 class TokenService {
   #generateTokens(payload: ITutor): IGenerateTokensResult {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET as string, {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRES,
     });
+
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET as string, {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRES,
     });
@@ -19,18 +21,16 @@ class TokenService {
     };
   }
 
-  async #saveRefreshToken(tokenInfo: ITokenInfo, tutor: Tutor) {
-    if (tokenInfo.id) {
-      const token = await Token.findOne({ tutorId: tutor.id, id: tokenInfo.id });
+  async #saveRefreshToken(refreshToken: string, tutor: Tutor) {
+    const tokenData = await Token.findOne({ tutorId: tutor.id });
 
-      if (token) {
-        token.refreshToken = tokenInfo.token;
+    if (tokenData) {
+      tokenData.refreshToken = refreshToken;
 
-        return await Token.save(token);
-      }
+      return await Token.save(tokenData);
     }
     const newToken = Token.create({
-      refreshToken: tokenInfo.token,
+      refreshToken: refreshToken,
       tutor,
     });
 
@@ -45,20 +45,13 @@ class TokenService {
     }
   }
 
-  async generateSaveTokens(
-    tutor: Tutor,
-    tokenInfo?: ITokenInfo
-  ): Promise<IGenerateTokensResult & { refreshTokenId: string }> {
-    const { id, email, name } = tutor;
-    const tokens = this.#generateTokens({ id, email, name });
-    const newTokenInfo = {
-      token: tokenInfo ? tokenInfo.token : tokens.refreshToken,
-      id: tokenInfo ? tokenInfo.id : '',
-    };
+  async generateSaveTokens(tutor: Tutor): Promise<IGenerateTokensResult> {
+    const tutorDto = new TutorDto(tutor);
+    const tokens = this.#generateTokens({ ...tutorDto } as unknown as ITutor);
 
-    const savedRefreshToken = await this.#saveRefreshToken(newTokenInfo, tutor);
+    await this.#saveRefreshToken(tokens.refreshToken, tutor);
 
-    return { ...tokens, refreshTokenId: savedRefreshToken.id };
+    return tokens;
   }
 
   async removeToken(refreshToken: string) {

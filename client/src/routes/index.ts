@@ -17,6 +17,7 @@ export const publicRoutes: IRouter[] = [
   {
     path: AppPath.LOGIN,
     component: Login,
+    // exact: true,
   },
   {
     path: AppPath.REGISTRATION,

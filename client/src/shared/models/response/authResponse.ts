@@ -1,10 +1,9 @@
 export interface IAuthResponse {
   accessToken: string;
-  refreshToken: string;
-  company: ICompany;
+  tutor: ITutor;
 }
 
-interface ICompany {
+export interface ITutor {
   id: string;
   name: string;
   email: string;

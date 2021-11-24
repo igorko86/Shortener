@@ -9,9 +9,9 @@ const Registration: FC = () => {
   const history = useHistory();
 
   const handleSubmit = async (values: any) => {
-    const { companyName, email, password } = values;
+    const { tutorName, email, password } = values;
 
-    await AuthService.register({ name: companyName, email, password });
+    await AuthService.register({ name: tutorName, email, password });
     history.push(AppPath.SUCCESS);
   };
 
