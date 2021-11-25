@@ -6,6 +6,7 @@ import { Layout } from 'antd';
 // Internal
 import Plan from 'components/Plan';
 import Library from 'components/Library';
+import CardContent from 'components/CardContent';
 
 const Main: FC = () => {
   return (
@@ -13,6 +14,7 @@ const Main: FC = () => {
       <Layout.Content>
         <div style={{ display: 'flex', width: '800px' }}>
           <Plan />
+          <CardContent />
           <Library />
         </div>
         <Layout.Footer>Footer</Layout.Footer>

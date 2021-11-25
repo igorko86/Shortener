@@ -1,16 +1,15 @@
 // External
 import { FC, useEffect } from 'react';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
-import { Button } from 'antd';
+import { Switch, Route, Redirect } from 'react-router-dom';
 // Internal
 import { AppPath } from 'shared/common/enum';
 import { privateRoutes, publicRoutes } from 'routes';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { isAuthSelector } from 'store/reducers/auth/selectors';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
+import AppSubHeader from '../AppSubHeader';
 
 const AppRouter: FC = () => {
-  const history = useHistory();
   const { checkAuth } = useActionCreator();
   const isAuth = useAppSelector(isAuthSelector);
 
@@ -23,10 +22,7 @@ const AppRouter: FC = () => {
   return isAuth ? (
     <Switch>
       <>
-        <div>
-          <Button onClick={() => history.push(AppPath.ROOT)}>home</Button>
-          <Button onClick={() => history.push(AppPath.CREATE_CARD)}>create cards</Button>
-        </div>
+        <AppSubHeader />
         {privateRoutes.map(({ path, component, exact }) => {
           return <Route path={path} component={component} exact={exact} key={path} />;
         })}

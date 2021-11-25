@@ -6,10 +6,18 @@ export enum FormItem {
   NAME = 'name',
   PASSWORD = 'password',
   CONFIRM = 'confirm',
+  TITLE = 'title',
+  DESCRIPTION = 'description',
+  PLAN_NAME = 'planName',
+  GROUP_NAME = 'groupName',
+}
+
+enum RulesType {
+  REQUIRED_FILED = 'requiredFiled',
 }
 
 const rules = {
-  [FormItem.NAME]: [{ required: true, message: 'Please input your name !', whitespace: true }],
+  [RulesType.REQUIRED_FILED]: [{ required: true, message: 'Please input field!', whitespace: true }],
   [FormItem.EMAIL]: [
     {
       type: 'email',
@@ -44,28 +52,48 @@ const rules = {
 
 export const config: Record<FormItem, any> = {
   [FormItem.NAME]: {
-    name: 'tutorName',
+    name: FormItem.NAME,
     label: 'Tutor Name',
     tooltip: 'What do you want others to call you?',
     required: true,
-    rules: rules[FormItem.NAME],
+    rules: rules[RulesType.REQUIRED_FILED],
   },
   [FormItem.EMAIL]: {
-    name: 'email',
+    name: FormItem.EMAIL,
     label: 'E-mail',
     rules: rules[FormItem.EMAIL],
   },
   [FormItem.PASSWORD]: {
-    name: 'password',
+    name: FormItem.PASSWORD,
     label: 'Password',
     hasFeedback: true,
     rules: rules[FormItem.PASSWORD],
   },
   [FormItem.CONFIRM]: {
-    name: 'confirm',
+    name: FormItem.CONFIRM,
     label: 'Confirm Password',
     dependencies: ['password'],
     hasFeedback: true,
     rules: rules[FormItem.CONFIRM],
+  },
+  [FormItem.TITLE]: {
+    name: FormItem.TITLE,
+    label: FormItem.TITLE,
+    rules: rules[RulesType.REQUIRED_FILED],
+  },
+  [FormItem.DESCRIPTION]: {
+    name: FormItem.DESCRIPTION,
+    label: FormItem.DESCRIPTION,
+    rules: rules[RulesType.REQUIRED_FILED],
+  },
+  [FormItem.PLAN_NAME]: {
+    name: FormItem.PLAN_NAME,
+    label: 'Plan name',
+    rules: rules[RulesType.REQUIRED_FILED],
+  },
+  [FormItem.GROUP_NAME]: {
+    name: FormItem.GROUP_NAME,
+    label: 'Group name',
+    rules: rules[RulesType.REQUIRED_FILED],
   },
 };

@@ -15,7 +15,7 @@ class LibraryController {
 
   async createLibraryCard(req: Request, res: Response, next: NextFunction) {
     try {
-      const newCard = libraryService.createLibraryCard(req.body);
+      const newCard = await libraryService.createLibraryCard(req.body);
 
       return res.status(200).json(newCard);
     } catch (error) {

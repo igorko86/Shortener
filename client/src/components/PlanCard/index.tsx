@@ -4,7 +4,7 @@ import { Card as CardAnt } from 'antd';
 import { useDrag, useDrop } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 // Internal
-import CardContent from './CardContent';
+import PlanCardContent from './PlanCardContent';
 import { IItemInfo, IMoveSubCardDragInfo, ISubCards, ItemTypeCard } from '../Plan';
 
 const style = {
@@ -29,7 +29,7 @@ interface IProps {
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
 }
 
-const Card: FC<IProps> = ({
+const PlanCard: FC<IProps> = ({
   canMoveDropSubCard,
   cardId,
   onMoveCard,
@@ -97,7 +97,7 @@ const Card: FC<IProps> = ({
       }}
     >
       <CardAnt title={`Title - ${cardId}`} size="small">
-        <CardContent
+        <PlanCardContent
           subCardsArray={subCards[cardId] || []}
           onMoveSubCard={onMoveSubCard}
           setSubCards={setSubCards}
@@ -109,4 +109,4 @@ const Card: FC<IProps> = ({
   );
 };
 
-export default Card;
+export default PlanCard;

@@ -27,7 +27,7 @@ interface IProps {
 
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
 }
-const CardContent: FC<IProps> = ({ canMoveDropSubCard, subCardsArray, onMoveSubCard, setSubCards, cardId }) => {
+const PlanCardContent: FC<IProps> = ({ canMoveDropSubCard, subCardsArray, onMoveSubCard, setSubCards, cardId }) => {
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
       accept: [ItemTypeCard.LIBRARY_CARD, ItemTypeCard.SUB_CARD],
@@ -102,4 +102,4 @@ const CardContent: FC<IProps> = ({ canMoveDropSubCard, subCardsArray, onMoveSubC
   );
 };
 
-export default CardContent;
+export default PlanCardContent;

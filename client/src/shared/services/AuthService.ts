@@ -1,18 +1,19 @@
-import $api from '../../http';
 import { IAuthResponse } from '../models/response/authResponse';
 import { IFormObjRequest, ITutorRequest } from '../models/request/authRequest';
+import $api from '../../http';
+import { ApiRoutes } from './apiRoutes';
 
 class AuthService {
-  static async register(formObj: IFormObjRequest): Promise<void> {
-    return $api.post('/auth/registration', formObj);
+  static register(formObj: IFormObjRequest): Promise<void> {
+    return $api.post(ApiRoutes.Registration, formObj);
   }
 
-  static async login(formObj: ITutorRequest): Promise<IAuthResponse> {
-    return $api.post('/auth/login', formObj).then(({ data }) => data);
+  static login(formObj: ITutorRequest): Promise<IAuthResponse> {
+    return $api.post(ApiRoutes.Login, formObj).then(({ data }) => data);
   }
 
-  static async logout(): Promise<void> {
-    return $api.delete('/auth/logout');
+  static logout(): Promise<void> {
+    return $api.delete(ApiRoutes.Logout);
   }
 }
 

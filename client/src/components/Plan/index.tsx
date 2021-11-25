@@ -3,7 +3,7 @@ import { FC, useCallback, useState } from 'react';
 import { List as ListAnt } from 'antd';
 import update from 'immutability-helper';
 // Internal
-import Card from 'components/Card';
+import PlanCard from 'components/PlanCard';
 // Styles
 import { DivListArea } from './styles';
 
@@ -127,7 +127,7 @@ const Plan: FC = () => {
         {cards.map(({ id }, index) => {
           return (
             <ListAnt.Item key={id}>
-              <Card
+              <PlanCard
                 cardId={id}
                 cardIndex={index}
                 onMoveCard={handleMoveCard}

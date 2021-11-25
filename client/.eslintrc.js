@@ -47,6 +47,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'react-hooks/exhaustive-deps': 0,
     'no-plusplus': 'off',
+    'no-underscore-dangle': 'off',
     // '@typescript-eslint/no-unused-vars': 'off',
     'prettier/prettier': [
       'error',

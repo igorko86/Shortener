@@ -1,7 +1,9 @@
+import axios from 'axios';
+
 import { IFormObjRequest } from 'shared/models/request/authRequest';
 import AuthService from 'shared/services/AuthService';
 import { IAuthResponse, ITutor } from 'shared/models/response/authResponse';
-import axios from 'axios';
+import { ApiRoutes } from 'shared/services/apiRoutes';
 import { AuthActionEnum, ISetAuthAction, ISetIsLoading, ISetTutor } from './types';
 import { AppDispatch } from '../../interfaces';
 
@@ -28,7 +30,7 @@ export const authThunks = {
   },
   checkAuth: () => async (dispatch: AppDispatch) => {
     try {
-      const { data } = await axios.get<IAuthResponse>(`${process.env.REACT_APP_SERVER_URL}/api/auth/refresh`, {
+      const { data } = await axios.get<IAuthResponse>(`${process.env.REACT_APP_SERVER_URL}/api${ApiRoutes.Refresh}`, {
         withCredentials: true,
       });
 

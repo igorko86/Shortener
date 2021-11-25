@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Button, Form, Input } from 'antd';
-
-import { config, FormItem } from './helper';
+import { config, FormItem } from 'shared/helpers/formConfig';
 
 interface IProps {
   onSubmit: (values: any) => void;
