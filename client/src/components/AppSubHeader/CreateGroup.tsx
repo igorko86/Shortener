@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Button } from 'antd';
-
+// External
+import { FC, useState } from 'react';
+// Internal
 import CreateGroupModal from 'components/Modals/CreateGroupModal';
+import Button from 'components/Items/Button';
 
-const CreateGroup = () => {
+const CreateGroup: FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleClickShowModal = () => {
@@ -12,7 +13,7 @@ const CreateGroup = () => {
 
   return (
     <>
-      <Button onClick={handleClickShowModal}>create plan</Button>
+      <Button text="create plan" onClick={handleClickShowModal} />
       <CreateGroupModal visible={showModal} onCancel={handleClickShowModal} />
     </>
   );
