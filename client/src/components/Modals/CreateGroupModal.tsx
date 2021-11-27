@@ -3,8 +3,7 @@ import { FC, useState } from 'react';
 import { Form, Input, Modal } from 'antd';
 // Internal
 import { config, FormItem } from 'shared/helpers/formConfig';
-import GroupService from 'shared/services/GroupService';
-import { useActionCreator } from '../../shared/hooks/useActionCreator';
+import { useActionCreator } from 'shared/hooks/useActionCreator';
 
 interface IProps {
   visible: boolean;

@@ -13,7 +13,7 @@ export const DivNameWithPopover = styled.div`
   padding: 0 5px 0 15px;
 `;
 
-export const ListName = styled.h3`
+export const SpanTitle = styled.span`
   color: ${({ theme }) => theme.colors.midnight};
   font-size: 25px;
   margin-bottom: 5px;
