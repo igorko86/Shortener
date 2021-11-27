@@ -17,5 +17,4 @@ export interface ILibraryCard {
   id: string;
   title: string;
   description: string;
-  htmlContent: string;
 }

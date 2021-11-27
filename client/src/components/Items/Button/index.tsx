@@ -3,7 +3,7 @@ import React, { FC, ReactElement } from 'react';
 import { ButtonStyle } from './styles';
 
 interface IProps {
-  text: string;
+  text?: string;
   icon?: ReactElement;
   onClick?: any;
 }

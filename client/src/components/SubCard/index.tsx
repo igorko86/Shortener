@@ -3,15 +3,8 @@ import { FC, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 // Internal
-import { IMoveSubCardDragInfo, ItemTypeCard } from 'components/Plan';
-
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-};
+import { IMoveSubCardDragInfo, ISubCard, ItemTypeCard } from 'components/Plan';
+import { DivSubCard } from './styles';
 
 interface IDragItem {
   hoverSubCardIndex: number;
@@ -24,9 +17,11 @@ interface IProps {
   cardId: string;
   subCardId: string;
   onMoveSubCard: (e: IMoveSubCardDragInfo) => void;
+  removeSubCard: (subCardIndex: number, cardId: string) => void;
+  subCard: ISubCard;
 }
 
-const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId }) => {
+const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId, removeSubCard, subCard }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypeCard.SUB_CARD,
@@ -35,7 +30,7 @@ const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId })
       isDragging: monitor.isDragging(),
     }),
   });
-  const [{ handlerId, isOver }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop({
     accept: ItemTypeCard.SUB_CARD,
     collect(monitor) {
       return {
@@ -76,22 +71,17 @@ const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId })
     },
   });
 
-  const opacity = isDragging || isOver ? 0.5 : 1;
   drag(drop(ref));
 
   return (
-    <div
-      ref={ref}
+    <DivSubCard
       data-handler-id={handlerId}
-      style={{
-        ...style,
-        border: '1px solid red',
-        opacity,
-      }}
-    >
-      <p>{`SubCard id - ${subCardId}  `}</p>
-      <p>{`Card id - ${cardId}  `}</p>
-    </div>
+      drag={ref}
+      isDragging={isDragging}
+      card={subCard}
+      isRemove
+      onClick={() => removeSubCard(subCardIndex, cardId)}
+    />
   );
 };
 

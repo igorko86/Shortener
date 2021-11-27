@@ -8,6 +8,7 @@ import { store } from './store';
 import App from './App';
 
 import './index.css';
+import './antStyles.css';
 
 ReactDOM.render(
   <Provider store={store}>

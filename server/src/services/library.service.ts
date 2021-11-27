@@ -5,11 +5,11 @@ class LibraryService {
   async createLibraryCard(data: IRequestCard): Promise<any> {
     const newCard = LibraryCard.create(data);
 
-    return await newCard.save();
+    return newCard.save();
   }
 
   async getLibraryCards(): Promise<LibraryCard[]> {
-    return await LibraryCard.find();
+    return LibraryCard.find();
   }
 }
 

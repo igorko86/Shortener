@@ -1,11 +1,13 @@
 // External
-import { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { List as ListAnt } from 'antd';
 import update from 'immutability-helper';
 // Internal
 import PlanCard from 'components/PlanCard';
 // Styles
-import { DivListArea } from './styles';
+import { DivAddCardWrapper, DivListPlanWrapper, DivNameWithPopover, ListName } from './styles';
+import Search from '../Search';
+// import Popover from '../Popover';
 
 export enum ItemTypeCard {
   CARD = 'Card',
@@ -27,8 +29,12 @@ export interface ICard {
 
 export interface ISubCard {
   id: string;
-  cardId: string;
+  cardId?: string;
+  description: string;
+  title: string;
 }
+
+export type LibraryCardType = Omit<ISubCard, 'cardId'>;
 
 export interface ISubCards {
   [key: string]: ISubCard[];
@@ -109,9 +115,29 @@ const Plan: FC = () => {
     [subCards]
   );
 
+  // const addCard = () => {
+  //   setCards([...cards, { id: String(Date.now()) }]);
+  // };
+
+  const removeCard = (index: number) => {
+    const newCardsList = [...cards];
+    newCardsList.splice(index, 1);
+    setCards(newCardsList);
+  };
+
+  const removeSubCard = (subCardIndex: number, cardId: string) => {
+    const newCardsList = JSON.parse(JSON.stringify(subCards));
+    newCardsList[cardId].splice(subCardIndex, 1);
+    setSubCards(newCardsList);
+  };
+
   return (
-    <DivListArea>
-      <h3>Plan</h3>
+    <DivListPlanWrapper>
+      <DivNameWithPopover>
+        <ListName>Plan</ListName>
+        {/* <Popover /> */}
+      </DivNameWithPopover>
+      <Search />
       <ListAnt
         grid={{
           gutter: 16,
@@ -131,16 +157,25 @@ const Plan: FC = () => {
                 cardId={id}
                 cardIndex={index}
                 onMoveCard={handleMoveCard}
+                removeCard={removeCard}
                 onMoveSubCard={handleMoveSubCard}
                 subCards={subCards}
                 setSubCards={setSubCards}
                 canMoveDropSubCard={canMoveDropSubCard}
+                removeSubCard={removeSubCard}
               />
             </ListAnt.Item>
           );
         })}
       </ListAnt>
-    </DivListArea>
+      s
+      <DivAddCardWrapper>
+        {/* <Button onClick={addCard}> */}
+        {/*  <SpanAdd>+ Add module</SpanAdd> */}
+        {/*  <SpanAdd>+ Add module</SpanAdd> */}
+        {/* </Button> */}
+      </DivAddCardWrapper>
+    </DivListPlanWrapper>
   );
 };
 

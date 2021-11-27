@@ -4,12 +4,16 @@ import { useDrop } from 'react-dnd';
 // Internal
 import SubCard from '../SubCard';
 import { IItemInfo, IMoveSubCardDragInfo, ISubCard, ISubCards, ItemTypeCard } from '../Plan';
+import { DivEmptyCard, DivWithContent, SpanEmptyCard } from './styles';
+import { useAppSelector } from '../../shared/hooks/storeHooks';
+import { libraryCardsSelector } from '../../store/reducers/library/selectors';
 
 const removeItem = (arr: ISubCard[], id: string) => {
   const index = arr.findIndex((item) => item.id === id);
 
-  arr.splice(index, 1);
-  return [...arr];
+  const [item] = arr.splice(index, 1);
+
+  return { newArr: [...arr], item };
 };
 
 interface IDragInfo {
@@ -17,6 +21,7 @@ interface IDragInfo {
   hoverSubCardIndex: number;
   subCardId: string;
   id?: string;
+  libraryCardIndex?: number;
 }
 
 interface IProps {
@@ -24,31 +29,49 @@ interface IProps {
   onMoveSubCard: (arg: IMoveSubCardDragInfo) => void;
   setSubCards: (callBack: any) => void;
   cardId: string;
-
+  removeSubCard: (subCardIndex: number, cardId: string) => void;
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
 }
-const PlanCardContent: FC<IProps> = ({ canMoveDropSubCard, subCardsArray, onMoveSubCard, setSubCards, cardId }) => {
+const PlanCardContent: FC<IProps> = ({
+  canMoveDropSubCard,
+  subCardsArray,
+  onMoveSubCard,
+  setSubCards,
+  cardId,
+  removeSubCard,
+}) => {
+  const libraryCards = useAppSelector(libraryCardsSelector);
+
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
       accept: [ItemTypeCard.LIBRARY_CARD, ItemTypeCard.SUB_CARD],
       drop: (dragInfo: IDragInfo) => {
         setSubCards((prevSubCards: ISubCards) => {
           const subCards = prevSubCards[cardId];
-          const { cardId: dragCardId, subCardId, id, hoverSubCardIndex } = dragInfo;
+          const { cardId: dragCardId, subCardId, hoverSubCardIndex, libraryCardIndex } = dragInfo;
+          let libraryCard = null;
+
+          if (typeof libraryCardIndex === 'number') {
+            libraryCard = libraryCards[libraryCardIndex];
+          }
 
           if (!subCards) {
             if (dragCardId) {
-              prevSubCards[dragCardId] = removeItem(prevSubCards[dragCardId], subCardId);
+              const { newArr, item } = removeItem(prevSubCards[dragCardId], subCardId);
+              prevSubCards[dragCardId] = newArr;
+              libraryCard = item;
             }
 
-            return { ...prevSubCards, [cardId]: [{ id: id || subCardId, cardId }] };
+            return { ...prevSubCards, [cardId]: [{ ...libraryCard, cardId }] };
           }
 
           if (dragCardId) {
             if (cardId !== dragCardId) {
-              prevSubCards[dragCardId] = removeItem(prevSubCards[dragCardId], subCardId);
+              const { newArr, item } = removeItem(prevSubCards[dragCardId], subCardId);
 
-              subCards.splice(hoverSubCardIndex, 0, { id: subCardId, cardId });
+              prevSubCards[dragCardId] = newArr;
+
+              subCards.splice(hoverSubCardIndex, 0, { ...item, cardId });
 
               return { ...prevSubCards, [cardId]: [...subCards] };
             }
@@ -56,7 +79,7 @@ const PlanCardContent: FC<IProps> = ({ canMoveDropSubCard, subCardsArray, onMove
             return prevSubCards;
           }
 
-          return { ...prevSubCards, [cardId]: [...subCards, { id, cardId }] };
+          return { ...prevSubCards, [cardId]: [...subCards, { ...libraryCard, cardId }] };
         });
       },
       collect: (monitor) => ({
@@ -69,16 +92,16 @@ const PlanCardContent: FC<IProps> = ({ canMoveDropSubCard, subCardsArray, onMove
         return canMoveDropSubCard({ dragSubCardId: id || subCardId, dragCardId: dragCardId || '', cardId });
       },
     }),
-    [canMoveDropSubCard]
+    [canMoveDropSubCard, libraryCards]
   );
 
   const getBackgroundColor = () => {
     if (isOver) {
       if (canDrop) {
-        return 'rgb(188,251,255)';
+        return 'rgb(195,249,255)';
       }
       if (!canDrop) {
-        return 'rgb(255,188,188)';
+        return 'rgb(255,212,212)';
       }
     }
 
@@ -86,19 +109,29 @@ const PlanCardContent: FC<IProps> = ({ canMoveDropSubCard, subCardsArray, onMove
   };
 
   return (
-    <div style={{ height: '300px', backgroundColor: getBackgroundColor() }} ref={drop}>
-      {subCardsArray.map((subCard, index) => {
-        return (
-          <SubCard
-            onMoveSubCard={onMoveSubCard}
-            key={subCard.id}
-            subCardId={subCard.id}
-            subCardIndex={index}
-            cardId={cardId}
-          />
-        );
-      })}
-    </div>
+    <>
+      {subCardsArray.length ? (
+        <DivWithContent style={{ backgroundColor: getBackgroundColor() }} ref={drop}>
+          {subCardsArray.map((subCard, index) => {
+            return (
+              <SubCard
+                onMoveSubCard={onMoveSubCard}
+                key={subCard.id}
+                subCardId={subCard.id}
+                subCardIndex={index}
+                cardId={cardId}
+                subCard={subCard}
+                removeSubCard={removeSubCard}
+              />
+            );
+          })}
+        </DivWithContent>
+      ) : (
+        <DivEmptyCard ref={drop}>
+          <SpanEmptyCard>Drop topic here</SpanEmptyCard>
+        </DivEmptyCard>
+      )}
+    </>
   );
 };
 

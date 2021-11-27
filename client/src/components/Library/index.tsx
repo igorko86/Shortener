@@ -7,7 +7,8 @@ import { useAppSelector } from 'shared/hooks/storeHooks';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { libraryCardsSelector } from 'store/reducers/library/selectors';
 // styles
-import { DivListArea } from './styles';
+import { DivListArea, ListName } from './styles';
+import Search from '../Search';
 
 const Library = () => {
   const libraryCards = useAppSelector(libraryCardsSelector);
@@ -19,7 +20,8 @@ const Library = () => {
 
   return (
     <DivListArea>
-      <h3>Library</h3>
+      <ListName>Library</ListName>
+      <Search />
       <List
         grid={{
           gutter: 16,
@@ -32,10 +34,10 @@ const Library = () => {
         }}
         dataSource={libraryCards}
       >
-        {libraryCards.map((card) => {
+        {libraryCards.map((card, index) => {
           return (
             <List.Item key={card.id}>
-              <LibraryCard card={card} />
+              <LibraryCard card={card} libraryCardIndex={index} />
             </List.Item>
           );
         })}
