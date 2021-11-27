@@ -1,5 +1,5 @@
 // External
-import { FC, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { List } from 'antd';
 // Internal
 import LibraryCard from 'components/LibraryCard/intex';
@@ -7,9 +7,9 @@ import { useAppSelector } from 'shared/hooks/storeHooks';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { libraryCardsSelector } from 'store/reducers/library/selectors';
 import ColumnWrapper from '../Items/ColumnWrapper';
-// styles
-import { ListName } from './styles';
 import Search from '../Search';
+import TitleColumn from '../Items/TitleColumn';
+// styles
 
 const Library: FC = () => {
   const libraryCards = useAppSelector(libraryCardsSelector);
@@ -21,7 +21,7 @@ const Library: FC = () => {
 
   return (
     <ColumnWrapper>
-      <ListName>Library</ListName>
+      <TitleColumn title="Library" />
       <Search />
       <List
         grid={{

@@ -5,13 +5,12 @@ import update from 'immutability-helper';
 // Internal
 import PlanCard from 'components/PlanCard';
 import ColumnWrapper from 'components/Items/ColumnWrapper';
-// Styles
 import Button from 'components/Items/Button';
-import { DivNameWithPopover, ListName } from './styles';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { groupsSelector } from 'store/reducers/group/selectors';
-import { DivListPlanWrapper, DivNameWithPopover, SpanTitle } from './styles';
+import TitleColumn from '../Items/TitleColumn';
 import Search from '../Search';
+// Styles
 
 export enum ItemTypeCard {
   CARD = 'Card',
@@ -138,9 +137,8 @@ const Plan: FC = () => {
 
   return (
     <ColumnWrapper>
-      <DivNameWithPopover>
-        <SpanTitle>{group && group.planName ? group.planName : 'Plan Name'}</SpanTitle>
-      </DivNameWithPopover>
+      <TitleColumn title={group && group.planName ? group.planName : 'Plan Name'} titlePosition="left" />
+      {/* <Popover /> */}
       <Search />
       <ListAnt
         grid={{

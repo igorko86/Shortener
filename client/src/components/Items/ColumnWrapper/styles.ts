@@ -9,5 +9,5 @@ export const DivListArea = styled.div`
   box-shadow: ${({ theme }) => theme.boxShadow};
   margin: ${({ theme }) => theme.marginTop};
   border-radius: 8px;
-  padding: 15px;
+  padding: 5px 15px 15px;
 `;
