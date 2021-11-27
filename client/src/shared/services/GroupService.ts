@@ -1,15 +1,19 @@
 import { ApiRoutes } from './apiRoutes';
 import $api from '../../http';
 import { ICreateGroupRequest } from '../models/request/groupReguest';
-import { IGroupResponse } from '../models/response/groupResponse';
+import { IGroupResponse, IPlanResponse } from '../models/response/groupResponse';
 
 class GroupService {
   static getGroups(): Promise<IGroupResponse[]> {
     return $api.get(ApiRoutes.GetGroups).then(({ data }) => data);
   }
 
-  static createGroup(formObj: ICreateGroupRequest): Promise<void> {
-    return $api.post(ApiRoutes.CreateGroup, formObj);
+  static getPlan(uuid: string): Promise<IPlanResponse> {
+    return $api.get<IPlanResponse>(ApiRoutes.GetPlan, { params: { uuid } }).then(({ data }) => data);
+  }
+
+  static createGroup(formObj: ICreateGroupRequest): Promise<IGroupResponse> {
+    return $api.post<IGroupResponse>(ApiRoutes.CreateGroup, formObj).then(({ data }) => data);
   }
 }
 

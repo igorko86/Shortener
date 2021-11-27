@@ -6,7 +6,9 @@ import update from 'immutability-helper';
 import PlanCard from 'components/PlanCard';
 // Styles
 import Button from 'components/Items/Button';
-import { DivListPlanWrapper, DivNameWithPopover, ListName } from './styles';
+import { useAppSelector } from 'shared/hooks/storeHooks';
+import { groupsSelector } from 'store/reducers/group/selectors';
+import { DivListPlanWrapper, DivNameWithPopover, SpanTitle } from './styles';
 import Search from '../Search';
 
 export enum ItemTypeCard {
@@ -62,6 +64,7 @@ export const cardsArray: ICard[] = [
 ];
 
 const Plan: FC = () => {
+  const [group] = useAppSelector(groupsSelector);
   const [cards, setCards] = useState<ICard[]>(cardsArray);
   const [subCards, setSubCards] = useState<ISubCards>({});
 
@@ -134,8 +137,7 @@ const Plan: FC = () => {
   return (
     <DivListPlanWrapper>
       <DivNameWithPopover>
-        <ListName>Plan</ListName>
-        {/* <Popover /> */}
+        <SpanTitle>{group && group.planName ? group.planName : 'Plan Name'}</SpanTitle>
       </DivNameWithPopover>
       <Search />
       <ListAnt

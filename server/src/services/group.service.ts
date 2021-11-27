@@ -24,11 +24,10 @@ class GroupService {
   }
 
   async getGroups(): Promise<any> {
-    const result = await Group.find();
-    // .select(['group.id', 'group.groupName', 'plan.id', 'plan.planName', 'plan.planCardIds'])
-    // .leftJoin('group.plan', 'plan')
-    // .leftJoinAndSelect('plan.planCards', 'planCard')
-    // .getMany();
+    const result = await Group.createQueryBuilder('group')
+      .select(['group.id', 'group.groupName', 'group.planId'])
+      .getMany();
+
     return result;
   }
 }

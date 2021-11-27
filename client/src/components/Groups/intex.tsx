@@ -1,10 +1,10 @@
 // External
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Select } from 'antd';
+// Internal
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { groupsSelector } from 'store/reducers/group/selectors';
-
-// Internal
+import { useActionCreator } from 'shared/hooks/useActionCreator';
 
 const { Option } = Select;
 
@@ -12,9 +12,19 @@ const { Option } = Select;
 
 const Groups: FC = () => {
   const groups = useAppSelector(groupsSelector);
+  const { getPlan } = useActionCreator();
+  const [selectedValue, setSelectedValue] = useState('');
 
-  const handleChangeGroups = (value: any) => {
+  useEffect(() => {
+    if (groups.length && groups[0]?.planName) {
+      setSelectedValue(groups[0].planId);
+    }
+  }, [groups]);
+
+  const handleChangeGroup = (value: any) => {
     console.log(value);
+    getPlan(value);
+    setSelectedValue(value);
   };
 
   return (
@@ -22,9 +32,10 @@ const Groups: FC = () => {
       <Select
         showSearch
         style={{ width: 300 }}
+        value={selectedValue}
         placeholder="Select group"
         optionFilterProp="children"
-        onChange={handleChangeGroups}
+        onChange={handleChangeGroup}
         filterOption={(input, option) => option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
       >
         {groups.map((group) => {

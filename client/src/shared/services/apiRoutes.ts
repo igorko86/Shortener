@@ -10,4 +10,6 @@ export enum ApiRoutes {
   // Croups
   GetGroups = '/groups',
   CreateGroup = '/groups/group',
+  // Plan
+  GetPlan = '/plan',
 }
