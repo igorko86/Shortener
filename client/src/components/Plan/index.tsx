@@ -4,9 +4,10 @@ import { List as ListAnt, Space } from 'antd';
 import update from 'immutability-helper';
 // Internal
 import PlanCard from 'components/PlanCard';
+import ColumnWrapper from 'components/Items/ColumnWrapper';
 // Styles
 import Button from 'components/Items/Button';
-import { DivListPlanWrapper, DivNameWithPopover, ListName } from './styles';
+import { DivNameWithPopover, ListName } from './styles';
 import Search from '../Search';
 
 export enum ItemTypeCard {
@@ -132,7 +133,7 @@ const Plan: FC = () => {
   };
 
   return (
-    <DivListPlanWrapper>
+    <ColumnWrapper>
       <DivNameWithPopover>
         <ListName>Plan</ListName>
         {/* <Popover /> */}
@@ -173,7 +174,7 @@ const Plan: FC = () => {
         <Button onClick={addCard} text="+ Add module" />
         <Button text="Save" />
       </Space>
-    </DivListPlanWrapper>
+    </ColumnWrapper>
   );
 };
 
