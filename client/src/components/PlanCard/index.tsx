@@ -1,19 +1,15 @@
 // External
 import { FC, useRef } from 'react';
-import { Card as CardAnt } from 'antd';
 import { useDrag, useDrop } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 // Internal
+import { DivNameWithPopover } from 'components/Plan/styles';
 import PlanCardContent from './PlanCardContent';
 import { IItemInfo, IMoveSubCardDragInfo, ISubCards, ItemTypeCard } from '../Plan';
-
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-};
+import { SpanCardDescription, SpanCardTitle } from '../LibraryCard/styles';
+import Close from '../../shared/assets/icons/close';
+import { DivCard } from './styles';
+import Button from '../Items/Button';
 
 interface IDragItem {
   index: number;
@@ -27,12 +23,16 @@ interface IProps {
   subCards: ISubCards;
   setSubCards: (callBack: any) => void;
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
+  removeCard: (index: number) => void;
+  removeSubCard: (subCardIndex: number, cardId: string) => void;
 }
 
 const PlanCard: FC<IProps> = ({
   canMoveDropSubCard,
   cardId,
   onMoveCard,
+  removeCard,
+  removeSubCard,
   onMoveSubCard,
   cardIndex,
   subCards,
@@ -88,24 +88,30 @@ const PlanCard: FC<IProps> = ({
   drag(drop(ref));
 
   return (
-    <div
+    <DivCard
       ref={ref}
       style={{
-        ...style,
         border: isDragging ? '1px solid red' : 'none',
         opacity,
       }}
     >
-      <CardAnt title={`Title - ${cardId}`} size="small">
-        <PlanCardContent
-          subCardsArray={subCards[cardId] || []}
-          onMoveSubCard={onMoveSubCard}
-          setSubCards={setSubCards}
-          cardId={cardId}
-          canMoveDropSubCard={canMoveDropSubCard}
-        />
-      </CardAnt>
-    </div>
+      <DivNameWithPopover>
+        <div>
+          <SpanCardTitle>Type - ${cardId}</SpanCardTitle>
+          <SpanCardDescription>Type - ${cardId}</SpanCardDescription>
+        </div>
+        <Button onClick={() => removeCard(cardIndex)} icon={<Close />} />
+      </DivNameWithPopover>
+
+      <PlanCardContent
+        subCardsArray={subCards[cardId] || []}
+        onMoveSubCard={onMoveSubCard}
+        setSubCards={setSubCards}
+        cardId={cardId}
+        canMoveDropSubCard={canMoveDropSubCard}
+        removeSubCard={removeSubCard}
+      />
+    </DivCard>
   );
 };
 

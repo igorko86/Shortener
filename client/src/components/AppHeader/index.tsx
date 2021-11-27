@@ -24,14 +24,16 @@ const AppHeader: FC = () => {
     <Header>
       <Row justify="end">
         <Col span={4}>
-          <div style={{ border: '1px solid red' }}>LGOG</div>
+          <div style={{ border: '1px solid red', color: 'white' }}>LOGO</div>
         </Col>
-        <Col span={6} offset={10}>
+        <Col span={8} offset={6}>
           <Menu theme="dark" mode="horizontal">
-            <Menu.Item key="item1">item1</Menu.Item>
-            <Menu.Item key="item2">item2</Menu.Item>
-            <Menu.Item key="item3">item3</Menu.Item>
+            <Menu.Item key="item1">About</Menu.Item>
+            <Menu.Item key="item2">Info</Menu.Item>
+            <Menu.Item key="item3">Help</Menu.Item>
           </Menu>
+
+          {/* <Popover /> */}
         </Col>
         {isAuth ? (
           <>
