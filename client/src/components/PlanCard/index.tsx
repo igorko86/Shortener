@@ -4,9 +4,9 @@ import { useDrag, useDrop } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 // Internal
 import { DivNameWithPopover } from 'components/Plan/styles';
+import { SpanDescription, SpanTitle } from 'components/Items/Card/styles';
 import PlanCardContent from './PlanCardContent';
 import { IItemInfo, IMoveSubCardDragInfo, ISubCards, ItemTypeCard } from '../Plan';
-import { SpanCardDescription, SpanCardTitle } from '../LibraryCard/styles';
 import Close from '../../shared/assets/icons/close';
 import { DivCard } from './styles';
 import Button from '../Items/Button';
@@ -97,8 +97,8 @@ const PlanCard: FC<IProps> = ({
     >
       <DivNameWithPopover>
         <div>
-          <SpanCardTitle>Type - ${cardId}</SpanCardTitle>
-          <SpanCardDescription>Type - ${cardId}</SpanCardDescription>
+          <SpanTitle>Type - ${cardId}</SpanTitle>
+          <SpanDescription>Type - ${cardId}</SpanDescription>
         </div>
         <Button onClick={() => removeCard(cardIndex)} icon={<Close />} />
       </DivNameWithPopover>

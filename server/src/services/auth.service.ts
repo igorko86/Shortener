@@ -3,15 +3,15 @@ import bcrypt from 'bcrypt';
 import { Tutor } from '../db/entites/Tutor';
 import mailService from './mail.service';
 import tokenService from './token.service';
-import { ITutorData, IRequestCompany, ITutor } from './types.services';
+import { ITutorData, ITutorRequest, ITutor } from './types';
 import apiErrorService from './apiError.service';
 import ApiErrorService from './apiError.service';
-import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants.service';
+import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants';
 import { Token } from '../db/entites/Token';
 import TutorDto from '../dtos/tutor.dto';
 
 class AuthService {
-  async registrationTutor(data: IRequestCompany) {
+  async registrationTutor(data: ITutorRequest) {
     const { name: tutorName, email: tutorEmail, password } = data;
     const tutor = await Tutor.findOne({ email: tutorEmail });
 
@@ -47,7 +47,7 @@ class AuthService {
     const tutor = await Tutor.findOne({ email });
 
     if (!tutor) {
-      throw ApiErrorService.badRequest(`Tutor with such "${email}" email doesn't exist`);
+      throw ApiErrorService.badRequest(`Such "${email}" email doesn't exist`);
     } else if (!tutor.isActive) {
       throw ApiErrorService.badRequest(ACTIVATE_ERROR);
     }

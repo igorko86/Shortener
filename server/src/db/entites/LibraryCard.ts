@@ -1,7 +1,10 @@
-import { BaseEntity, Column, Entity, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+
+import { CreateUpdateDate } from '../common/CreateUpdateDate';
+import { PlanCard } from './PlanCard';
 
 @Entity('libraryCard')
-export class LibraryCard extends BaseEntity {
+export class LibraryCard extends CreateUpdateDate {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -14,9 +17,6 @@ export class LibraryCard extends BaseEntity {
   @Column()
   htmlContent: string;
 
-  @CreateDateColumn({ type: 'timestamptz', name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamptz', name: 'updated_at' })
-  updatedAt: Date;
+  @ManyToOne(() => PlanCard, (planCard) => planCard.libraryCards)
+  planCard: PlanCard;
 }

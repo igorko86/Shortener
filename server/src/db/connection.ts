@@ -3,6 +3,9 @@ import { createConnection } from 'typeorm';
 import { Tutor } from './entites/Tutor';
 import { Token } from './entites/Token';
 import { LibraryCard } from './entites/LibraryCard';
+import { Group } from './entites/Group';
+import { Plan } from './entites/Plan';
+import { PlanCard } from './entites/PlanCard';
 
 export const connectDB = async () => {
   const host = process.env.DB_HOST as unknown as string;
@@ -19,12 +22,11 @@ export const connectDB = async () => {
       username,
       password,
       database,
-      entities: [Tutor, Token, LibraryCard],
+      entities: [Tutor, Token, LibraryCard, Group, Plan, PlanCard],
       synchronize: true,
     });
     console.log('Connected to postgres');
   } catch (error) {
-    console.log(error);
     console.log('Failed to connect to postgres');
     throw error;
   }

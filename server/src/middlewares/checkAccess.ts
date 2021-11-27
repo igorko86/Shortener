@@ -16,9 +16,9 @@ export const checkAccess = (req: Request, res: Response, next: NextFunction) => 
       throw ApiErrorService.unauthorized();
     }
 
-    const tutorData = tokenService.validateToken(accessToken, process.env.JWT_ACCESS_SECRET as unknown as string);
+    const userData = tokenService.validateToken(accessToken, process.env.JWT_ACCESS_SECRET as unknown as string);
 
-    if (!tutorData) {
+    if (!userData) {
       throw ApiErrorService.unauthorized();
     }
 

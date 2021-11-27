@@ -1,9 +1,9 @@
 // External
 import { FC } from 'react';
 // Internal
+import Close from 'shared/assets/icons/close';
 import { DivCard, SpanDescription, SpanTitle } from './styles';
 import Button from '../Button';
-import Close from '../../../shared/assets/icons/close';
 import { ISubCard } from '../../Plan';
 
 interface IProps {

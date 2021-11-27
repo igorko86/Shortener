@@ -14,6 +14,7 @@ export interface ISetGroups {
 export type GroupActions = ISetGroups;
 
 export interface IGroup {
-  id: string;
-  name: string;
+  groupName: string;
+  planName: string;
+  students?: string[];
 }

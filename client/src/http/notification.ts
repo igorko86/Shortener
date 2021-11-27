@@ -11,7 +11,7 @@ export enum NotificationStatus {
 export const showNotificationWithIcon = (
   type: NotificationStatus,
   message: string,
-  placement: NotificationPlacement = 'topLeft'
+  placement: NotificationPlacement = 'bottomRight'
 ) => {
   notification[type]({
     message,

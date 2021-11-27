@@ -1,5 +1,5 @@
 import { ValidationError } from 'express-validator';
-import { UNAUTHORIZED } from './constants.service';
+import { UNAUTHORIZED } from './constants';
 import { NextFunction, Request, Response } from 'express';
 
 enum StatusCode {

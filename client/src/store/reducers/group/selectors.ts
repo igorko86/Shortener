@@ -1,3 +1,3 @@
 import { AppState } from '../../index';
 
-export const libraryCardsSelector = ({ library }: AppState) => library.libraryCards;
+export const groupsSelector = ({ group }: AppState) => group.groups;

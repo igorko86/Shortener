@@ -1,16 +1,5 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-  PrimaryColumn,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Person } from '../common/Persone';
-import { LibraryCard } from './LibraryCard';
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+
 import { Tutor } from './Tutor';
 
 @Entity('token')
@@ -25,6 +14,7 @@ export class Token extends BaseEntity {
 
   @Column({
     name: 'tutor_id',
+    type: 'uuid',
   })
   tutorId: string;
 

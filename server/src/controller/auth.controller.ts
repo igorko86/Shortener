@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 
 import authService from '../services/auth.service';
 import ApiErrorService from '../services/apiError.service';
-import { VALIDATION_ERROR } from '../services/constants.service';
+import { VALIDATION_ERROR } from '../services/constants';
 
 class AuthController {
   constructor() {

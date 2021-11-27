@@ -13,14 +13,24 @@ export interface ITutorData extends IGenerateTokensResult {
   tutor: ITutor;
 }
 
-export interface IRequestCompany {
+export interface ITutorRequest {
   name: string;
   email: string;
   password: string;
 }
 
-export interface IRequestCard {
+export interface ICardRequest {
   title: string;
   description: string;
   htmlContent: string;
+}
+
+export interface IGroupRequest {
+  groupName: string;
+  planName: string;
+  students?: string[];
+}
+
+export interface ICreatePlanInfo {
+  planName: string;
 }

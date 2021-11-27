@@ -20,7 +20,7 @@ const rules = {
   [RulesType.REQUIRED_FILED]: [{ required: true, message: 'Please input field!', whitespace: true }],
   [FormItem.EMAIL]: [
     {
-      type: 'email',
+      type: FormItem.EMAIL,
       message: 'The email is not valid!',
     },
     {
@@ -30,6 +30,7 @@ const rules = {
   ],
   [FormItem.PASSWORD]: [
     {
+      whitespace: true,
       required: true,
       message: 'Please input your password!',
     },
