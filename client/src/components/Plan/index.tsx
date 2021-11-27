@@ -1,13 +1,13 @@
 // External
 import React, { FC, useCallback, useState } from 'react';
-import { List as ListAnt } from 'antd';
+import { List as ListAnt, Space } from 'antd';
 import update from 'immutability-helper';
 // Internal
 import PlanCard from 'components/PlanCard';
 // Styles
-import { DivAddCardWrapper, DivListPlanWrapper, DivNameWithPopover, ListName } from './styles';
+import Button from 'components/Items/Button';
+import { DivListPlanWrapper, DivNameWithPopover, ListName } from './styles';
 import Search from '../Search';
-// import Popover from '../Popover';
 
 export enum ItemTypeCard {
   CARD = 'Card',
@@ -115,9 +115,9 @@ const Plan: FC = () => {
     [subCards]
   );
 
-  // const addCard = () => {
-  //   setCards([...cards, { id: String(Date.now()) }]);
-  // };
+  const addCard = () => {
+    setCards([...cards, { id: String(Date.now()) }]);
+  };
 
   const removeCard = (index: number) => {
     const newCardsList = [...cards];
@@ -168,13 +168,11 @@ const Plan: FC = () => {
           );
         })}
       </ListAnt>
-      s
-      <DivAddCardWrapper>
-        {/* <Button onClick={addCard}> */}
-        {/*  <SpanAdd>+ Add module</SpanAdd> */}
-        {/*  <SpanAdd>+ Add module</SpanAdd> */}
-        {/* </Button> */}
-      </DivAddCardWrapper>
+
+      <Space size="middle">
+        <Button onClick={addCard} text="+ Add module" />
+        <Button text="Save" />
+      </Space>
     </DivListPlanWrapper>
   );
 };
