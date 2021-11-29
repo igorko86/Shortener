@@ -104,24 +104,24 @@
 
 /*!* Cards *!*/
 
-.ant-list-split {
-    overflow: auto;
-    width: 280px;
-}
+/*.ant-list-split {*/
+/*    overflow: auto;*/
+/*    width: 280px;*/
+/*}*/
 
-.ant-list-split::-webkit-scrollbar-track {
-    background-color: transparent;
-}
+/*.ant-list-split::-webkit-scrollbar-track {*/
+/*    background-color: transparent;*/
+/*}*/
 
-.ant-list-split::-webkit-scrollbar-thumb {
-    background-color: var(--iron);
-}
+/*.ant-list-split::-webkit-scrollbar-thumb {*/
+/*    background-color: var(--iron);*/
+/*}*/
 
-.ant-list-split::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-    background-color: transparent;
-}
+/*.ant-list-split::-webkit-scrollbar {*/
+/*    height: 4px;*/
+/*    width: 4px;*/
+/*    background-color: transparent;*/
+/*}*/
 
 
 
