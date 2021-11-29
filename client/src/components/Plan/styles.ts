@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+export const DivScrollZone = styled.div`
+  width: 280px;
+  height: 600px;
+  overflow: auto;
+  border: solid 2px green;
+`;
+
 export const DivNameWithPopover = styled.div`
   display: flex;
   align-items: center;

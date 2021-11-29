@@ -5,11 +5,12 @@ import { XYCoord } from 'dnd-core';
 // Internal
 import { DivNameWithPopover } from 'components/Plan/styles';
 import { SpanDescription, SpanTitle } from 'components/Items/Card/styles';
+import Close from 'shared/assets/icons/close';
 import PlanCardContent from './PlanCardContent';
 import { IItemInfo, IMoveSubCardDragInfo, ISubCards, ItemTypeCard } from '../Plan';
-import Close from '../../shared/assets/icons/close';
-import { DivCard } from './styles';
 import Button from '../Items/Button';
+// Styles
+import { DivCard } from './styles';
 
 interface IDragItem {
   index: number;
@@ -40,11 +41,12 @@ const PlanCard: FC<IProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging, handlerId }, drag] = useDrag({
     type: ItemTypeCard.CARD,
     item: { id: cardId, index: cardIndex },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
+      handlerId: monitor.getHandlerId(),
     }),
   });
 
@@ -94,6 +96,7 @@ const PlanCard: FC<IProps> = ({
         border: isDragging ? '1px solid red' : 'none',
         opacity,
       }}
+      data-handler-id={handlerId}
     >
       <DivNameWithPopover>
         <div>
