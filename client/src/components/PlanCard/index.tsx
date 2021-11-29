@@ -6,8 +6,8 @@ import { XYCoord } from 'dnd-core';
 import { DivNameWithPopover } from 'components/Plan/styles';
 import { SpanDescription, SpanTitle } from 'components/Items/Card/styles';
 import Close from 'shared/assets/icons/close';
+import { IItemInfo, IMoveSubCardDragInfo, ISubCards, ItemTypeCard } from 'components/Plan/interfaces';
 import PlanCardContent from './PlanCardContent';
-import { IItemInfo, IMoveSubCardDragInfo, ISubCards, ItemTypeCard } from '../Plan';
 import Button from '../Items/Button';
 // Styles
 import { DivCard } from './styles';

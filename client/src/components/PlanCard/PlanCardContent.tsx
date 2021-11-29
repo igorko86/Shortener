@@ -2,11 +2,12 @@
 import { FC } from 'react';
 import { useDrop } from 'react-dnd';
 // Internal
+import { IItemInfo, IMoveSubCardDragInfo, ISubCard, ISubCards, ItemTypeCard } from 'components/Plan/interfaces';
+import { useAppSelector } from 'shared/hooks/storeHooks';
+import { libraryCardsSelector } from 'store/reducers/library/selectors';
 import SubCard from '../SubCard';
-import { IItemInfo, IMoveSubCardDragInfo, ISubCard, ISubCards, ItemTypeCard } from '../Plan';
+// Styles
 import { DivEmptyCard, DivWithContent, SpanEmptyCard } from './styles';
-import { useAppSelector } from '../../shared/hooks/storeHooks';
-import { libraryCardsSelector } from '../../store/reducers/library/selectors';
 
 const removeItem = (arr: ISubCard[], id: string) => {
   const index = arr.findIndex((item) => item.id === id);

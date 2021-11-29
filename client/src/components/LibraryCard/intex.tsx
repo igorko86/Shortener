@@ -1,8 +1,8 @@
 // External
+import { ItemTypeCard, LibraryCardType } from 'components/Plan/interfaces';
 import { FC } from 'react';
 import { useDrag } from 'react-dnd';
 // Internal
-import { ItemTypeCard, LibraryCardType } from '../Plan';
 import Card from '../Items/Card/intex';
 
 interface IProps {

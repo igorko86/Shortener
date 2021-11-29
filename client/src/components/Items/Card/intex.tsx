@@ -2,9 +2,9 @@
 import { FC } from 'react';
 // Internal
 import Close from 'shared/assets/icons/close';
+import { ISubCard } from 'components/Plan/interfaces';
 import { DivCard, SpanDescription, SpanTitle } from './styles';
 import Button from '../Button';
-import { ISubCard } from '../../Plan';
 
 interface IProps {
   card: ISubCard;

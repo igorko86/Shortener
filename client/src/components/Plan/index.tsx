@@ -1,56 +1,17 @@
 // External
 import React, { FC, useCallback, useState } from 'react';
-import { List as ListAnt, Space } from 'antd';
+import { Space } from 'antd';
 import update from 'immutability-helper';
-import withScrolling from 'react-dnd-scrolling';
 // Internal
-import PlanCard from 'components/PlanCard';
 import ColumnWrapper from 'components/Items/ColumnWrapper';
 import Button from 'components/Items/Button';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { groupsSelector } from 'store/reducers/group/selectors';
 import TitleColumn from '../Items/TitleColumn';
 import Search from '../Search';
+import Cards from './Cards';
 // Styles
-
-const ScrollZone = withScrolling(DivScrollZone);
-
-export enum ItemTypeCard {
-  CARD = 'Card',
-  SUB_CARD = 'SubCard',
-  LIBRARY_CARD = 'LibraryCard',
-}
-
-export interface IMoveSubCardDragInfo {
-  currentCardId: string;
-  dragItemIndex: number;
-  hoverItemIndex: number;
-  subCardId: string;
-  dragCardId: string;
-}
-
-export interface ICard {
-  id: string;
-}
-
-export interface ISubCard {
-  id: string;
-  cardId?: string;
-  description: string;
-  title: string;
-}
-
-export type LibraryCardType = Omit<ISubCard, 'cardId'>;
-
-export interface ISubCards {
-  [key: string]: ISubCard[];
-}
-
-export interface IItemInfo {
-  dragSubCardId: string;
-  cardId: string;
-  dragCardId: string;
-}
+import { ICard, IItemInfo, IMoveSubCardDragInfo, ISubCards } from './interfaces';
 
 export const cardsArray: ICard[] = [
   {
@@ -141,40 +102,17 @@ const Plan: FC = () => {
   return (
     <ColumnWrapper>
       <TitleColumn title={group && group.planName ? group.planName : 'Plan Name'} titlePosition="left" />
-      {/* <Popover /> */}
       <Search />
-      <ScrollZone>
-        <ListAnt
-          grid={{
-            gutter: 16,
-            xs: 1,
-            sm: 1,
-            md: 1,
-            lg: 1,
-            xl: 1,
-            xxl: 1,
-          }}
-          dataSource={cards}
-        >
-          {cards.map(({ id }, index) => {
-            return (
-              <ListAnt.Item key={id}>
-                <PlanCard
-                  cardId={id}
-                  cardIndex={index}
-                  onMoveCard={handleMoveCard}
-                  removeCard={removeCard}
-                  onMoveSubCard={handleMoveSubCard}
-                  subCards={subCards}
-                  setSubCards={setSubCards}
-                  canMoveDropSubCard={canMoveDropSubCard}
-                  removeSubCard={removeSubCard}
-                />
-              </ListAnt.Item>
-            );
-          })}
-        </ListAnt>
-      </ScrollZone>
+      <Cards
+        cards={cards}
+        onMoveCard={handleMoveCard}
+        removeCard={removeCard}
+        onMoveSubCard={handleMoveSubCard}
+        subCards={subCards}
+        setSubCards={setSubCards}
+        canMoveDropSubCard={canMoveDropSubCard}
+        removeSubCard={removeSubCard}
+      />
       <Space size="middle">
         <Button onClick={addCard} text="+ Add module" />
         <Button text="Save" />

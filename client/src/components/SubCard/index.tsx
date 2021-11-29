@@ -3,7 +3,7 @@ import { FC, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 // Internal
-import { IMoveSubCardDragInfo, ISubCard, ItemTypeCard } from 'components/Plan';
+import { IMoveSubCardDragInfo, ISubCard, ItemTypeCard } from 'components/Plan/interfaces';
 import { DivSubCard } from './styles';
 
 interface IDragItem {
