@@ -35,26 +35,38 @@ const handleResponseError = async (error: any) => {
   if (!error.response) {
     showNotificationWithIcon(NotificationStatus.Error, 'Server is unavailable');
   }
+  const { status, data: errorData } = error.response;
+  switch (status) {
+    case 401:
+      if (error.config && !error.config._isRetry) {
+        const originalRequest = error.config;
 
-  if (error.response && error.response.status === 401 && error.config && !error.config._isRetry) {
-    const originalRequest = error.config;
+        originalRequest._isRetry = true;
 
-    originalRequest._isRetry = true;
+        try {
+          const { data } = await axios.get<IAuthResponse>(
+            `${process.env.REACT_APP_SERVER_URL}/api${ApiRoutes.Refresh}`,
+            {
+              withCredentials: true,
+            }
+          );
 
-    try {
-      const { data } = await axios.get<IAuthResponse>(`${process.env.REACT_APP_SERVER_URL}/api${ApiRoutes.Refresh}`, {
-        withCredentials: true,
-      });
+          localStorage.setItem('token', data.accessToken);
 
-      localStorage.setItem('token', data.accessToken);
+          return await $api.request(originalRequest); // repeat request
+        } catch {
+          showNotificationWithIcon(NotificationStatus.Error, errorData.message);
+          store.dispatch<any>(authThunks.logout());
 
-      return await $api.request(originalRequest); // repeat request
-    } catch {
-      showNotificationWithIcon(NotificationStatus.Error, error.response.data.message);
-      store.dispatch<any>(authThunks.logout());
-
-      history.replace(AppPath.LOGIN);
-    }
+          history.replace(AppPath.LOGIN);
+        }
+      }
+      break;
+    case 400:
+      showNotificationWithIcon(NotificationStatus.Error, errorData.message);
+      break;
+    default:
+      break;
   }
 
   throw error;
