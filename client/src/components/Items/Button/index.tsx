@@ -6,11 +6,12 @@ interface IProps {
   text?: string;
   icon?: ReactElement;
   onClick?: any;
+  isDisabled?: boolean;
 }
 
-const Button: FC<IProps> = ({ text, icon, onClick }) => {
+const Button: FC<IProps> = ({ text, icon, onClick, isDisabled }) => {
   return (
-    <ButtonStyle icon={icon} onClick={onClick}>
+    <ButtonStyle icon={icon} onClick={onClick} disabled={isDisabled}>
       {text}
     </ButtonStyle>
   );

@@ -1,10 +1,23 @@
 import styled from 'styled-components';
 
 export const DivScrollZone = styled.div`
-  width: 280px;
-  height: 600px;
+  //width: 280px;
+  //height: 600px;
   overflow: auto;
-  border: solid 2px green;
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.iron};
+  }
+
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+    background-color: transparent;
+  }
 `;
 
 export const DivNameWithPopover = styled.div`

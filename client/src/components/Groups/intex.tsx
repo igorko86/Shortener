@@ -34,7 +34,6 @@ const Groups: FC = () => {
     <ColumnWrapper>
       <Select
         showSearch
-        style={{ width: 300 }}
         value={selectedValue}
         placeholder="Select group"
         optionFilterProp="children"

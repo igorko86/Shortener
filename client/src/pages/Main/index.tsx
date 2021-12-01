@@ -20,7 +20,7 @@ const Main: FC = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout.Content>
-        <div style={{ display: 'flex', width: '800px' }}>
+        <div style={{ display: 'flex' }}>
           <Plan />
           <CardContent />
           <Groups />

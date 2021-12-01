@@ -19,7 +19,7 @@ const LibraryCard: FC<IProps> = ({ card, libraryCardIndex }) => {
     }),
   });
 
-  return <Card isDragging={isDragging} drag={drag} card={card} />;
+  return <Card isDragging={isDragging} drag={drag} card={card} isDescription />;
 };
 
 export default LibraryCard;

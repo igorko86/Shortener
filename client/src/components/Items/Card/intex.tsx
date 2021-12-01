@@ -12,16 +12,17 @@ interface IProps {
   drag?: any;
   isRemove?: boolean;
   onClick?: any;
+  isDescription?: boolean;
 }
 
-const Card: FC<IProps> = ({ card, isDragging, onClick, drag, isRemove }) => {
+const Card: FC<IProps> = ({ card, isDragging, onClick, drag, isRemove, isDescription }) => {
   const { title, description } = card;
 
   return (
     <DivCard ref={drag} isOpacity={isDragging}>
       <div>
         <SpanTitle>{title}</SpanTitle>
-        <SpanDescription>{description}</SpanDescription>
+        {isDescription && <SpanDescription>{description}</SpanDescription>}
       </div>
       {isRemove && <Button onClick={onClick} icon={<Close />} />}
     </DivCard>
