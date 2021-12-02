@@ -60,16 +60,24 @@ export enum UpdateStatus {
 }
 
 export interface IUpdatePlanCardIds {
-  cardId: string;
+  cardId?: string;
   planId: string;
   status: UpdateStatus;
   index?: number;
+  dragIndex?: number;
 }
 
 export interface IDeletePlanCardRequest {
   cardId: string;
   planId: string;
   index: number;
+}
+
+export interface IMovePlanCardRequest {
+  cardId: string;
+  planId: string;
+  index: number;
+  dragIndex: number;
 }
 
 export interface ICreatePlanCardByIdResponse {

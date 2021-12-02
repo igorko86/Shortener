@@ -35,3 +35,9 @@ export interface IItemInfo {
   cardId: string;
   dragCardId: string;
 }
+
+export interface IDropCardInfo {
+  id: string;
+  dragIndex: number;
+  index: number;
+}

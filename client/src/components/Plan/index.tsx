@@ -12,7 +12,7 @@ import TitleColumn from '../Items/TitleColumn';
 import Search from '../Search';
 import Cards from './Cards';
 // Styles
-import { ICard, IItemInfo, IMoveSubCardDragInfo, ISubCards } from './interfaces';
+import { ICard, IDropCardInfo, IItemInfo, IMoveSubCardDragInfo, ISubCards } from './interfaces';
 
 export const cardsArray: ICard[] = [
   {
@@ -24,7 +24,7 @@ export const cardsArray: ICard[] = [
 const Plan: FC = () => {
   const plan = useAppSelector(planSelector);
 
-  const { createPlanCard, deletePlanCard } = useActionCreator();
+  const { createPlanCard, deletePlanCard, movePlanCardId } = useActionCreator();
 
   const [cards, setCards] = useState<ICard[]>([]);
   const [subCards, setSubCards] = useState<ISubCards>({});
@@ -113,6 +113,12 @@ const Plan: FC = () => {
     setCards(newCardsList);
   };
 
+  const handleDropCard = async (dropCardInfo: IDropCardInfo) => {
+    if (!plan) return;
+
+    await movePlanCardId(dropCardInfo);
+  };
+
   const removeSubCard = (subCardIndex: number, cardId: string) => {
     const newCardsList = JSON.parse(JSON.stringify(subCards));
 
@@ -133,6 +139,7 @@ const Plan: FC = () => {
         setSubCards={setSubCards}
         canMoveDropSubCard={canMoveDropSubCard}
         removeSubCard={removeSubCard}
+        onDropCard={handleDropCard}
       />
       <Space size="middle">
         <Button onClick={addCard} text="+ Add module" />

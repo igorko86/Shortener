@@ -6,7 +6,14 @@ import { XYCoord } from 'dnd-core';
 import { DivNameWithPopover } from 'components/Plan/styles';
 import { SpanTitle } from 'components/Items/Card/styles';
 import Close from 'shared/assets/icons/close';
-import { ICard, IItemInfo, IMoveSubCardDragInfo, ISubCards, ItemTypeCard } from 'components/Plan/interfaces';
+import {
+  ICard,
+  IDropCardInfo,
+  IItemInfo,
+  IMoveSubCardDragInfo,
+  ISubCards,
+  ItemTypeCard,
+} from 'components/Plan/interfaces';
 import PlanCardContent from './PlanCardContent';
 import Button from '../Items/Button';
 // Styles
@@ -14,6 +21,8 @@ import { DivCard } from './styles';
 
 interface IDragItem {
   index: number;
+  dragIndex: number;
+  hoverInd: number;
 }
 
 interface IProps {
@@ -26,6 +35,7 @@ interface IProps {
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
   removeCard: (index: number, cardId: string) => void;
   removeSubCard: (subCardIndex: number, cardId: string) => void;
+  onDropCard: (dropCardInfo: IDropCardInfo) => void;
 }
 
 const PlanCard: FC<IProps> = ({
@@ -38,6 +48,7 @@ const PlanCard: FC<IProps> = ({
   subCards,
   setSubCards,
   card,
+  onDropCard,
 }) => {
   const { id: cardId, title } = card;
 
@@ -52,43 +63,50 @@ const PlanCard: FC<IProps> = ({
     }),
   });
 
-  const [, drop] = useDrop({
-    accept: ItemTypeCard.CARD,
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
+  const [, drop] = useDrop(
+    {
+      accept: ItemTypeCard.CARD,
+      collect(monitor) {
+        return {
+          handlerId: monitor.getHandlerId(),
+        };
+      },
+      drop(item: any) {
+        if (item.dragIndex === item.index) return;
+
+        onDropCard(item);
+      },
+      hover(item: IDragItem, monitor) {
+        if (!ref.current) {
+          return;
+        }
+        const dragIndex = item.index;
+        const hoverItemIndex = cardIndex;
+
+        item.dragIndex = item.dragIndex || dragIndex;
+
+        if (dragIndex === hoverItemIndex) {
+          return;
+        }
+        const hoverBoundingRect = ref.current?.getBoundingClientRect();
+        const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+        const clientOffset = monitor.getClientOffset();
+        const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
+
+        if (dragIndex < hoverItemIndex && hoverClientY < hoverMiddleY) {
+          return;
+        }
+        if (dragIndex > hoverItemIndex && hoverClientY > hoverMiddleY) {
+          return;
+        }
+
+        onMoveCard(dragIndex, hoverItemIndex);
+
+        item.index = hoverItemIndex;
+      },
     },
-    drop(item: any) {
-      console.log('DROP', item);
-    },
-    hover(item: IDragItem, monitor) {
-      if (!ref.current) {
-        return;
-      }
-      const dragIndex = item.index;
-      const hoverItemIndex = cardIndex;
-
-      if (dragIndex === hoverItemIndex) {
-        return;
-      }
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
-
-      if (dragIndex < hoverItemIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-      if (dragIndex > hoverItemIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
-
-      onMoveCard(dragIndex, hoverItemIndex);
-
-      item.index = hoverItemIndex;
-    },
-  });
+    [cardIndex, onDropCard]
+  );
 
   const opacity = isDragging ? 0 : 1;
 

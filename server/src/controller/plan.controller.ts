@@ -33,6 +33,16 @@ class PlanController {
       next(error);
     }
   }
+
+  async movePlanCardId(req: Request, res: Response, next: NextFunction) {
+    try {
+      await planService.movePlanCardId(req.body);
+
+      return res.status(200).json('Success');
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new PlanController();

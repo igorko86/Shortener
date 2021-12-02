@@ -1,6 +1,7 @@
 import GroupService from 'shared/services/GroupService';
 import { ICreateGroupAndPlanRequest } from 'shared/models/request/groupReguest';
 import { IPlanResponse } from 'shared/models/response/groupResponse';
+import { IDropCardInfo } from 'components/Plan/interfaces';
 import { GroupActionEnum, IGroup, ISetGroups, ISetPlan } from './types';
 import { AppDispatch } from '../../interfaces';
 
@@ -76,6 +77,22 @@ export const groupThunks = {
       const plan = await GroupService.getPlan(groupId);
 
       dispatch(groupActions.setPlan(plan));
+      return null;
+    } catch {
+      return null;
+    }
+  },
+  movePlanCardId: (cardInfo: IDropCardInfo) => async (dispatch: AppDispatch, getState: any) => {
+    try {
+      const { plan } = getState().group;
+      const { index, dragIndex } = cardInfo;
+      await GroupService.movePlanCardId({ dragIndex, index, planId: plan.id });
+
+      const [deletedElement] = plan.planCards.splice(dragIndex, 1);
+
+      plan.planCards.splice(index, 0, deletedElement);
+      dispatch(groupActions.setPlan(plan));
+
       return null;
     } catch {
       return null;

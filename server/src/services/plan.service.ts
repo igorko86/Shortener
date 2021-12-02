@@ -1,7 +1,7 @@
 import { Plan } from '../db/entites/Plan';
 import planCardService from './planCard.service';
 import apiErrorService from './apiError.service';
-import { ICreatePlan, IUpdatePlanCardIds, UpdateStatus } from './interfaces';
+import { ICreatePlan, IMovePlanCardRequest, IUpdatePlanCardIds, UpdateStatus } from './interfaces';
 import { sortArrayBasedArray } from '../helpers';
 
 class PlanService {
@@ -36,7 +36,7 @@ class PlanService {
     return await Plan.update(id, planInfo);
   }
 
-  async updatePlanCardIds({ planId, status, index, cardId }: IUpdatePlanCardIds) {
+  async updatePlanCardIds({ planId, status, index, cardId, dragIndex }: IUpdatePlanCardIds) {
     const plan = await Plan.findOne(planId);
 
     if (!plan) {
@@ -46,10 +46,15 @@ class PlanService {
 
     switch (status) {
       case UpdateStatus.New:
-        planCardIds.splice(planCardIds.length, 0, cardId);
+        if (cardId) {
+          planCardIds.splice(planCardIds.length, 0, cardId);
+        }
         break;
       case UpdateStatus.Update:
-        planCardIds.splice(planCardIds.length, 0, cardId); // TODO
+        if (typeof dragIndex === 'number' && typeof index === 'number') {
+          const [deletedId] = planCardIds.splice(dragIndex, 1);
+          planCardIds.splice(index, 0, deletedId);
+        }
         break;
       case UpdateStatus.Delete:
         if (typeof index === 'number') {
@@ -83,13 +88,21 @@ class PlanService {
       throw apiErrorService.badRequest(`Plan data doesn't exist`);
     }
 
-    const { planCards, planCardIds } = planData;
+    const { planCards, planCardIds, ...res } = planData;
     const sortedPlanCards = sortArrayBasedArray(planCards, planCardIds);
 
     return {
-      ...planData,
+      ...res,
       planCards: sortedPlanCards,
     };
+  }
+
+  async movePlanCardId(params: IMovePlanCardRequest): Promise<any> {
+    const { dragIndex, planId, index } = params;
+
+    await this.updatePlanCardIds({ planId, status: UpdateStatus.Update, dragIndex, index });
+
+    return null;
   }
 }
 

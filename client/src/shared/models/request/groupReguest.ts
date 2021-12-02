@@ -3,3 +3,8 @@ export interface ICreateGroupAndPlanRequest {
   planName: string;
   students?: string[];
 }
+export interface IMovePlanCardRequest {
+  dragIndex: number;
+  index: number;
+  planId: string;
+}

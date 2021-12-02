@@ -4,9 +4,9 @@ import { List as ListAnt } from 'antd';
 import withScrolling from 'react-dnd-scrolling';
 // Internal
 import PlanCard from 'components/PlanCard';
-import { DivScrollZone } from './styles';
-import { ICard, IItemInfo, IMoveSubCardDragInfo, ISubCards } from './interfaces';
+import { ICard, IDropCardInfo, IItemInfo, IMoveSubCardDragInfo, ISubCards } from './interfaces';
 // Styles
+import { DivScrollZone } from './styles';
 
 const ScrollZone = withScrolling(DivScrollZone);
 
@@ -17,6 +17,7 @@ interface IProps {
   subCards: ISubCards;
   setSubCards: (callBack: any) => void;
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
+  onDropCard: (dropCardInfo: IDropCardInfo) => void;
   removeCard: (index: number, cardId: string) => void;
   removeSubCard: (subCardIndex: number, cardId: string) => void;
 }
