@@ -17,7 +17,7 @@ interface IProps {
   subCards: ISubCards;
   setSubCards: (callBack: any) => void;
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
-  removeCard: (index: number) => void;
+  removeCard: (index: number, cardId: string) => void;
   removeSubCard: (subCardIndex: number, cardId: string) => void;
 }
 
@@ -36,10 +36,12 @@ const Cards: FC<IProps> = ({ cards, ...props }) => {
         }}
         dataSource={cards}
       >
-        {cards.map(({ id }, index) => {
+        {cards.map((card, index) => {
+          const { id } = card;
+
           return (
             <ListAnt.Item key={id}>
-              <PlanCard {...props} cardIndex={index} cardId={id} />
+              <PlanCard {...props} cardIndex={index} card={card} />
             </ListAnt.Item>
           );
         })}

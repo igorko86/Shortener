@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import { Select } from 'antd';
 // Internal
 import { useAppSelector } from 'shared/hooks/storeHooks';
-import { groupsSelector } from 'store/reducers/group/selectors';
+import { groupsSelector, planSelector } from 'store/reducers/group/selectors';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import ColumnWrapper from '../Items/ColumnWrapper';
 
@@ -15,17 +15,23 @@ const { Option } = Select;
 
 const Groups: FC = () => {
   const groups = useAppSelector(groupsSelector);
-  const { getPlan } = useActionCreator();
+  const plan = useAppSelector(planSelector);
+  const { getPlan, getGroups } = useActionCreator();
   const [selectedValue, setSelectedValue] = useState('');
 
   useEffect(() => {
-    if (groups.length && groups[0]?.planName) {
-      setSelectedValue(groups[0].planId);
+    if (groups.length && plan) {
+      setSelectedValue(groups[0].id);
     }
   }, [groups]);
 
+  useEffect(() => {
+    if (!plan) {
+      getGroups();
+    }
+  }, []);
+
   const handleChangeGroup = (value: any) => {
-    console.log(value);
     getPlan(value);
     setSelectedValue(value);
   };
@@ -42,10 +48,10 @@ const Groups: FC = () => {
       >
         {groups.map((group) => {
           // @ts-ignore
-          const { groupName, planId } = group;
+          const { groupName, id } = group;
 
           return (
-            <Option key={planId} value={planId}>
+            <Option key={id} value={id}>
               {groupName}
             </Option>
           );

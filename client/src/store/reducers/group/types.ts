@@ -24,7 +24,5 @@ export type GroupActions = ISetGroups | ISetPlan;
 
 export interface IGroup {
   groupName: string;
-  planName?: string;
-  planId: string;
   id: string;
 }

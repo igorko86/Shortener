@@ -1,17 +1,16 @@
 export interface IGroupResponse {
   groupName: string;
-  planId: string;
   id: string;
+  plan: IPlanResponse;
 }
 
-interface IPlanCard {
+export interface IPlanCard {
   id: string;
   planCardName: string;
-  libraryCardIds: string[];
+  libraryCards: string[];
 }
 export interface IPlanResponse {
   planName: string;
   id: string;
-  planCardIds: string[];
-  planCards: IPlanCard;
+  planCards: IPlanCard[];
 }

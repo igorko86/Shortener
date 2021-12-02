@@ -36,6 +36,7 @@ const handleResponseError = async (error: any) => {
     showNotificationWithIcon(NotificationStatus.Error, 'Server is unavailable');
   }
   const { status, data: errorData } = error.response;
+
   switch (status) {
     case 401:
       if (error.config && !error.config._isRetry) {
@@ -53,7 +54,7 @@ const handleResponseError = async (error: any) => {
 
           localStorage.setItem('token', data.accessToken);
 
-          return await $api.request(originalRequest); // repeat request
+          $api.request(originalRequest); // repeat request
         } catch {
           showNotificationWithIcon(NotificationStatus.Error, errorData.message);
           store.dispatch<any>(authThunks.logout());

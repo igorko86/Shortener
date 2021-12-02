@@ -4,9 +4,9 @@ import { useDrag, useDrop } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 // Internal
 import { DivNameWithPopover } from 'components/Plan/styles';
-import { SpanDescription, SpanTitle } from 'components/Items/Card/styles';
+import { SpanTitle } from 'components/Items/Card/styles';
 import Close from 'shared/assets/icons/close';
-import { IItemInfo, IMoveSubCardDragInfo, ISubCards, ItemTypeCard } from 'components/Plan/interfaces';
+import { ICard, IItemInfo, IMoveSubCardDragInfo, ISubCards, ItemTypeCard } from 'components/Plan/interfaces';
 import PlanCardContent from './PlanCardContent';
 import Button from '../Items/Button';
 // Styles
@@ -17,20 +17,19 @@ interface IDragItem {
 }
 
 interface IProps {
+  card: ICard;
   cardIndex: number;
-  cardId: string;
   onMoveSubCard: (arg: IMoveSubCardDragInfo) => void;
   onMoveCard: (dragIndex: number, hoverItemIndex: number) => void;
   subCards: ISubCards;
   setSubCards: (callBack: any) => void;
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
-  removeCard: (index: number) => void;
+  removeCard: (index: number, cardId: string) => void;
   removeSubCard: (subCardIndex: number, cardId: string) => void;
 }
 
 const PlanCard: FC<IProps> = ({
   canMoveDropSubCard,
-  cardId,
   onMoveCard,
   removeCard,
   removeSubCard,
@@ -38,7 +37,10 @@ const PlanCard: FC<IProps> = ({
   cardIndex,
   subCards,
   setSubCards,
+  card,
 }) => {
+  const { id: cardId, title } = card;
+
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ isDragging, handlerId }, drag] = useDrag({
@@ -56,6 +58,9 @@ const PlanCard: FC<IProps> = ({
       return {
         handlerId: monitor.getHandlerId(),
       };
+    },
+    drop(item: any) {
+      console.log('DROP', item);
     },
     hover(item: IDragItem, monitor) {
       if (!ref.current) {
@@ -87,6 +92,10 @@ const PlanCard: FC<IProps> = ({
 
   const opacity = isDragging ? 0 : 1;
 
+  const handleRemoveCard = () => {
+    removeCard(cardIndex, cardId);
+  };
+
   drag(drop(ref));
 
   return (
@@ -100,10 +109,9 @@ const PlanCard: FC<IProps> = ({
     >
       <DivNameWithPopover>
         <div>
-          <SpanTitle>Type - ${cardId}</SpanTitle>
-          <SpanDescription>Type - ${cardId}</SpanDescription>
+          <SpanTitle>{title}</SpanTitle>
         </div>
-        <Button onClick={() => removeCard(cardIndex)} icon={<Close />} />
+        <Button onClick={handleRemoveCard} icon={<Close />} />
       </DivNameWithPopover>
 
       <PlanCardContent

@@ -13,7 +13,7 @@ interface IProps {
 const CreateGroupModal: FC<IProps> = ({ visible, onCancel }) => {
   const [form] = Form.useForm();
   const [creating, setCreating] = useState(false);
-  const { createGroup } = useActionCreator();
+  const { createGroupAndPlan } = useActionCreator();
 
   const handleCancel = () => {
     form.resetFields();
@@ -25,7 +25,8 @@ const CreateGroupModal: FC<IProps> = ({ visible, onCancel }) => {
 
     try {
       const validFields = await form.validateFields();
-      createGroup(validFields);
+
+      createGroupAndPlan(validFields);
 
       handleCancel();
       setCreating(false);

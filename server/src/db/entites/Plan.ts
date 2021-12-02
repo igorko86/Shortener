@@ -14,11 +14,18 @@ export class Plan extends CreateUpdateDate {
   planName: string;
 
   @Column({
-    name: 'plan_card_ids',
-    array: true,
-    default: null,
+    name: 'group_id',
+    type: 'uuid',
   })
-  planCardIds: string;
+  groupId: string;
+
+  @Column({
+    type: 'text',
+    nullable: false,
+    array: true,
+    default: [],
+  })
+  planCardIds: string[];
 
   @OneToMany(() => PlanCard, (planCard) => planCard.plan)
   planCards: PlanCard[];

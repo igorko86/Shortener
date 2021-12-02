@@ -9,12 +9,8 @@ interface IProps {
   isDisabled?: boolean;
 }
 
-const Button: FC<IProps> = ({ text, icon, onClick, isDisabled }) => {
-  return (
-    <ButtonStyle icon={icon} onClick={onClick} disabled={isDisabled}>
-      {text}
-    </ButtonStyle>
-  );
+const Button: FC<IProps> = ({ text, ...props }) => {
+  return <ButtonStyle {...props}>{text}</ButtonStyle>;
 };
 
 export default Button;

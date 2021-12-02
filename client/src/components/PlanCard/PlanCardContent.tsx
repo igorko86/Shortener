@@ -59,6 +59,7 @@ const PlanCardContent: FC<IProps> = ({
           if (!subCards) {
             if (dragCardId) {
               const { newArr, item } = removeItem(prevSubCards[dragCardId], subCardId);
+
               prevSubCards[dragCardId] = newArr;
               libraryCard = item;
             }

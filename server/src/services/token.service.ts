@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 import { Token } from '../db/entites/Token';
-import { IGenerateTokensResult, ITutor } from './types';
+import { IGenerateTokensResult, ITutor } from './interfaces';
 import { Tutor } from '../db/entites/Tutor';
 import TutorDto from '../dtos/tutor.dto';
 

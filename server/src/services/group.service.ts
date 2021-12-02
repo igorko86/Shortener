@@ -1,32 +1,28 @@
-import { IGroupRequest } from './types';
+import { IGroupAndPlanRequest, IGroupAndPlanResponse } from './interfaces';
 import { Group } from '../db/entites/Group';
 import planService from './plan.service';
 
 class GroupService {
-  async createGroup(data: IGroupRequest): Promise<any> {
+  async createGroupAndPlan(data: IGroupAndPlanRequest): Promise<IGroupAndPlanResponse> {
     const { planName, groupName } = data;
-
-    const newPlanData = await planService.createPlan(planName);
 
     const newGroup = Group.create({
       groupName,
-      planId: newPlanData.id,
-      plan: newPlanData,
     });
 
-    const { groupName: name, plan } = await newGroup.save();
+    const { groupName: savedGroupName, id } = await newGroup.save();
+
+    const planData = await planService.createPlan(planName, id);
 
     return {
-      groupName: name,
-      planName: plan.planName,
-      planId: plan.id,
+      groupName: savedGroupName,
+      id,
+      plan: planData,
     };
   }
 
   async getGroups(): Promise<any> {
-    const result = await Group.createQueryBuilder('group')
-      .select(['group.id', 'group.groupName', 'group.planId'])
-      .getMany();
+    const result = await Group.createQueryBuilder('group').select(['group.id', 'group.groupName']).getMany();
 
     return result;
   }

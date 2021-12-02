@@ -1,12 +1,13 @@
 // External
-import React, { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Space } from 'antd';
 import update from 'immutability-helper';
 // Internal
 import ColumnWrapper from 'components/Items/ColumnWrapper';
 import Button from 'components/Items/Button';
 import { useAppSelector } from 'shared/hooks/storeHooks';
-import { groupsSelector } from 'store/reducers/group/selectors';
+import { planSelector } from 'store/reducers/group/selectors';
+import { useActionCreator } from 'shared/hooks/useActionCreator';
 import TitleColumn from '../Items/TitleColumn';
 import Search from '../Search';
 import Cards from './Cards';
@@ -16,22 +17,33 @@ import { ICard, IItemInfo, IMoveSubCardDragInfo, ISubCards } from './interfaces'
 export const cardsArray: ICard[] = [
   {
     id: '1',
-  },
-  {
-    id: '2',
-  },
-  {
-    id: '3',
-  },
-  {
-    id: '4',
+    title: '',
   },
 ];
 
 const Plan: FC = () => {
-  const [group] = useAppSelector(groupsSelector);
-  const [cards, setCards] = useState<ICard[]>(cardsArray);
+  const plan = useAppSelector(planSelector);
+
+  const { createPlanCard, deletePlanCard } = useActionCreator();
+
+  const [cards, setCards] = useState<ICard[]>([]);
   const [subCards, setSubCards] = useState<ISubCards>({});
+
+  useEffect(() => {
+    if (plan) {
+      const planSubCards: { [key: string]: any } = {};
+
+      const planCards = plan.planCards.map((card) => {
+        planSubCards[card.id] = card.libraryCards;
+        return {
+          id: card.id,
+          title: card.planCardName,
+        };
+      });
+      setCards(planCards);
+      setSubCards(planSubCards);
+    }
+  }, [plan]);
 
   const handleMoveCard = useCallback(
     (dragIndex: number, hoverItemIndex: number) => {
@@ -83,25 +95,34 @@ const Plan: FC = () => {
     [subCards]
   );
 
-  const addCard = () => {
-    setCards([...cards, { id: String(Date.now()) }]);
+  const addCard = async () => {
+    if (!plan) return;
+    // @ts-ignore
+    const { id, planCardName } = await createPlanCard(plan.id);
+
+    setCards([...cards, { id, title: planCardName }]);
   };
 
-  const removeCard = (index: number) => {
+  const removeCard = async (index: number, cardId: string) => {
+    if (!plan) return;
+    await deletePlanCard(cardId, index);
+
     const newCardsList = [...cards];
+
     newCardsList.splice(index, 1);
     setCards(newCardsList);
   };
 
   const removeSubCard = (subCardIndex: number, cardId: string) => {
     const newCardsList = JSON.parse(JSON.stringify(subCards));
+
     newCardsList[cardId].splice(subCardIndex, 1);
     setSubCards(newCardsList);
   };
 
   return (
     <ColumnWrapper>
-      <TitleColumn title={group && group.planName ? group.planName : 'Plan Name'} titlePosition="left" />
+      <TitleColumn title={plan && plan.planName ? plan.planName : 'Plan Name'} titlePosition="left" />
       <Search />
       <Cards
         cards={cards}
@@ -115,7 +136,6 @@ const Plan: FC = () => {
       />
       <Space size="middle">
         <Button onClick={addCard} text="+ Add module" />
-        <Button text="Save" />
       </Space>
     </ColumnWrapper>
   );

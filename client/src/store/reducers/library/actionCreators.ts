@@ -1,9 +1,9 @@
 import LibraryService from 'shared/services/LibraryService';
-import { ILibraryCard, LibraryActionEnum } from './types';
+import { ILibraryCard, ISetLibraryCards, LibraryActionEnum } from './types';
 import { AppDispatch } from '../../interfaces';
 
 export const libraryActions = {
-  setLibraryCards: (libraryCards: ILibraryCard[]) => ({
+  setLibraryCards: (libraryCards: ILibraryCard[]): ISetLibraryCards => ({
     type: LibraryActionEnum.SET_LIBRARY_CARDS,
     payload: libraryCards,
   }),

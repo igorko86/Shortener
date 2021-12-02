@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { Tutor } from '../db/entites/Tutor';
 import mailService from './mail.service';
 import tokenService from './token.service';
-import { ITutorData, ITutorRequest, ITutor } from './types';
+import { ITutorData, ITutorRequest, ITutor } from './interfaces';
 import apiErrorService from './apiError.service';
 import ApiErrorService from './apiError.service';
 import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants';
