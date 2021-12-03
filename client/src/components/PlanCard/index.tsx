@@ -61,6 +61,11 @@ const PlanCard: FC<IProps> = ({
       isDragging: monitor.isDragging(),
       handlerId: monitor.getHandlerId(),
     }),
+    end: (item: any) => {
+      if (item.dragIndex === item.index) return;
+
+      onDropCard(item);
+    },
   });
 
   const [, drop] = useDrop(
@@ -69,14 +74,11 @@ const PlanCard: FC<IProps> = ({
       collect(monitor) {
         return {
           handlerId: monitor.getHandlerId(),
+          isOver: monitor.isOver(),
         };
       },
-      drop(item: any) {
-        if (item.dragIndex === item.index) return;
-
-        onDropCard(item);
-      },
       hover(item: IDragItem, monitor) {
+        // console.log('HERE');
         if (!ref.current) {
           return;
         }
@@ -107,7 +109,6 @@ const PlanCard: FC<IProps> = ({
     },
     [cardIndex, onDropCard]
   );
-
   const opacity = isDragging ? 0 : 1;
 
   const handleRemoveCard = () => {
