@@ -31,9 +31,9 @@ const Groups: FC = () => {
     }
   }, []);
 
-  const handleChangeGroup = (value: any) => {
-    getPlan(value);
-    setSelectedValue(value);
+  const handleChangeGroup = (groupId: any) => {
+    getPlan(groupId);
+    setSelectedValue(groupId);
   };
 
   return (

@@ -3,10 +3,10 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IAuthResponse } from 'shared/models/response/authResponse';
 import { AppPath } from 'shared/common/enum';
 import { authThunks } from 'store/reducers/auth/actionCreators';
+import { ApiRoutes } from 'shared/services/apiRoutes.constants';
 import history from '../appHistory';
 import { store } from '../store';
 import { NotificationStatus, showNotificationWithIcon } from './notification';
-import { ApiRoutes } from '../shared/services/apiRoutes';
 
 const $api = axios.create({
   withCredentials: true, // set cookies automatically

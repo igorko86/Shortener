@@ -14,7 +14,7 @@ export interface IMoveSubCardDragInfo {
 
 export interface ICard {
   id: string;
-  title: string;
+  planCardName: string;
 }
 
 export interface ISubCard {

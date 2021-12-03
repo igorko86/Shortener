@@ -5,25 +5,11 @@ import { useDrop } from 'react-dnd';
 import { IItemInfo, IMoveSubCardDragInfo, ISubCard, ISubCards, ItemTypeCard } from 'components/Plan/interfaces';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { libraryCardsSelector } from 'store/reducers/library/selectors';
+import { useActionCreator } from 'shared/hooks/useActionCreator';
 import SubCard from '../SubCard';
+import { updateSubCards, IDragInfo } from './helper';
 // Styles
 import { DivEmptyCard, DivWithContent, SpanEmptyCard } from './styles';
-
-const removeItem = (arr: ISubCard[], id: string) => {
-  const index = arr.findIndex((item) => item.id === id);
-
-  const [item] = arr.splice(index, 1);
-
-  return { newArr: [...arr], item };
-};
-
-interface IDragInfo {
-  cardId?: string;
-  hoverSubCardIndex: number;
-  subCardId: string;
-  id?: string;
-  libraryCardIndex?: number;
-}
 
 interface IProps {
   subCardsArray: ISubCard[];
@@ -42,47 +28,21 @@ const PlanCardContent: FC<IProps> = ({
   removeSubCard,
 }) => {
   const libraryCards = useAppSelector(libraryCardsSelector);
+  const { moveSubCardId } = useActionCreator();
 
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
       accept: [ItemTypeCard.LIBRARY_CARD, ItemTypeCard.SUB_CARD],
-      drop: (dragInfo: IDragInfo) => {
+      drop: (item) => {
+        let updatedSubCards = null;
+
         setSubCards((prevSubCards: ISubCards) => {
-          const subCards = prevSubCards[cardId];
-          const { cardId: dragCardId, subCardId, hoverSubCardIndex, libraryCardIndex } = dragInfo;
-          let libraryCard = null;
+          updatedSubCards = updateSubCards({ prevSubCards, dragInfo: item, libraryCards, cardId });
 
-          if (typeof libraryCardIndex === 'number') {
-            libraryCard = libraryCards[libraryCardIndex];
-          }
-
-          if (!subCards) {
-            if (dragCardId) {
-              const { newArr, item } = removeItem(prevSubCards[dragCardId], subCardId);
-
-              prevSubCards[dragCardId] = newArr;
-              libraryCard = item;
-            }
-
-            return { ...prevSubCards, [cardId]: [{ ...libraryCard, cardId }] };
-          }
-
-          if (dragCardId) {
-            if (cardId !== dragCardId) {
-              const { newArr, item } = removeItem(prevSubCards[dragCardId], subCardId);
-
-              prevSubCards[dragCardId] = newArr;
-
-              subCards.splice(hoverSubCardIndex, 0, { ...item, cardId });
-
-              return { ...prevSubCards, [cardId]: [...subCards] };
-            }
-
-            return prevSubCards;
-          }
-
-          return { ...prevSubCards, [cardId]: [...subCards, { ...libraryCard, cardId }] };
+          return updatedSubCards;
         });
+
+        moveSubCardId(updatedSubCards);
       },
       collect: (monitor) => ({
         isOver: monitor.isOver(),

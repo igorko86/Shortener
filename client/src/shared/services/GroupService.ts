@@ -1,4 +1,4 @@
-import { ApiRoutes } from './apiRoutes';
+import { ApiRoutes } from './apiRoutes.constants';
 import $api from '../../http';
 import { ICreateGroupAndPlanRequest, IMovePlanCardRequest } from '../models/request/groupReguest';
 import { IGroupResponse, IPlanCard, IPlanResponse } from '../models/response/groupResponse';

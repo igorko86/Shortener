@@ -3,7 +3,7 @@ import axios from 'axios';
 import { IFormObjRequest } from 'shared/models/request/authRequest';
 import AuthService from 'shared/services/AuthService';
 import { IAuthResponse, ITutor } from 'shared/models/response/authResponse';
-import { ApiRoutes } from 'shared/services/apiRoutes';
+import { ApiRoutes } from 'shared/services/apiRoutes.constants';
 import { AuthActionEnum, ISetAuthAction, ISetIsLoading, ISetTutor } from './types';
 import { AppDispatch } from '../../interfaces';
 

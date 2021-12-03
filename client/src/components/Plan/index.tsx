@@ -17,7 +17,7 @@ import { ICard, IDropCardInfo, IItemInfo, IMoveSubCardDragInfo, ISubCards } from
 export const cardsArray: ICard[] = [
   {
     id: '1',
-    title: '',
+    planCardName: '',
   },
 ];
 
@@ -31,15 +31,8 @@ const Plan: FC = () => {
 
   useEffect(() => {
     if (plan) {
-      const planSubCards: { [key: string]: any } = {};
+      const { subCards: planSubCards, planCards } = plan;
 
-      const planCards = plan.planCards.map((card) => {
-        planSubCards[card.id] = card.libraryCards;
-        return {
-          id: card.id,
-          title: card.planCardName,
-        };
-      });
       setCards(planCards);
       setSubCards(planSubCards);
     }
@@ -100,7 +93,7 @@ const Plan: FC = () => {
     // @ts-ignore
     const { id, planCardName } = await createPlanCard(plan.id);
 
-    setCards([...cards, { id, title: planCardName }]);
+    setCards([...cards, { id, planCardName }]);
   };
 
   const removeCard = async (index: number, cardId: string) => {

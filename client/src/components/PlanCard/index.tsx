@@ -50,7 +50,7 @@ const PlanCard: FC<IProps> = ({
   card,
   onDropCard,
 }) => {
-  const { id: cardId, title } = card;
+  const { id: cardId, planCardName } = card;
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -127,7 +127,7 @@ const PlanCard: FC<IProps> = ({
     >
       <DivNameWithPopover>
         <div>
-          <SpanTitle>{title}</SpanTitle>
+          <SpanTitle>{planCardName}</SpanTitle>
         </div>
         <Button onClick={handleRemoveCard} icon={<Close />} />
       </DivNameWithPopover>

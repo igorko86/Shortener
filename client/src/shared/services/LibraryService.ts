@@ -1,7 +1,7 @@
 import $api from '../../http';
 import { ILibraryCardRequest } from '../models/request/libraryRequest';
 import { ILibraryCardResponse } from '../models/response/libraryResponse';
-import { ApiRoutes } from './apiRoutes';
+import { ApiRoutes } from './apiRoutes.constants';
 
 class LibraryService {
   static async getLibraryCards(): Promise<ILibraryCardResponse[]> {

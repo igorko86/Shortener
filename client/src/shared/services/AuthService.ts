@@ -1,7 +1,7 @@
 import { IAuthResponse } from '../models/response/authResponse';
 import { IFormObjRequest, ITutorRequest } from '../models/request/authRequest';
 import $api from '../../http';
-import { ApiRoutes } from './apiRoutes';
+import { ApiRoutes } from './apiRoutes.constants';
 
 class AuthService {
   static register(formObj: IFormObjRequest): Promise<void> {

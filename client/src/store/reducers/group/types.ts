@@ -1,8 +1,6 @@
-import { IPlanResponse } from 'shared/models/response/groupResponse';
-
 export interface IGroupState {
   groups: IGroup[];
-  plan: IPlanResponse | null;
+  plan: IPlan | null;
 }
 
 export enum GroupActionEnum {
@@ -17,7 +15,7 @@ export interface ISetGroups {
 
 export interface ISetPlan {
   type: GroupActionEnum.SET_PLAN;
-  payload: IPlanResponse;
+  payload: IPlan;
 }
 
 export type GroupActions = ISetGroups | ISetPlan;
@@ -25,4 +23,15 @@ export type GroupActions = ISetGroups | ISetPlan;
 export interface IGroup {
   groupName: string;
   id: string;
+}
+
+export interface IPlanCard {
+  id: string;
+  planCardName: string;
+}
+export interface IPlan {
+  planName: string;
+  id: string;
+  planCards: IPlanCard[];
+  subCards: any;
 }
