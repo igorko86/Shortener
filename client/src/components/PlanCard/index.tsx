@@ -54,19 +54,22 @@ const PlanCard: FC<IProps> = ({
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const [{ isDragging, handlerId }, drag] = useDrag({
-    type: ItemTypeCard.CARD,
-    item: { id: cardId, index: cardIndex },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      handlerId: monitor.getHandlerId(),
-    }),
-    end: (item: any) => {
-      if (item.dragIndex === item.index) return;
+  const [{ isDragging, handlerId }, drag] = useDrag(
+    {
+      type: ItemTypeCard.CARD,
+      item: { id: cardId, index: cardIndex },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+        handlerId: monitor.getHandlerId(),
+      }),
+      end: (item: any) => {
+        if (item.dragIndex === item.index) return;
 
-      onDropCard(item);
+        onDropCard(item);
+      },
     },
-  });
+    [cardIndex, onDropCard]
+  );
 
   const [, drop] = useDrop(
     {
@@ -78,14 +81,13 @@ const PlanCard: FC<IProps> = ({
         };
       },
       hover(item: IDragItem, monitor) {
-        // console.log('HERE');
         if (!ref.current) {
           return;
         }
         const dragIndex = item.index;
         const hoverItemIndex = cardIndex;
 
-        item.dragIndex = item.dragIndex || dragIndex;
+        item.dragIndex = typeof item.dragIndex !== 'number' ? dragIndex : item.dragIndex;
 
         if (dragIndex === hoverItemIndex) {
           return;
