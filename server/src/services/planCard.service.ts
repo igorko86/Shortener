@@ -3,6 +3,7 @@ import { Plan } from '../db/entites/Plan';
 import apiErrorService from './apiError.service';
 import { ICreatePlanCardByIdResponse, IDeletePlanCardRequest, UpdateStatus } from './interfaces';
 import planService from './plan.service';
+import subCardService from './subCard.service';
 
 class PlanCardService {
   async createDefaultPlanCard(plan: Plan): Promise<PlanCard> {
@@ -31,6 +32,8 @@ class PlanCardService {
 
   async deletePlanCardById(body: IDeletePlanCardRequest): Promise<any> {
     const { cardId, planId, index } = body;
+
+    await subCardService.deleteSubCard({ cardId });
 
     const deletedElement = await PlanCard.delete(cardId);
 

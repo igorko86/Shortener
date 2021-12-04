@@ -9,5 +9,6 @@ planRouter.post('/plan/card', planController.createPlanCardById);
 planRouter.delete('/plan/card', planController.deletePlanCardById);
 planRouter.put('/plan/card/movement', planController.movePlanCardId);
 planRouter.put('/plan/card/subCard/movement', planController.moveSubCard);
+planRouter.delete('/plan/card/subCard', planController.deleteSubCard);
 
 export { planRouter as planRoutes };

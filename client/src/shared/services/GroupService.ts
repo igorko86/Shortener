@@ -35,6 +35,10 @@ class GroupService {
   static moveSubCardId(cardInfo: IMoveSubCardIdRequest): Promise<any> {
     return $api.put(ApiRoutes.MoveSubCardId, cardInfo).then(({ data }) => data);
   }
+
+  static updateSubCardIds(body: { cardId: string; subCardId: string; newIds: string[] }): Promise<any> {
+    return $api.delete(ApiRoutes.UpdateSubCardIds, { data: body }).then(({ data }) => data);
+  }
 }
 
 export default GroupService;

@@ -54,6 +54,18 @@ class PlanController {
       next(error);
     }
   }
+
+  async deleteSubCard(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { newIds, cardId, subCardId } = req.body;
+      await subCardService.deleteSubCard({ cardId, libraryCardId: subCardId });
+      await planCardService.updatePlanCardIds({ cardId, newIds });
+
+      return res.status(200).json('Success');
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new PlanController();

@@ -6,8 +6,8 @@ import { SubCard } from '../db/entites/SubCard';
 import apiErrorService from './apiError.service';
 
 class SubCardService {
-  async deleteSubCard(cardId: string, libraryCardId: string): Promise<null> {
-    await SubCard.delete({ cardId, libraryCardId });
+  async deleteSubCard(criteria: any): Promise<null> {
+    await SubCard.delete(criteria);
 
     return null;
   }
@@ -18,7 +18,7 @@ class SubCardService {
     planCardService.updatePlanCardIds({ newIds, afterRemovedIds, cardId, dragCardId });
 
     if (libraryCardId && dragCardId) {
-      this.deleteSubCard(dragCardId, libraryCardId);
+      this.deleteSubCard({ dragCardId, libraryCardId });
     }
 
     if (libraryCardId) {

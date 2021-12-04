@@ -24,7 +24,7 @@ export const cardsArray: ICard[] = [
 const Plan: FC = () => {
   const plan = useAppSelector(planSelector);
 
-  const { createPlanCard, deletePlanCard, movePlanCardId } = useActionCreator();
+  const { createPlanCard, deletePlanCard, movePlanCardId, deleteSubCard } = useActionCreator();
 
   const [cards, setCards] = useState<ICard[]>([]);
   const [subCards, setSubCards] = useState<ISubCards>({});
@@ -112,10 +112,13 @@ const Plan: FC = () => {
     await movePlanCardId(dropCardInfo);
   };
 
-  const removeSubCard = (subCardIndex: number, cardId: string) => {
+  const removeSubCard = async (subCardIndex: number, cardId: string) => {
     const newCardsList = JSON.parse(JSON.stringify(subCards));
 
-    newCardsList[cardId].splice(subCardIndex, 1);
+    const [deletedSubCard] = newCardsList[cardId].splice(subCardIndex, 1);
+
+    await deleteSubCard({ cardId, subCardId: deletedSubCard.id, subCards: newCardsList[cardId] });
+
     setSubCards(newCardsList);
   };
 

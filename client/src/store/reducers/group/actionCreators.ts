@@ -118,6 +118,23 @@ export const groupThunks = {
       return null;
     }
   },
+  deleteSubCard:
+    ({ cardId, subCards, subCardId }: { cardId: string; subCardId: string; subCards: string[] }) =>
+    async (dispatch: AppDispatch, getState: any): Promise<any> => {
+      try {
+        const { plan } = getState().group;
+        const newIds = subCards.map((item: any) => item.id);
+
+        await GroupService.updateSubCardIds({ cardId, newIds, subCardId });
+
+        plan.subCards[cardId] = subCards;
+        dispatch(groupActions.setPlan(plan));
+
+        return null;
+      } catch {
+        return null;
+      }
+    },
 };
 
 export default {

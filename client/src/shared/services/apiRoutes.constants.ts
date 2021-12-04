@@ -17,4 +17,5 @@ export enum ApiRoutes {
   DeletePlanCard = '/plans/plan/card',
   MovePlanCardId = '/plans/plan/card/movement',
   MoveSubCardId = '/plans/plan/card/subCard/movement',
+  UpdateSubCardIds = '/plans/plan/card/subCard',
 }
