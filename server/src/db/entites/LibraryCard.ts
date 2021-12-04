@@ -1,7 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
-import { PlanCard } from './PlanCard';
+import { SubCard } from './SubCard';
 
 @Entity('libraryCard')
 export class LibraryCard extends CreateUpdateDate {
@@ -17,6 +17,6 @@ export class LibraryCard extends CreateUpdateDate {
   @Column()
   htmlContent: string;
 
-  @ManyToOne(() => PlanCard, (planCard) => planCard.libraryCards)
-  planCard: PlanCard;
+  @OneToMany(() => SubCard, (subCard) => subCard.library)
+  subCards: SubCard[];
 }

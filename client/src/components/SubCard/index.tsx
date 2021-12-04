@@ -10,6 +10,7 @@ interface IDragItem {
   hoverSubCardIndex: number;
   subCardId: string;
   cardId: string;
+  dragIndex: number;
 }
 
 interface IProps {
@@ -44,6 +45,7 @@ const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId, r
       }
       const dragItemIndex = item.hoverSubCardIndex;
       const hoverItemIndex = subCardIndex;
+      item.dragIndex = typeof item.dragIndex !== 'number' ? dragItemIndex : item.dragIndex;
 
       if (dragItemIndex === hoverItemIndex) {
         return;

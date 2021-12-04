@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import planCardService from '../services/planCard.service';
 import planService from '../services/plan.service';
+import subCardService from '../services/subCard.service';
 
 class PlanController {
   async getPlan(req: Request, res: Response, next: NextFunction) {
@@ -37,6 +38,16 @@ class PlanController {
   async movePlanCardId(req: Request, res: Response, next: NextFunction) {
     try {
       await planService.movePlanCardId(req.body);
+
+      return res.status(200).json('Success');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async moveSubCard(req: Request, res: Response, next: NextFunction) {
+    try {
+      await subCardService.moveSubCard(req.body);
 
       return res.status(200).json('Success');
     } catch (error) {

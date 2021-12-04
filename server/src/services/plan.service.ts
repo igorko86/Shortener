@@ -3,6 +3,7 @@ import planCardService from './planCard.service';
 import apiErrorService from './apiError.service';
 import { ICreatePlan, IMovePlanCardRequest, IUpdatePlanCardIds, UpdateStatus } from './interfaces';
 import { sortArrayBasedArray } from '../helpers';
+import { mapSubCards } from './mapper';
 
 class PlanService {
   async createPlan(name: string, groupId: string): Promise<ICreatePlan> {
@@ -74,13 +75,16 @@ class PlanService {
         'plan.id',
         'plan.planName',
         'plan.planCardIds',
-        'planCards.id',
-        'planCards.planCardName',
-        'libraryCards.title',
-        'libraryCards.id',
+        'planCard.id',
+        'planCard.planCardName',
+        'planCard.libraryCardIds',
+        'subCard.id',
+        'libraryCard.id',
+        'libraryCard.title',
       ])
-      .leftJoin('plan.planCards', 'planCards')
-      .leftJoin('planCards.libraryCards', 'libraryCards')
+      .leftJoin('plan.planCards', 'planCard')
+      .leftJoin('planCard.subCards', 'subCard')
+      .leftJoin('subCard.library', 'libraryCard')
       .where('plan.groupId = :groupId', { groupId })
       .getOne();
 
@@ -90,10 +94,11 @@ class PlanService {
 
     const { planCards, planCardIds, ...res } = planData;
     const sortedPlanCards = sortArrayBasedArray(planCards, planCardIds);
+    const planCardsWithSortedSubCards = mapSubCards(sortedPlanCards);
 
     return {
       ...res,
-      planCards: sortedPlanCards,
+      planCards: planCardsWithSortedSubCards,
     };
   }
 

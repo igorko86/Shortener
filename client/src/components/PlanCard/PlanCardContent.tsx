@@ -34,15 +34,18 @@ const PlanCardContent: FC<IProps> = ({
     () => ({
       accept: [ItemTypeCard.LIBRARY_CARD, ItemTypeCard.SUB_CARD],
       drop: (item) => {
-        let updatedSubCards = null;
+        const { hoverSubCardIndex, dragIndex } = item;
+        let updatedSubCardsInfo = null;
+
+        if (hoverSubCardIndex && hoverSubCardIndex === dragIndex) return;
 
         setSubCards((prevSubCards: ISubCards) => {
-          updatedSubCards = updateSubCards({ prevSubCards, dragInfo: item, libraryCards, cardId });
+          updatedSubCardsInfo = updateSubCards({ prevSubCards, dragInfo: item, libraryCards, cardId });
 
-          return updatedSubCards;
+          return updatedSubCardsInfo.updatedSubCards;
         });
 
-        moveSubCardId(updatedSubCards);
+        moveSubCardId(updatedSubCardsInfo);
       },
       collect: (monitor) => ({
         isOver: monitor.isOver(),

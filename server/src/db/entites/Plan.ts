@@ -20,6 +20,7 @@ export class Plan extends CreateUpdateDate {
   groupId: string;
 
   @Column({
+    name: 'plan_card_ids',
     type: 'text',
     nullable: false,
     array: true,

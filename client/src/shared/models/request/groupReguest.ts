@@ -8,3 +8,11 @@ export interface IMovePlanCardRequest {
   index: number;
   planId: string;
 }
+
+export interface IMoveSubCardIdRequest {
+  newIds: string[];
+  afterRemovedIds: string[];
+  cardId: string;
+  dragCardId?: string;
+  libraryCardId?: string;
+}

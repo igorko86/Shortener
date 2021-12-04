@@ -85,3 +85,17 @@ export interface ICreatePlanCardByIdResponse {
   planCardName: string;
   libraryCards: string[];
 }
+
+export interface ILibraryCardsResponse {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface IMoveSubCardRequest {
+  newIds: string[];
+  afterRemovedIds: string[];
+  cardId: string;
+  dragCardId?: string;
+  libraryCardId?: string;
+}

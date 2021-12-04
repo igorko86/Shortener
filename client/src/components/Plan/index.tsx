@@ -33,8 +33,8 @@ const Plan: FC = () => {
     if (plan) {
       const { subCards: planSubCards, planCards } = plan;
 
-      setCards(planCards);
-      setSubCards(planSubCards);
+      setCards([...planCards]);
+      setSubCards({ ...planSubCards });
     }
   }, [plan]);
 

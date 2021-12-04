@@ -4,10 +4,14 @@ export interface IGroupResponse {
   plan: IPlanResponse;
 }
 
+interface ISubCard {
+  id: string;
+  title: string;
+}
 export interface IPlanCard {
   id: string;
   planCardName: string;
-  libraryCards: string[];
+  subCards: ISubCard[];
 }
 export interface IPlanResponse {
   planName: string;

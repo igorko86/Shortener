@@ -1,5 +1,5 @@
 import { LibraryCard } from '../db/entites/LibraryCard';
-import { ICardRequest } from './interfaces';
+import { ICardRequest, ILibraryCardsResponse } from './interfaces';
 
 class LibraryService {
   async createLibraryCard(data: ICardRequest): Promise<LibraryCard> {
@@ -8,8 +8,10 @@ class LibraryService {
     return newCard.save();
   }
 
-  async getLibraryCards(): Promise<LibraryCard[]> {
-    return LibraryCard.find();
+  async getLibraryCards(): Promise<ILibraryCardsResponse[]> {
+    return await LibraryCard.createQueryBuilder('libraryCard')
+      .select(['libraryCard.id', 'libraryCard.title', 'libraryCard.description'])
+      .getMany();
   }
 }
 

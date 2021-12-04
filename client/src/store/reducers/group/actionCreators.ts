@@ -49,6 +49,8 @@ export const groupThunks = {
         const planCard = await GroupService.createPlanCard(planId);
 
         plan.planCards.push(planCard);
+        plan.subCards = { ...plan.subCards, [planCard.id]: [] };
+
         dispatch(groupActions.setPlan(plan));
         const { id, planCardName } = planCard;
 
@@ -101,11 +103,12 @@ export const groupThunks = {
       return null;
     }
   },
-  moveSubCardId: (updatedSubCards: any) => async (dispatch: AppDispatch, getState: any) => {
+  moveSubCardId: (updatedSubCardsInfo: any) => async (dispatch: AppDispatch, getState: any) => {
     try {
       const { plan } = getState().group;
+      const { updatedSubCards, ...res } = updatedSubCardsInfo;
 
-      // await GroupService.movePlanCardId({ dragIndex, index, planId: plan.id });
+      await GroupService.moveSubCardId(res);
 
       plan.subCards = updatedSubCards;
       dispatch(groupActions.setPlan(plan));

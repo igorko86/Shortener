@@ -29,14 +29,24 @@ class PlanCardService {
     };
   }
 
-  async deletePlanCardById(params: IDeletePlanCardRequest): Promise<any> {
-    const { cardId, planId, index } = params;
+  async deletePlanCardById(body: IDeletePlanCardRequest): Promise<any> {
+    const { cardId, planId, index } = body;
 
     const deletedElement = await PlanCard.delete(cardId);
 
     await planService.updatePlanCardIds({ planId, status: UpdateStatus.Delete, cardId, index });
 
     return deletedElement;
+  }
+
+  async updatePlanCardIds(data: any): Promise<void> {
+    const { newIds, afterRemovedIds, cardId, dragCardId } = data;
+
+    if (dragCardId) {
+      await PlanCard.update(dragCardId, { libraryCardIds: afterRemovedIds });
+    }
+
+    await PlanCard.update(cardId, { libraryCardIds: newIds });
   }
 }
 

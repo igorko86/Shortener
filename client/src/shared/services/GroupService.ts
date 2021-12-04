@@ -1,6 +1,10 @@
 import { ApiRoutes } from './apiRoutes.constants';
 import $api from '../../http';
-import { ICreateGroupAndPlanRequest, IMovePlanCardRequest } from '../models/request/groupReguest';
+import {
+  ICreateGroupAndPlanRequest,
+  IMovePlanCardRequest,
+  IMoveSubCardIdRequest,
+} from '../models/request/groupReguest';
 import { IGroupResponse, IPlanCard, IPlanResponse } from '../models/response/groupResponse';
 
 class GroupService {
@@ -26,6 +30,10 @@ class GroupService {
 
   static movePlanCardId(cardInfo: IMovePlanCardRequest): Promise<any> {
     return $api.put(ApiRoutes.MovePlanCardId, cardInfo).then(({ data }) => data);
+  }
+
+  static moveSubCardId(cardInfo: IMoveSubCardIdRequest): Promise<any> {
+    return $api.put(ApiRoutes.MoveSubCardId, cardInfo).then(({ data }) => data);
   }
 }
 

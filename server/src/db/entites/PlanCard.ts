@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'ty
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { Plan } from './Plan';
-import { LibraryCard } from './LibraryCard';
+import { SubCard } from './SubCard';
 
 @Entity('planCard')
 export class PlanCard extends CreateUpdateDate {
@@ -16,14 +16,16 @@ export class PlanCard extends CreateUpdateDate {
 
   @Column({
     name: 'library_card_ids',
+    type: 'text',
+    nullable: false,
     array: true,
-    default: null,
+    default: [],
   })
-  libraryCardIds: string;
+  libraryCardIds: string[];
 
   @ManyToOne(() => Plan, (plan) => plan.planCards)
   plan: Plan;
 
-  @OneToMany(() => LibraryCard, (libraryCard) => libraryCard.planCard)
-  libraryCards: LibraryCard[];
+  @OneToMany(() => SubCard, (subCard) => subCard.planCard)
+  subCards: SubCard[];
 }
