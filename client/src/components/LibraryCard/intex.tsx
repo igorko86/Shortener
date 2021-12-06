@@ -1,8 +1,9 @@
 // External
-import { ItemTypeCard, LibraryCardType } from 'components/Plan/interfaces';
 import { FC } from 'react';
 import { useDrag } from 'react-dnd';
 // Internal
+import { ItemTypeCard, LibraryCardType } from 'components/Plan/interfaces';
+import { useActionCreator } from 'shared/hooks/useActionCreator';
 import Card from '../Items/Card/intex';
 
 interface IProps {
@@ -11,6 +12,7 @@ interface IProps {
 }
 
 const LibraryCard: FC<IProps> = ({ card, libraryCardIndex }) => {
+  const { getCardContent } = useActionCreator();
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypeCard.LIBRARY_CARD,
     item: { id: card.id, libraryCardIndex },
@@ -19,7 +21,11 @@ const LibraryCard: FC<IProps> = ({ card, libraryCardIndex }) => {
     }),
   });
 
-  return <Card isDragging={isDragging} drag={drag} card={card} isDescription />;
+  const handleShowContent = () => {
+    getCardContent(card.id);
+  };
+
+  return <Card isDragging={isDragging} drag={drag} card={card} isDescription onShowContent={handleShowContent} />;
 };
 
 export default LibraryCard;

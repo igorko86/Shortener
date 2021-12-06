@@ -1,9 +1,11 @@
 export interface ILibraryState {
   libraryCards: ILibraryCard[];
+  cardContent: string | null;
 }
 
 export enum LibraryActionEnum {
   SET_LIBRARY_CARDS = 'SET_LIBRARY_CARDS',
+  SET_CARD_CONTENT = 'SET_CARD_CONTENT',
 }
 
 export interface ISetLibraryCards {
@@ -11,7 +13,12 @@ export interface ISetLibraryCards {
   payload: ILibraryCard[];
 }
 
-export type LibraryActions = ISetLibraryCards;
+export interface ISetCardContent {
+  type: LibraryActionEnum.SET_CARD_CONTENT;
+  payload: string;
+}
+
+export type LibraryActions = ISetLibraryCards | ISetCardContent;
 
 export interface ILibraryCard {
   id: string;

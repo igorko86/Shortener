@@ -1,11 +1,15 @@
 import LibraryService from 'shared/services/LibraryService';
-import { ILibraryCard, ISetLibraryCards, LibraryActionEnum } from './types';
+import { ILibraryCard, ISetCardContent, ISetLibraryCards, LibraryActionEnum } from './types';
 import { AppDispatch } from '../../interfaces';
 
 export const libraryActions = {
   setLibraryCards: (libraryCards: ILibraryCard[]): ISetLibraryCards => ({
     type: LibraryActionEnum.SET_LIBRARY_CARDS,
     payload: libraryCards,
+  }),
+  setCardContent: (content: any): ISetCardContent => ({
+    type: LibraryActionEnum.SET_CARD_CONTENT,
+    payload: content,
   }),
 };
 
@@ -20,6 +24,18 @@ export const libraryThunks = {
       return null;
     }
   },
+  getCardContent:
+    (cardId: string) =>
+    async (dispatch: AppDispatch): Promise<any> => {
+      try {
+        const cardContent = await LibraryService.getCardContent(cardId);
+
+        dispatch(libraryActions.setCardContent(cardContent.htmlContent));
+        return null;
+      } catch {
+        return null;
+      }
+    },
 };
 
 export default {

@@ -4,6 +4,8 @@ import { useDrag, useDrop } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 // Internal
 import { IMoveSubCardDragInfo, ISubCard, ItemTypeCard } from 'components/Plan/interfaces';
+import { useActionCreator } from 'shared/hooks/useActionCreator';
+// Styles
 import { DivSubCard } from './styles';
 
 interface IDragItem {
@@ -24,6 +26,8 @@ interface IProps {
 
 const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId, removeSubCard, subCard }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const { getCardContent } = useActionCreator();
+
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypeCard.SUB_CARD,
     item: { hoverSubCardIndex: subCardIndex, cardId, subCardId },
@@ -73,6 +77,16 @@ const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId, r
     },
   });
 
+  const handleShowContent = () => {
+    getCardContent(subCard.id);
+  };
+
+  const handleRemoveCard = (e: any) => {
+    e.stopPropagation();
+
+    removeSubCard(subCardIndex, cardId);
+  };
+
   drag(drop(ref));
 
   return (
@@ -81,8 +95,8 @@ const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId, r
       drag={ref}
       isDragging={isDragging}
       card={subCard}
-      isRemove
-      onClick={() => removeSubCard(subCardIndex, cardId)}
+      onRemove={handleRemoveCard}
+      onShowContent={handleShowContent}
     />
   );
 };

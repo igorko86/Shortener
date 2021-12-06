@@ -1,6 +1,6 @@
 import $api from '../../http';
 import { ILibraryCardRequest } from '../models/request/libraryRequest';
-import { ILibraryCardResponse } from '../models/response/libraryResponse';
+import { ICardContentResponse, ILibraryCardResponse } from '../models/response/libraryResponse';
 import { ApiRoutes } from './apiRoutes.constants';
 
 class LibraryService {
@@ -10,6 +10,10 @@ class LibraryService {
 
   static async createLibraryCard(body: ILibraryCardRequest): Promise<void> {
     return $api.post(ApiRoutes.CreateCard, body);
+  }
+
+  static getCardContent(cardId: string): Promise<ICardContentResponse> {
+    return $api.get(ApiRoutes.CardContent, { params: { cardId } }).then(({ data }) => data);
   }
 }
 

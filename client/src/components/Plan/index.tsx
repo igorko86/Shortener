@@ -104,12 +104,13 @@ const Plan: FC = () => {
 
   const addCard = async () => {
     if (!plan) return;
-    // @ts-ignore
+
     await createPlanCard(plan.id);
   };
 
   const removeCard = async (index: number, cardId: string) => {
     if (!plan) return;
+
     await deletePlanCard(cardId, index);
   };
 

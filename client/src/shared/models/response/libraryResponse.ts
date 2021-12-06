@@ -3,3 +3,7 @@ export interface ILibraryCardResponse {
   title: string;
   description: string;
 }
+
+export interface ICardContentResponse {
+  htmlContent: string;
+}

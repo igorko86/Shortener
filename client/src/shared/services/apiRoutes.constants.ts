@@ -7,6 +7,7 @@ export enum ApiRoutes {
   // Library
   GetCards = '/library/cards',
   CreateCard = '/library/card',
+  CardContent = '/library/card/content',
   // Croups
   GetGroups = '/groups',
   CreateGroup = '/groups/group',

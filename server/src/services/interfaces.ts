@@ -99,3 +99,7 @@ export interface IMoveSubCardRequest {
   dragCardId?: string;
   libraryCardId?: string;
 }
+
+export interface ICardContentResponse {
+  htmlContent: string;
+}
