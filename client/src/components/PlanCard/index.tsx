@@ -23,6 +23,7 @@ interface IDragItem {
   index: number;
   dragIndex: number;
   hoverInd: number;
+  id: string;
 }
 
 interface IProps {
@@ -52,7 +53,7 @@ const PlanCard: FC<IProps> = ({
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const [{ isDragging, handlerId }, drag] = useDrag(
+  const [{ isDragging, handlerId }, connectDrag] = useDrag(
     {
       type: ItemTypeCard.CARD,
       item: { id: cardId, index: cardIndex },
@@ -69,7 +70,7 @@ const PlanCard: FC<IProps> = ({
     [cardIndex, onDropCard]
   );
 
-  const [{ isOver }, drop] = useDrop(
+  const [, connectDrop] = useDrop(
     {
       accept: ItemTypeCard.CARD,
       collect(monitor) {
@@ -86,6 +87,10 @@ const PlanCard: FC<IProps> = ({
         const hoverItemIndex = cardIndex;
 
         item.dragIndex = typeof item.dragIndex !== 'number' ? dragIndex : item.dragIndex;
+
+        if (item.id === cardId) {
+          return;
+        }
 
         if (dragIndex === hoverItemIndex) {
           return;
@@ -115,8 +120,9 @@ const PlanCard: FC<IProps> = ({
     removeCard(cardIndex, cardId);
   };
 
-  drag(drop(ref));
-  console.log(isOver);
+  connectDrag(ref);
+  connectDrop(ref);
+
   return (
     <DivCard
       ref={ref}

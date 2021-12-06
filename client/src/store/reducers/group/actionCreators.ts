@@ -91,11 +91,6 @@ export const groupThunks = {
       const { plan } = getState().group;
       const { index, dragIndex } = cardInfo;
 
-      const [deletedElement] = plan.planCards.splice(dragIndex, 1);
-
-      plan.planCards.splice(index, 0, deletedElement);
-      dispatch(groupActions.setPlan({ ...plan }));
-
       GroupService.movePlanCardId({ dragIndex, index, planId: plan.id });
 
       return null;
@@ -108,8 +103,10 @@ export const groupThunks = {
       const { plan } = getState().group;
       const { updatedSubCards, ...res } = updatedSubCardsInfo;
 
-      plan.subCards = updatedSubCards;
-      dispatch(groupActions.setPlan({ ...plan }));
+      if (updatedSubCardsInfo.libraryCardId) {
+        plan.subCards = updatedSubCards;
+        dispatch(groupActions.setPlan({ ...plan }));
+      }
 
       GroupService.moveSubCardId(res);
 

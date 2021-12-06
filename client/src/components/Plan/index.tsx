@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 // Internal
 import ColumnWrapper from 'components/Items/ColumnWrapper';
 import Button from 'components/Items/Button';
-import { useAppSelector } from 'shared/hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from 'shared/hooks/storeHooks';
 import { planSelector } from 'store/reducers/group/selectors';
 import { groupActions } from 'store/reducers/group/actionCreators';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
@@ -23,25 +23,46 @@ export const cardsArray: ICard[] = [
 ];
 const { setPlan } = groupActions;
 
+let pendingUpdateFn: any;
+let requestedFrame: number | undefined;
+
 const Plan: FC = () => {
   const plan = useAppSelector(planSelector);
+  const dispatch = useAppDispatch();
   const { subCards = [], planCards = [], planName = '' } = plan || {};
 
   const { createPlanCard, deletePlanCard, movePlanCardId, deleteSubCard } = useActionCreator();
+
+  const drawFrame = (): void => {
+    if (!plan) return;
+    const nextState = update(plan, pendingUpdateFn);
+
+    dispatch(setPlan(nextState));
+
+    pendingUpdateFn = undefined;
+    requestedFrame = undefined;
+  };
 
   const handleMoveCard = useCallback(
     (dragIndex: number, hoverItemIndex: number) => {
       if (!plan) return;
       const dragCard = planCards[dragIndex];
 
-      const newPlanCards = update(planCards, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverItemIndex, 0, dragCard],
-        ],
-      });
+      const newPlanCards = {
+        planCards: {
+          $splice: [
+            [dragIndex, 1],
+            [hoverItemIndex, 0, dragCard],
+          ],
+        },
+      };
 
-      setPlan({ ...plan, planCards: newPlanCards });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      pendingUpdateFn = newPlanCards;
+
+      if (!requestedFrame) {
+        requestedFrame = requestAnimationFrame(drawFrame);
+      }
     },
     [plan]
   );
@@ -67,7 +88,7 @@ const Plan: FC = () => {
       });
 
       if (!dragCard || !canMoveSubCard) {
-        setPlan({ ...plan, subCards });
+        dispatch(setPlan({ ...plan, subCards }));
       } else {
         const newSuBCards = update(subCards[currentCardId], {
           $splice: [
@@ -75,7 +96,7 @@ const Plan: FC = () => {
             [hoverItemIndex, 0, dragCard],
           ],
         });
-        setPlan({ ...plan, subCards: { ...subCards, [currentCardId]: newSuBCards } });
+        dispatch(setPlan({ ...plan, subCards: { ...subCards, [currentCardId]: newSuBCards } }));
       }
     },
     [plan]
@@ -105,7 +126,7 @@ const Plan: FC = () => {
 
     await deleteSubCard({ cardId, subCardId: deletedSubCard.id, subCards: newCardsList[cardId] });
   };
-  console.log('here');
+
   return (
     <ColumnWrapper>
       <TitleColumn title={planName || 'Plan Name'} titlePosition="left" />
