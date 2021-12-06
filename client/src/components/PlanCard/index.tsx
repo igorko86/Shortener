@@ -31,7 +31,6 @@ interface IProps {
   onMoveSubCard: (arg: IMoveSubCardDragInfo) => void;
   onMoveCard: (dragIndex: number, hoverItemIndex: number) => void;
   subCards: ISubCards;
-  setSubCards: (callBack: any) => void;
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
   removeCard: (index: number, cardId: string) => void;
   removeSubCard: (subCardIndex: number, cardId: string) => void;
@@ -46,7 +45,6 @@ const PlanCard: FC<IProps> = ({
   onMoveSubCard,
   cardIndex,
   subCards,
-  setSubCards,
   card,
   onDropCard,
 }) => {
@@ -71,7 +69,7 @@ const PlanCard: FC<IProps> = ({
     [cardIndex, onDropCard]
   );
 
-  const [, drop] = useDrop(
+  const [{ isOver }, drop] = useDrop(
     {
       accept: ItemTypeCard.CARD,
       collect(monitor) {
@@ -118,7 +116,7 @@ const PlanCard: FC<IProps> = ({
   };
 
   drag(drop(ref));
-
+  console.log(isOver);
   return (
     <DivCard
       ref={ref}
@@ -138,7 +136,6 @@ const PlanCard: FC<IProps> = ({
       <PlanCardContent
         subCardsArray={subCards[cardId] || []}
         onMoveSubCard={onMoveSubCard}
-        setSubCards={setSubCards}
         cardId={cardId}
         canMoveDropSubCard={canMoveDropSubCard}
         removeSubCard={removeSubCard}

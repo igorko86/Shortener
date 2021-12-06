@@ -51,7 +51,7 @@ export const groupThunks = {
         plan.planCards.push(planCard);
         plan.subCards = { ...plan.subCards, [planCard.id]: [] };
 
-        dispatch(groupActions.setPlan(plan));
+        dispatch(groupActions.setPlan({ ...plan }));
         const { id, planCardName } = planCard;
 
         return { id, planCardName };
@@ -65,10 +65,10 @@ export const groupThunks = {
       try {
         const { plan } = getState().group;
 
-        await GroupService.deletePlanCard(cardId, plan.id, index);
-
         plan.planCards.splice(index, 1);
-        dispatch(groupActions.setPlan(plan));
+        dispatch(groupActions.setPlan({ ...plan }));
+
+        GroupService.deletePlanCard(cardId, plan.id, index);
 
         return null;
       } catch {
@@ -91,12 +91,12 @@ export const groupThunks = {
       const { plan } = getState().group;
       const { index, dragIndex } = cardInfo;
 
-      await GroupService.movePlanCardId({ dragIndex, index, planId: plan.id });
-
       const [deletedElement] = plan.planCards.splice(dragIndex, 1);
 
       plan.planCards.splice(index, 0, deletedElement);
-      dispatch(groupActions.setPlan(plan));
+      dispatch(groupActions.setPlan({ ...plan }));
+
+      GroupService.movePlanCardId({ dragIndex, index, planId: plan.id });
 
       return null;
     } catch {
@@ -108,10 +108,10 @@ export const groupThunks = {
       const { plan } = getState().group;
       const { updatedSubCards, ...res } = updatedSubCardsInfo;
 
-      await GroupService.moveSubCardId(res);
-
       plan.subCards = updatedSubCards;
-      dispatch(groupActions.setPlan(plan));
+      dispatch(groupActions.setPlan({ ...plan }));
+
+      GroupService.moveSubCardId(res);
 
       return null;
     } catch {
@@ -123,12 +123,13 @@ export const groupThunks = {
     async (dispatch: AppDispatch, getState: any): Promise<any> => {
       try {
         const { plan } = getState().group;
-        const newIds = subCards.map((item: any) => item.id);
-
-        await GroupService.updateSubCardIds({ cardId, newIds, subCardId });
 
         plan.subCards[cardId] = subCards;
-        dispatch(groupActions.setPlan(plan));
+        dispatch(groupActions.setPlan({ ...plan }));
+
+        const newIds = subCards.map((item: any) => item.id);
+
+        GroupService.updateSubCardIds({ cardId, newIds, subCardId });
 
         return null;
       } catch {

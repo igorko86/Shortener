@@ -15,7 +15,6 @@ interface IProps {
   onMoveSubCard: (arg: IMoveSubCardDragInfo) => void;
   onMoveCard: (dragIndex: number, hoverItemIndex: number) => void;
   subCards: ISubCards;
-  setSubCards: (callBack: any) => void;
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
   onDropCard: (dropCardInfo: IDropCardInfo) => void;
   removeCard: (index: number, cardId: string) => void;

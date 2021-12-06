@@ -2,7 +2,7 @@
 import { FC } from 'react';
 import { useDrop } from 'react-dnd';
 // Internal
-import { IItemInfo, IMoveSubCardDragInfo, ISubCard, ISubCards, ItemTypeCard } from 'components/Plan/interfaces';
+import { IItemInfo, IMoveSubCardDragInfo, ISubCard, ItemTypeCard } from 'components/Plan/interfaces';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { libraryCardsSelector } from 'store/reducers/library/selectors';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
@@ -10,23 +10,17 @@ import SubCard from '../SubCard';
 import { updateSubCards, IDragInfo } from './helper';
 // Styles
 import { DivEmptyCard, DivWithContent, SpanEmptyCard } from './styles';
+import { planSelector } from '../../store/reducers/group/selectors';
 
 interface IProps {
   subCardsArray: ISubCard[];
   onMoveSubCard: (arg: IMoveSubCardDragInfo) => void;
-  setSubCards: (callBack: any) => void;
   cardId: string;
   removeSubCard: (subCardIndex: number, cardId: string) => void;
   canMoveDropSubCard: (itemInfo: IItemInfo) => boolean;
 }
-const PlanCardContent: FC<IProps> = ({
-  canMoveDropSubCard,
-  subCardsArray,
-  onMoveSubCard,
-  setSubCards,
-  cardId,
-  removeSubCard,
-}) => {
+const PlanCardContent: FC<IProps> = ({ canMoveDropSubCard, subCardsArray, onMoveSubCard, cardId, removeSubCard }) => {
+  const plan = useAppSelector(planSelector);
   const libraryCards = useAppSelector(libraryCardsSelector);
   const { moveSubCardId } = useActionCreator();
 
@@ -34,15 +28,16 @@ const PlanCardContent: FC<IProps> = ({
     () => ({
       accept: [ItemTypeCard.LIBRARY_CARD, ItemTypeCard.SUB_CARD],
       drop: (item) => {
+        if (!plan) return;
         const { hoverSubCardIndex, dragIndex } = item;
-        let updatedSubCardsInfo = null;
 
         if (hoverSubCardIndex && hoverSubCardIndex === dragIndex) return;
 
-        setSubCards((prevSubCards: ISubCards) => {
-          updatedSubCardsInfo = updateSubCards({ prevSubCards, dragInfo: item, libraryCards, cardId });
-
-          return updatedSubCardsInfo.updatedSubCards;
+        const updatedSubCardsInfo = updateSubCards({
+          prevSubCards: plan.subCards,
+          dragInfo: item,
+          libraryCards,
+          cardId,
         });
 
         moveSubCardId(updatedSubCardsInfo);

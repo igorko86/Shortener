@@ -18,7 +18,7 @@ class SubCardService {
     planCardService.updatePlanCardIds({ newIds, afterRemovedIds, cardId, dragCardId });
 
     if (libraryCardId && dragCardId) {
-      this.deleteSubCard({ dragCardId, libraryCardId });
+      await this.deleteSubCard({ cardId: dragCardId, libraryCardId });
     }
 
     if (libraryCardId) {

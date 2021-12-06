@@ -94,6 +94,7 @@ class PlanService {
 
     const { planCards, planCardIds, ...res } = planData;
     const sortedPlanCards = sortArrayBasedArray(planCards, planCardIds);
+
     const planCardsWithSortedSubCards = mapSubCards(sortedPlanCards);
 
     return {

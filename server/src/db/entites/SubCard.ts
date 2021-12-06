@@ -32,7 +32,7 @@ export class SubCard extends BaseEntity {
   libraryCardName: string;
 
   @Column({
-    name: 'library_id',
+    name: 'library_card_id',
   })
   libraryCardId: string;
 
