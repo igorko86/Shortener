@@ -16,7 +16,7 @@ class AuthService {
     const tutor = await Tutor.findOne({ email: tutorEmail });
 
     if (tutor) {
-      throw apiErrorService.badRequest(`Company with such "${tutorEmail}" email exists`);
+      throw apiErrorService.badRequest(`Sorry, Such email email already exists`);
     }
 
     const hashPassword = bcrypt.hashSync(String(password), 10);

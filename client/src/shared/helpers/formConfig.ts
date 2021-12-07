@@ -55,7 +55,6 @@ export const config: Record<FormItem, any> = {
   [FormItem.NAME]: {
     name: FormItem.NAME,
     label: 'Tutor Name',
-    tooltip: 'What do you want others to call you?',
     required: true,
     rules: rules[RulesType.REQUIRED_FILED],
   },

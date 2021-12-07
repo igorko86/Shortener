@@ -23,6 +23,7 @@ const CardContent: FC = () => {
   const handleClose = () => {
     dispatch(setCardContent(null));
   };
+
   return cardContent ? (
     <div>
       <CloseCircleFilled onClick={handleClose} />
