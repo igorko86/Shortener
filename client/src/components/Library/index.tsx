@@ -21,7 +21,7 @@ const Library: FC = () => {
 
   return (
     <ColumnWrapper>
-      <TitleColumn title="Library" />
+      <TitleColumn planName="Library" />
       <Search />
       <List
         grid={{

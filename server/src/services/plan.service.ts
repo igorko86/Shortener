@@ -4,6 +4,9 @@ import apiErrorService from './apiError.service';
 import { ICreatePlan, IMovePlanCardRequest, IUpdatePlanCardIds, UpdateStatus } from './interfaces';
 import { sortArrayBasedArray } from '../helpers';
 import { mapSubCards } from './mapper';
+import { IUpdateCardName, IUpdatePlanName } from '../../../client/src/shared/models/request/groupReguest';
+import { log } from 'util';
+import { PlanCard } from '../db/entites/PlanCard';
 
 class PlanService {
   async createPlan(name: string, groupId: string): Promise<ICreatePlan> {
@@ -22,7 +25,7 @@ class PlanService {
 
     return {
       id: planId,
-      planName: planName,
+      planName,
       planCards: [
         {
           id: planCardId,
@@ -108,6 +111,19 @@ class PlanService {
 
     await this.updatePlanCardIds({ planId, status: UpdateStatus.Update, dragIndex, index });
 
+    return null;
+  }
+
+  async updatePlanName(params: IUpdatePlanName): Promise<null> {
+    const { planId: id, planName } = params;
+
+    await Plan.update(id, { planName });
+    return null;
+  }
+  async updateCardName(params: IUpdateCardName): Promise<null> {
+    const { cardId: id, cardName } = params;
+
+    await PlanCard.update(id, { planCardName: cardName });
     return null;
   }
 }

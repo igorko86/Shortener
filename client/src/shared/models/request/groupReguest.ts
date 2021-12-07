@@ -9,6 +9,16 @@ export interface IMovePlanCardRequest {
   planId: string;
 }
 
+export interface IUpdatePlanName {
+  planName: string;
+  planId: string;
+}
+export interface IUpdateCardName {
+  cardName: string;
+  cardId: string;
+  cardIndex: number;
+}
+
 export interface IMoveSubCardIdRequest {
   newIds: string[];
   afterRemovedIds: string[];

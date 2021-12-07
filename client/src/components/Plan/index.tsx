@@ -1,5 +1,5 @@
 // External
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Space } from 'antd';
 import update from 'immutability-helper';
 // Internal
@@ -30,8 +30,13 @@ const Plan: FC = () => {
   const plan = useAppSelector(planSelector);
   const dispatch = useAppDispatch();
   const { subCards = [], planCards = [], planName = '' } = plan || {};
+  const [newPlanName, setNewPlanName] = useState('');
 
   const { createPlanCard, deletePlanCard, movePlanCardId, deleteSubCard } = useActionCreator();
+
+  useEffect(() => {
+    setNewPlanName(planName);
+  }, [planName]);
 
   const drawFrame = (): void => {
     if (!plan) return;
@@ -130,7 +135,13 @@ const Plan: FC = () => {
 
   return (
     <ColumnWrapper>
-      <TitleColumn title={planName || 'Plan Name'} titlePosition="left" />
+      <TitleColumn
+        planName={plan ? newPlanName : 'Plan Name'}
+        setNewPlanName={setNewPlanName}
+        isChange
+        titlePosition="left"
+        plan={plan}
+      />
       <Search />
       <Cards
         cards={planCards}

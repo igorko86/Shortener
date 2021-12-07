@@ -4,6 +4,8 @@ import {
   ICreateGroupAndPlanRequest,
   IMovePlanCardRequest,
   IMoveSubCardIdRequest,
+  IUpdateCardName,
+  IUpdatePlanName,
 } from '../models/request/groupReguest';
 import { IGroupResponse, IPlanCard, IPlanResponse } from '../models/response/groupResponse';
 
@@ -26,6 +28,14 @@ class GroupService {
 
   static deletePlanCard(cardId: string, planId: string, index: number): Promise<any> {
     return $api.delete(ApiRoutes.DeletePlanCard, { data: { cardId, planId, index } }).then(({ data }) => data);
+  }
+
+  static updatePlanName(planInfo: IUpdatePlanName): Promise<any> {
+    return $api.put(ApiRoutes.UpdatePlanName, planInfo).then(({ data }) => data);
+  }
+
+  static updateCardName(cardInfo: IUpdateCardName): Promise<any> {
+    return $api.put(ApiRoutes.UpdateCardName, cardInfo).then(({ data }) => data);
   }
 
   static movePlanCardId(cardInfo: IMovePlanCardRequest): Promise<any> {

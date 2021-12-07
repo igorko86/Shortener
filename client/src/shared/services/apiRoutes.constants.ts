@@ -13,9 +13,11 @@ export enum ApiRoutes {
   CreateGroup = '/groups/group',
   // Plan
   GetPlan = '/plans/plan',
+  UpdatePlanName = '/plans/plan/name',
   // cards for plan
   CreatePlanCard = '/plans/plan/card',
   DeletePlanCard = '/plans/plan/card',
+  UpdateCardName = '/plans/plan/card/name',
   MovePlanCardId = '/plans/plan/card/movement',
   MoveSubCardId = '/plans/plan/card/subCard/movement',
   UpdateSubCardIds = '/plans/plan/card/subCard',

@@ -1,5 +1,5 @@
 import GroupService from 'shared/services/GroupService';
-import { ICreateGroupAndPlanRequest } from 'shared/models/request/groupReguest';
+import { ICreateGroupAndPlanRequest, IUpdateCardName, IUpdatePlanName } from 'shared/models/request/groupReguest';
 import { IDropCardInfo } from 'components/Plan/interfaces';
 import { GroupActionEnum, IGroup, IPlan, ISetGroups, ISetPlan } from './types';
 import { AppDispatch } from '../../interfaces';
@@ -55,6 +55,38 @@ export const groupThunks = {
         const { id, planCardName } = planCard;
 
         return { id, planCardName };
+      } catch {
+        return null;
+      }
+    },
+  updatePlanName:
+    (planInfo: IUpdatePlanName) =>
+    async (dispatch: AppDispatch, getState: any): Promise<any> => {
+      try {
+        const { plan } = getState().group;
+        const { planId, planName } = planInfo;
+
+        await GroupService.updatePlanName({ planId, planName });
+        plan.planName = planName;
+        dispatch(groupActions.setPlan(plan));
+
+        return null;
+      } catch {
+        return null;
+      }
+    },
+  updateCardName:
+    (cardInfo: IUpdateCardName) =>
+    async (dispatch: AppDispatch, getState: any): Promise<any> => {
+      try {
+        const { plan } = getState().group;
+        const { cardId, cardName, cardIndex } = cardInfo;
+
+        await GroupService.updateCardName({ cardId, cardName, cardIndex });
+        plan.planCards[cardIndex].planCardName = cardName;
+        dispatch(groupActions.setPlan(plan));
+
+        return null;
       } catch {
         return null;
       }

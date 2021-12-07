@@ -66,6 +66,24 @@ class PlanController {
       next(error);
     }
   }
+  async updatePlanName(req: Request, res: Response, next: NextFunction) {
+    try {
+      await planService.updatePlanName(req.body);
+
+      return res.status(200).json('Success');
+    } catch (error) {
+      next(error);
+    }
+  }
+  async updateCardName(req: Request, res: Response, next: NextFunction) {
+    try {
+      await planService.updateCardName(req.body);
+
+      return res.status(200).json('Success');
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new PlanController();

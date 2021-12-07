@@ -1,10 +1,9 @@
 // External
-import { FC, useRef } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 // Internal
 import { DivNameWithPopover } from 'components/Plan/styles';
-import { SpanTitle } from 'components/Items/Card/styles';
 import Close from 'shared/assets/icons/close';
 import {
   ICard,
@@ -18,6 +17,8 @@ import PlanCardContent from './PlanCardContent';
 import Button from '../Items/Button';
 // Styles
 import { DivCard } from './styles';
+import EditableTitle from '../Items/EditableTitle';
+import { useActionCreator } from '../../shared/hooks/useActionCreator';
 
 interface IDragItem {
   index: number;
@@ -50,8 +51,10 @@ const PlanCard: FC<IProps> = ({
   onDropCard,
 }) => {
   const { id: cardId, planCardName } = card;
+  const [newCardName, setNewCardName] = useState(planCardName);
 
   const ref = useRef<HTMLDivElement>(null);
+  const { updateCardName } = useActionCreator();
 
   const [{ isDragging, handlerId }, connectDrag] = useDrag(
     {
@@ -120,6 +123,15 @@ const PlanCard: FC<IProps> = ({
     removeCard(cardIndex, cardId);
   };
 
+  const handleBluer = async () => {
+    if (card.planCardName !== newCardName) {
+      const result = newCardName || 'Title';
+
+      setNewCardName(result);
+      await updateCardName({ cardId: card.id, cardName: result, cardIndex });
+    }
+  };
+
   connectDrag(ref);
   connectDrop(ref);
 
@@ -134,7 +146,7 @@ const PlanCard: FC<IProps> = ({
     >
       <DivNameWithPopover>
         <div>
-          <SpanTitle>{planCardName}</SpanTitle>
+          <EditableTitle title={newCardName} setName={setNewCardName} cardId={cardId} handleBluer={handleBluer} />
         </div>
         <Button onClick={handleRemoveCard} icon={<Close />} />
       </DivNameWithPopover>
