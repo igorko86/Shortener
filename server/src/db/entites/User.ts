@@ -1,11 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
-import { Group } from './Group';
 import { Role } from '../../services/interfaces';
 
-@Entity('tutor')
-export class Tutor extends CreateUpdateDate {
+@Entity('user')
+export class User extends CreateUpdateDate {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -23,7 +22,7 @@ export class Tutor extends CreateUpdateDate {
   @Column({
     type: 'enum',
     enum: Role,
-    default: Role.Tutor,
+    default: Role.Viewer,
   })
   role: Role;
 
@@ -35,7 +34,4 @@ export class Tutor extends CreateUpdateDate {
 
   @Column({ type: 'timestamptz', onUpdate: 'NOW()', nullable: true, name: 'allow_to' })
   allowTo: Date;
-
-  @OneToMany(() => Group, (group) => group.tutor)
-  groups: Group[];
 }

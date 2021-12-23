@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Switch } from 'antd';
 import { config, FormItem } from 'shared/helpers/formConfig';
 
 interface IProps {
@@ -22,6 +22,9 @@ const RegistrationForm: FC<IProps> = ({ onSubmit }) => {
       </Form.Item>
       <Form.Item {...config[FormItem.CONFIRM]}>
         <Input.Password />
+      </Form.Item>
+      <Form.Item name="isTutor" label="Tutor" valuePropName="checked" initialValue>
+        <Switch defaultChecked />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">

@@ -17,9 +17,9 @@ export const groupActions = {
 };
 
 export const groupThunks = {
-  getGroups: () => async (dispatch: AppDispatch) => {
+  getGroupsById: (tutorId: string) => async (dispatch: AppDispatch) => {
     try {
-      const groups = await GroupService.getGroups();
+      const groups = await GroupService.getGroupsById(tutorId);
 
       dispatch(groupActions.setGroups(groups));
       return null;
@@ -27,10 +27,10 @@ export const groupThunks = {
       return null;
     }
   },
-  createGroupAndPlan: (validFields: ICreateGroupAndPlanRequest) => async (dispatch: AppDispatch, getState: any) => {
+  createCourse: (validFields: ICreateGroupAndPlanRequest) => async (dispatch: AppDispatch, getState: any) => {
     try {
       const { groups } = getState().group;
-      const groupPlanData = await GroupService.createGroupAndPlan(validFields);
+      const groupPlanData = await GroupService.createCourse(validFields);
       const { groupName, id, plan } = groupPlanData;
       const subCards = convertSubCardsArrayToObj(plan.planCards);
 
@@ -107,12 +107,45 @@ export const groupThunks = {
         return null;
       }
     },
-  getPlan: (groupId: string) => async (dispatch: AppDispatch) => {
-    try {
-      const plan = await GroupService.getPlan(groupId);
+  getCourseData: (groupId: string) => async (dispatch: AppDispatch) => {
+    const [planResponse, studentsResponse] = await Promise.allSettled([
+      GroupService.getPlanById(groupId),
+      GroupService.getStudentsById(groupId),
+    ]);
+    if (planResponse.status === 'fulfilled') {
+      const { value: plan } = planResponse;
       const subCards = convertSubCardsArrayToObj(plan.planCards);
 
       dispatch(groupActions.setPlan({ ...plan, subCards }));
+    }
+    if (studentsResponse.status === 'fulfilled') {
+      console.log(studentsResponse);
+    }
+  },
+  getPlanById: (groupId: string) => async (dispatch: AppDispatch) => {
+    try {
+      const plan = await GroupService.getPlanById(groupId);
+      const subCards = convertSubCardsArrayToObj(plan.planCards);
+
+      dispatch(groupActions.setPlan({ ...plan, subCards }));
+      return null;
+    } catch {
+      return null;
+    }
+  },
+  getStudentsById: (groupId: string) => async () => {
+    try {
+      const students = await GroupService.getStudentsById(groupId);
+      console.log(students);
+      return null;
+    } catch {
+      return null;
+    }
+  },
+  getStudentsByTutorId: (tutorId: string) => async () => {
+    try {
+      const students = await GroupService.getStudentsById(tutorId);
+      console.log(students);
       return null;
     } catch {
       return null;
@@ -158,7 +191,7 @@ export const groupThunks = {
 
         const newIds = subCards.map((item: any) => item.id);
 
-        GroupService.updateSubCardIds({ cardId, newIds, subCardId });
+        GroupService.deleteSubCard({ cardId, newIds, subCardId });
 
         return null;
       } catch {

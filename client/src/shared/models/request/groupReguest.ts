@@ -1,6 +1,7 @@
 export interface ICreateGroupAndPlanRequest {
   groupName: string;
   planName: string;
+  tutorId: string;
   students?: string[];
 }
 export interface IMovePlanCardRequest {

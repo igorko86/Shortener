@@ -4,16 +4,19 @@ import { Form, Input, Modal } from 'antd';
 // Internal
 import { config, FormItem } from 'shared/helpers/formConfig';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
+import { useAppSelector } from 'shared/hooks/storeHooks';
+import { userSelector } from 'store/reducers/auth/selectors';
 
 interface IProps {
   visible: boolean;
   onCancel: (showModal: boolean) => void;
 }
 
-const CreateGroupModal: FC<IProps> = ({ visible, onCancel }) => {
+const CreateCourseModal: FC<IProps> = ({ visible, onCancel }) => {
   const [form] = Form.useForm();
   const [creating, setCreating] = useState(false);
-  const { createGroupAndPlan } = useActionCreator();
+  const tutor = useAppSelector(userSelector);
+  const { createCourse } = useActionCreator();
 
   const handleCancel = () => {
     form.resetFields();
@@ -25,8 +28,9 @@ const CreateGroupModal: FC<IProps> = ({ visible, onCancel }) => {
 
     try {
       const validFields = await form.validateFields();
-
-      createGroupAndPlan(validFields);
+      if (tutor) {
+        createCourse({ ...validFields, tutorId: tutor.id });
+      }
 
       handleCancel();
       setCreating(false);
@@ -62,4 +66,4 @@ const CreateGroupModal: FC<IProps> = ({ visible, onCancel }) => {
   );
 };
 
-export default CreateGroupModal;
+export default CreateCourseModal;

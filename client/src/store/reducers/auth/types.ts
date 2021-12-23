@@ -1,9 +1,14 @@
-import { ITutor } from 'shared/models/response/authResponse';
+import { Role } from 'shared/models/request/authRequest';
 
+export interface IUser {
+  id: string;
+  name: string;
+  role: Role;
+}
 export interface IAuthState {
   isAuth: boolean;
   isLoading: boolean;
-  tutor: ITutor | null;
+  user: IUser | null;
 }
 
 export enum AuthActionEnum {
@@ -22,9 +27,9 @@ export interface ISetIsLoading {
   payload: boolean;
 }
 
-export interface ISetTutor {
+export interface ISetUser {
   type: AuthActionEnum.SET_TUTOR;
-  payload: ITutor | null;
+  payload: IUser | null;
 }
 
-export type AuthActions = ISetAuthAction | ISetIsLoading | ISetTutor;
+export type AuthActions = ISetAuthAction | ISetIsLoading | ISetUser;

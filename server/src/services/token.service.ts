@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken';
 
 import { Token } from '../db/entites/Token';
-import { IGenerateTokensResult, ITutor } from './interfaces';
+import { IGenerateTokensResult, IUser } from './interfaces';
 import { Tutor } from '../db/entites/Tutor';
-import TutorDto from '../dtos/tutor.dto';
+import { User } from '../db/entites/User';
+import UserDto from '../dtos/user.dto';
 
 class TokenService {
-  #generateTokens(payload: ITutor): IGenerateTokensResult {
+  #generateTokens(payload: IUser): IGenerateTokensResult {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET as string, {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRES,
     });
@@ -21,8 +22,8 @@ class TokenService {
     };
   }
 
-  async #saveRefreshToken(refreshToken: string, tutor: Tutor) {
-    const tokenData = await Token.findOne({ tutorId: tutor.id });
+  async #saveRefreshToken(refreshToken: string, userTutorId: string) {
+    const tokenData = await Token.findOne({ userTutorId });
 
     if (tokenData) {
       tokenData.refreshToken = refreshToken;
@@ -31,25 +32,25 @@ class TokenService {
     }
     const newToken = Token.create({
       refreshToken: refreshToken,
-      tutor,
+      userTutorId,
     });
 
     return await newToken.save();
   }
 
-  validateToken(token: string, secretKey: string): ITutor | null {
+  validateToken(token: string, secretKey: string): IUser | null {
     try {
-      return <ITutor>jwt.verify(token, secretKey);
+      return <IUser>jwt.verify(token, secretKey);
     } catch {
       return null;
     }
   }
 
-  async generateSaveTokens(tutor: Tutor): Promise<IGenerateTokensResult> {
-    const tutorDto = new TutorDto(tutor);
-    const tokens = this.#generateTokens({ ...tutorDto } as unknown as ITutor);
+  async generateSaveTokens(entity: Tutor | User): Promise<IGenerateTokensResult> {
+    const userDto = new UserDto(entity);
+    const tokens = this.#generateTokens({ ...userDto } as unknown as IUser);
 
-    await this.#saveRefreshToken(tokens.refreshToken, tutor);
+    await this.#saveRefreshToken(tokens.refreshToken, entity.id);
 
     return tokens;
   }

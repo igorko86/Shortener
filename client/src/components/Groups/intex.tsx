@@ -4,6 +4,7 @@ import { Select } from 'antd';
 // Internal
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { groupsSelector, planSelector } from 'store/reducers/group/selectors';
+import { userSelector } from 'store/reducers/auth/selectors';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import ColumnWrapper from '../Items/ColumnWrapper';
 
@@ -16,7 +17,8 @@ const { Option } = Select;
 const Groups: FC = () => {
   const groups = useAppSelector(groupsSelector);
   const plan = useAppSelector(planSelector);
-  const { getPlan, getGroups } = useActionCreator();
+  const user = useAppSelector(userSelector);
+  const { getCourseData, getGroupsById } = useActionCreator();
   const [selectedValue, setSelectedValue] = useState('');
 
   useEffect(() => {
@@ -26,13 +28,13 @@ const Groups: FC = () => {
   }, [groups]);
 
   useEffect(() => {
-    if (!plan) {
-      getGroups();
+    if (!plan && user) {
+      getGroupsById(user.id);
     }
   }, []);
 
   const handleChangeGroup = (groupId: any) => {
-    getPlan(groupId);
+    getCourseData(groupId);
     setSelectedValue(groupId);
   };
 
@@ -47,7 +49,6 @@ const Groups: FC = () => {
         filterOption={(input, option) => option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
       >
         {groups.map((group) => {
-          // @ts-ignore
           const { groupName, id } = group;
 
           return (

@@ -3,7 +3,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { SubCard } from './SubCard';
 
-@Entity('libraryCard')
+@Entity('library_card')
 export class LibraryCard extends CreateUpdateDate {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -14,7 +14,7 @@ export class LibraryCard extends CreateUpdateDate {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ name: 'html_content' })
   htmlContent: string;
 
   @OneToMany(() => SubCard, (subCard) => subCard.library)

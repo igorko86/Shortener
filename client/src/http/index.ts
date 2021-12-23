@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { IAuthResponse } from 'shared/models/response/authResponse';
 import { AppPath } from 'shared/common/enum';
 import { authThunks } from 'store/reducers/auth/actionCreators';
 import { ApiRoutes } from 'shared/services/apiRoutes.constants';
@@ -45,14 +44,11 @@ const handleResponseError = async (error: any) => {
         originalRequest._isRetry = true;
 
         try {
-          const { data } = await axios.get<IAuthResponse>(
-            `${process.env.REACT_APP_SERVER_URL}/api${ApiRoutes.Refresh}`,
-            {
-              withCredentials: true,
-            }
-          );
+          const { data: token } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api${ApiRoutes.Refresh}`, {
+            withCredentials: true,
+          });
 
-          localStorage.setItem('token', data.accessToken);
+          localStorage.setItem('token', token);
 
           $api.request(originalRequest); // repeat request
         } catch {

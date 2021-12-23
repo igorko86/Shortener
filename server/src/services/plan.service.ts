@@ -4,8 +4,6 @@ import apiErrorService from './apiError.service';
 import { ICreatePlan, IMovePlanCardRequest, IUpdatePlanCardIds, UpdateStatus } from './interfaces';
 import { sortArrayBasedArray } from '../helpers';
 import { mapSubCards } from './mapper';
-import { IUpdateCardName, IUpdatePlanName } from '../../../client/src/shared/models/request/groupReguest';
-import { log } from 'util';
 import { PlanCard } from '../db/entites/PlanCard';
 
 class PlanService {
@@ -57,6 +55,7 @@ class PlanService {
       case UpdateStatus.Update:
         if (typeof dragIndex === 'number' && typeof index === 'number') {
           const [deletedId] = planCardIds.splice(dragIndex, 1);
+
           planCardIds.splice(index, 0, deletedId);
         }
         break;
@@ -114,13 +113,14 @@ class PlanService {
     return null;
   }
 
-  async updatePlanName(params: IUpdatePlanName): Promise<null> {
+  async updatePlanName(params: any): Promise<null> {
     const { planId: id, planName } = params;
 
     await Plan.update(id, { planName });
     return null;
   }
-  async updateCardName(params: IUpdateCardName): Promise<null> {
+
+  async updateCardName(params: any): Promise<null> {
     const { cardId: id, cardName } = params;
 
     await PlanCard.update(id, { planCardName: cardName });

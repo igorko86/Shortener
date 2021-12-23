@@ -10,7 +10,7 @@ export enum ApiRoutes {
   CardContent = '/library/card/content',
   // Croups
   GetGroups = '/groups',
-  CreateGroup = '/groups/group',
+  CreateCourse = '/course',
   // Plan
   GetPlan = '/plans/plan',
   UpdatePlanName = '/plans/plan/name',
@@ -20,5 +20,8 @@ export enum ApiRoutes {
   UpdateCardName = '/plans/plan/card/name',
   MovePlanCardId = '/plans/plan/card/movement',
   MoveSubCardId = '/plans/plan/card/subCard/movement',
-  UpdateSubCardIds = '/plans/plan/card/subCard',
+  DeleteSubCardIds = '/plans/plan/card/subCard',
+  // Student
+  GetStudents = '/students',
+  AddStudent = '/students/student',
 }

@@ -7,8 +7,9 @@ import { VALIDATION_ERROR } from '../services/constants';
 
 class AuthController {
   constructor() {
-    this.refresh = this.refresh.bind(this);
+    this.register = this.register.bind(this);
     this.login = this.login.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
 
   async register(req: Request, res: Response, next: NextFunction) {
@@ -18,7 +19,7 @@ class AuthController {
       if (!errors.isEmpty()) {
         return next(ApiErrorService.badRequest(VALIDATION_ERROR, errors.array()));
       }
-      await authService.registrationTutor(req.body);
+      await authService.register(req.body);
 
       return res.json({
         message: `"${req.body.name}" has been registered successfully`,
@@ -30,12 +31,11 @@ class AuthController {
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password } = req.body;
-      const { refreshToken, ...loginData } = await authService.login(email, password);
+      const { refreshToken, accessToken } = await authService.login(req.body);
 
       this.#setCookie(refreshToken, res);
 
-      return res.status(200).json(loginData);
+      return res.status(200).json(accessToken);
     } catch (error) {
       next(error);
     }
@@ -54,9 +54,8 @@ class AuthController {
 
   async activate(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = req.params.link;
+      await authService.activate(req.params);
 
-      await authService.activateTutor(id);
       res.redirect(process.env.CLIENT_URL as unknown as string);
     } catch (error) {
       next(error);
@@ -65,11 +64,11 @@ class AuthController {
 
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
-      const { refreshToken, ...refreshData } = await authService.refresh(req.cookies.refreshToken);
+      const { refreshToken, accessToken } = await authService.refresh(req.cookies.refreshToken);
 
       this.#setCookie(refreshToken, res);
 
-      return res.status(200).json(refreshData);
+      return res.status(200).json(accessToken);
     } catch (error) {
       next(error);
     }

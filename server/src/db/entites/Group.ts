@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
+import { Tutor } from './Tutor';
 
 @Entity('group')
 export class Group extends CreateUpdateDate {
@@ -11,4 +12,7 @@ export class Group extends CreateUpdateDate {
     name: 'group_name',
   })
   groupName: string;
+
+  @ManyToOne(() => Tutor, (tutor) => tutor.groups)
+  tutor: Tutor;
 }

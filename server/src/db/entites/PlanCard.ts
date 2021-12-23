@@ -4,7 +4,7 @@ import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { Plan } from './Plan';
 import { SubCard } from './SubCard';
 
-@Entity('planCard')
+@Entity('plan_card')
 export class PlanCard extends CreateUpdateDate {
   @PrimaryGeneratedColumn('uuid')
   id: string;

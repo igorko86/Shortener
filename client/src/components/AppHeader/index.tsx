@@ -6,7 +6,7 @@ import { Header } from 'antd/lib/layout/layout';
 // Internal
 import { AppPath } from 'shared/common/enum';
 import { useAppSelector } from 'shared/hooks/storeHooks';
-import { isAuthSelector, tutorSelector } from 'store/reducers/auth/selectors';
+import { isAuthSelector, userSelector } from 'store/reducers/auth/selectors';
 import { useActionCreator } from '../../shared/hooks/useActionCreator';
 
 const AppHeader: FC = () => {
@@ -14,7 +14,7 @@ const AppHeader: FC = () => {
   // const dispatch = useDispatch();
   const { logout } = useActionCreator();
   const isAuth = useAppSelector(isAuthSelector);
-  const tutor = useAppSelector(tutorSelector);
+  const tutor = useAppSelector(userSelector);
 
   const handleClickLogOut = () => {
     logout();

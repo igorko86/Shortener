@@ -10,16 +10,20 @@ import {
 import { IGroupResponse, IPlanCard, IPlanResponse } from '../models/response/groupResponse';
 
 class GroupService {
-  static getGroups(): Promise<IGroupResponse[]> {
-    return $api.get(ApiRoutes.GetGroups).then(({ data }) => data);
+  static getGroupsById(tutorId: string): Promise<IGroupResponse[]> {
+    return $api.get(ApiRoutes.GetGroups, { params: { tutorId } }).then(({ data }) => data);
   }
 
-  static getPlan(groupId: string): Promise<IPlanResponse> {
+  static getPlanById(groupId: string): Promise<IPlanResponse> {
     return $api.get<IPlanResponse>(ApiRoutes.GetPlan, { params: { groupId } }).then(({ data }) => data);
   }
 
-  static createGroupAndPlan(formObj: ICreateGroupAndPlanRequest): Promise<IGroupResponse> {
-    return $api.post<IGroupResponse>(ApiRoutes.CreateGroup, formObj).then(({ data }) => data);
+  static getStudentsById(groupId: string): Promise<IPlanResponse> {
+    return $api.get<IPlanResponse>(ApiRoutes.GetStudents, { params: { groupId } }).then(({ data }) => data);
+  }
+
+  static createCourse(formObj: ICreateGroupAndPlanRequest): Promise<IGroupResponse> {
+    return $api.post<IGroupResponse>(ApiRoutes.CreateCourse, formObj).then(({ data }) => data);
   }
 
   static createPlanCard(planId: string): Promise<any> {
@@ -46,8 +50,8 @@ class GroupService {
     return $api.put(ApiRoutes.MoveSubCardId, cardInfo).then(({ data }) => data);
   }
 
-  static updateSubCardIds(body: { cardId: string; subCardId: string; newIds: string[] }): Promise<any> {
-    return $api.delete(ApiRoutes.UpdateSubCardIds, { data: body }).then(({ data }) => data);
+  static deleteSubCard(body: { cardId: string; subCardId: string; newIds: string[] }): Promise<any> {
+    return $api.delete(ApiRoutes.DeleteSubCardIds, { data: body }).then(({ data }) => data);
   }
 }
 

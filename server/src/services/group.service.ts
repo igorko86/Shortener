@@ -1,28 +1,26 @@
-import { IGroupAndPlanRequest, IGroupAndPlanResponse } from './interfaces';
+import { IGroupAndPlanRequest } from './interfaces';
 import { Group } from '../db/entites/Group';
-import planService from './plan.service';
+import { Tutor } from '../db/entites/Tutor';
 
 class GroupService {
-  async createGroupAndPlan(data: IGroupAndPlanRequest): Promise<IGroupAndPlanResponse> {
-    const { planName, groupName } = data;
+  async createGroup(data: IGroupAndPlanRequest): Promise<Group> {
+    const { groupName, tutorId } = data;
+
+    const tutor = await Tutor.findOne({ id: tutorId });
 
     const newGroup = Group.create({
       groupName,
+      tutor,
     });
 
-    const { groupName: savedGroupName, id } = await newGroup.save();
-
-    const planData = await planService.createPlan(planName, id);
-
-    return {
-      groupName: savedGroupName,
-      id,
-      plan: planData,
-    };
+    return await newGroup.save();
   }
 
-  async getGroups(): Promise<any> {
-    const result = await Group.createQueryBuilder('group').select(['group.id', 'group.groupName']).getMany();
+  async getGroupsById(tutorId: any): Promise<any> {
+    const result = await Group.createQueryBuilder('group')
+      .select(['group.id', 'group.groupName'])
+      .where('group.tutorId = :tutorId', { tutorId })
+      .getMany();
 
     return result;
   }

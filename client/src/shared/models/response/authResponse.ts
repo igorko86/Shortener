@@ -1,10 +1,8 @@
-export interface IAuthResponse {
-  accessToken: string;
-  tutor: ITutor;
-}
+import { Role } from '../request/authRequest';
 
-export interface ITutor {
+export interface ITokenResponse {
   id: string;
   name: string;
   email: string;
+  role: Role;
 }

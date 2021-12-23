@@ -3,7 +3,7 @@ import { AuthActions, AuthActionEnum, IAuthState } from './types';
 const initialState: IAuthState = {
   isAuth: false,
   isLoading: false,
-  tutor: null,
+  user: null,
 };
 
 const authReducer = (state = initialState, action: AuthActions): IAuthState => {
@@ -13,7 +13,7 @@ const authReducer = (state = initialState, action: AuthActions): IAuthState => {
     case AuthActionEnum.SET_IS_LOADING:
       return { ...state, isLoading: action.payload };
     case AuthActionEnum.SET_TUTOR:
-      return { ...state, tutor: action.payload };
+      return { ...state, user: action.payload };
     default:
       return state;
   }

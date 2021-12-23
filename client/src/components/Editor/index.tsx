@@ -33,6 +33,7 @@ const modules = {
 interface IProps {
   onChange?: (e: any) => void;
 }
+
 const Editor: FC<IProps> = ({ onChange }) => {
   return <ReactQuill modules={modules} theme="snow" onChange={onChange} placeholder="Content goes here..." />;
 };

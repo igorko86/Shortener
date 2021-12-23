@@ -1,104 +1,61 @@
-import bcrypt from 'bcrypt';
-
-import { Tutor } from '../db/entites/Tutor';
-import mailService from './mail.service';
 import tokenService from './token.service';
-import { ITutorData, ITutorRequest, ITutor } from './interfaces';
-import apiErrorService from './apiError.service';
+import { Role, IServicesByRole, IGenerateTokensResult } from './interfaces';
+import { IAuthLoginRequest, IAuthRegistrationRequest } from 'src/models/request/auth.request';
+
+import userService from './user.service';
+import tutorService from './tutor.service';
 import ApiErrorService from './apiError.service';
-import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants';
 import { Token } from '../db/entites/Token';
-import TutorDto from '../dtos/tutor.dto';
 
 class AuthService {
-  async registrationTutor(data: ITutorRequest) {
-    const { name: tutorName, email: tutorEmail, password } = data;
-    const tutor = await Tutor.findOne({ email: tutorEmail });
+  private services: IServicesByRole;
 
-    if (tutor) {
-      throw apiErrorService.badRequest(`Sorry, Such email email already exists`);
-    }
-
-    const hashPassword = bcrypt.hashSync(String(password), 10);
-    const newTutor = Tutor.create({
-      email: tutorEmail,
-      password: hashPassword,
-      name: tutorName,
-    });
-    const savedTutor = await newTutor.save();
-    const { id, email } = savedTutor;
-    const activationLink = `${process.env.SERVER_URL}/api/auth/activation/${id}`;
-
-    await mailService.sendActivationMail(email, activationLink);
+  constructor(services: IServicesByRole) {
+    this.services = services;
   }
 
-  async activateTutor(id: string) {
-    const tutor = await Tutor.findOne(id);
-
-    if (!tutor || tutor.isActive) {
-      throw ApiErrorService.badRequest(ACTIVATION_LINK_ERROR);
-    }
-    tutor.isActive = true;
-
-    await tutor.save();
+  async register(data: IAuthRegistrationRequest) {
+    // @ts-ignore
+    await this.services[data.role].register(data);
   }
 
-  async login(email: string, password: string): Promise<ITutorData> {
-    const tutor = await Tutor.findOne({ email });
+  async activate(params: any) {
+    const { link: id, role } = params;
 
-    if (!tutor) {
-      throw ApiErrorService.badRequest(`Such "${email}" email doesn't exist`);
-    } else if (!tutor.isActive) {
-      throw ApiErrorService.badRequest(ACTIVATE_ERROR);
-    }
+    // @ts-ignore
+    await this.services[role].activate(id);
+  }
 
-    const isPassEquals = await bcrypt.compare(String(password), String(tutor.password));
-
-    if (!isPassEquals) {
-      throw ApiErrorService.badRequest(PASSWORD_ERROR);
-    }
-    const tokens = await tokenService.generateSaveTokens(tutor);
-    const tutorDto = new TutorDto(tutor);
-
-    return {
-      tutor: tutorDto as unknown as ITutor,
-      ...tokens,
-    };
+  async login(body: IAuthLoginRequest): Promise<IGenerateTokensResult> {
+    // @ts-ignore
+    return this.services[body.role].login(body);
   }
 
   async logout(refreshToken: string) {
     await tokenService.removeToken(refreshToken);
   }
 
-  async refresh(currentRefreshToken: string): Promise<ITutorData> {
+  async refresh(currentRefreshToken: string): Promise<IGenerateTokensResult> {
     if (!currentRefreshToken) {
       throw ApiErrorService.unauthorized();
     }
 
-    const tutorData = tokenService.validateToken(
+    const userData = tokenService.validateToken(
       currentRefreshToken,
       process.env.JWT_REFRESH_SECRET as unknown as string
     );
     const tokenFromDB = await Token.findOne({ refreshToken: currentRefreshToken });
 
-    if (!tutorData || !tokenFromDB) {
+    if (!userData || !tokenFromDB) {
       throw ApiErrorService.unauthorized();
     }
 
-    const tutor = await Tutor.findOne(tutorData.id);
-
-    if (!tutor) {
-      throw ApiErrorService.unauthorized();
-    }
-
-    const tokens = await tokenService.generateSaveTokens(tutor);
-    const tutorDto = new TutorDto(tutor);
-
-    return {
-      tutor: tutorDto as unknown as ITutor,
-      ...tokens,
-    };
+    // @ts-ignore
+    return await this.services[userData.role].refresh(userData.id);
   }
 }
 
-export default new AuthService();
+export default new AuthService({
+  [Role.Viewer]: userService,
+  [Role.Tutor]: tutorService,
+});

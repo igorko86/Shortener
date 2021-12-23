@@ -1,22 +1,9 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-import { CreateUpdateDate } from '../common/CreateUpdateDate';
-import { Plan } from './Plan';
 import { LibraryCard } from './LibraryCard';
 import { PlanCard } from './PlanCard';
 
-@Entity('subCard')
+@Entity('sub_card')
 export class SubCard extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

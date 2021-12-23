@@ -1,3 +1,6 @@
+import userService from './user.service';
+import tutorService from './tutor.service';
+
 export interface IGenerateTokensResult {
   accessToken: string;
   refreshToken: string;
@@ -9,14 +12,19 @@ export interface ITutor {
   email: string;
 }
 
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  role: IAuthRole;
+}
+
 export interface ITutorData extends IGenerateTokensResult {
   tutor: ITutor;
 }
 
-export interface ITutorRequest {
-  name: string;
-  email: string;
-  password: string;
+export interface IUserData extends IGenerateTokensResult {
+  user: IUser;
 }
 
 export interface ICardRequest {
@@ -28,6 +36,7 @@ export interface ICardRequest {
 export interface IGroupAndPlanRequest {
   groupName: string;
   planName: string;
+  tutorId: string;
   students?: string[];
 }
 
@@ -102,4 +111,21 @@ export interface IMoveSubCardRequest {
 
 export interface ICardContentResponse {
   htmlContent: string;
+}
+
+export interface IServicesByRole {
+  [Role.Viewer]: typeof userService;
+  [Role.Tutor]: typeof tutorService;
+}
+
+export interface IAuthRole {
+  [Role.Viewer]: Role.Viewer;
+  [Role.Tutor]: Role.Tutor;
+  [Role.Student]: Role.Student;
+}
+
+export enum Role {
+  Tutor = 'Tutor',
+  Viewer = 'Viewer',
+  Student = 'Student',
 }

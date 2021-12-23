@@ -10,6 +10,7 @@ import Plans from 'shared/assets/icons/plans';
 import Students from 'shared/assets/icons/students';
 import AddStudents from 'shared/assets/icons/addStudent';
 import CreateGroup from './CreateGroup';
+import AddStudent from './AddStudent';
 // Styles
 import { DivSubHeader } from './styles';
 
@@ -25,6 +26,7 @@ const AppSubHeader: FC = () => {
       <Space size="middle">
         <Button text="Home" icon={<Home />} onClick={() => handleClickButton(AppPath.ROOT)} />
         <CreateGroup />
+        <AddStudent />
         <Button text="create card" onClick={() => handleClickButton(AppPath.CREATE_CARD)} />
         <Button text="Students" icon={<Students />} />
         <Button text="Plans" icon={<Plans />} />

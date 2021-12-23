@@ -1,5 +1,4 @@
-import { IAuthResponse } from '../models/response/authResponse';
-import { IFormObjRequest, ITutorRequest } from '../models/request/authRequest';
+import { IFormObjRequest, IUserRequest } from '../models/request/authRequest';
 import $api from '../../http';
 import { ApiRoutes } from './apiRoutes.constants';
 
@@ -8,8 +7,8 @@ class AuthService {
     return $api.post(ApiRoutes.Registration, formObj);
   }
 
-  static login(formObj: ITutorRequest): Promise<IAuthResponse> {
-    return $api.post(ApiRoutes.Login, formObj).then(({ data }) => data);
+  static login(formObj: IUserRequest): Promise<string> {
+    return $api.post<string>(ApiRoutes.Login, formObj).then(({ data }) => data);
   }
 
   static logout(): Promise<void> {

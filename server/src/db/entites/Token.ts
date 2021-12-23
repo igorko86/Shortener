@@ -1,6 +1,4 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-
-import { Tutor } from './Tutor';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('token')
 export class Token extends BaseEntity {
@@ -13,14 +11,8 @@ export class Token extends BaseEntity {
   refreshToken: string;
 
   @Column({
-    name: 'tutor_id',
+    name: 'user_tutor_id',
     type: 'uuid',
   })
-  tutorId: string;
-
-  @ManyToOne(() => Tutor, (tutor) => tutor.tokens)
-  @JoinColumn({
-    name: 'tutor_id',
-  })
-  tutor: Tutor;
+  userTutorId: string;
 }

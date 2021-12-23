@@ -1,10 +1,10 @@
 // External
 import { FC, useState } from 'react';
 // Internal
-import CreateGroupModal from 'components/Modals/CreateGroupModal';
+import CreateCourseModal from 'components/Modals/CreateCourseModal';
 import Button from 'components/Items/Button';
 
-const CreateGroup: FC = () => {
+const CreateCourse: FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleClickShowModal = () => {
@@ -13,10 +13,10 @@ const CreateGroup: FC = () => {
 
   return (
     <>
-      <Button text="create plan" onClick={handleClickShowModal} />
-      <CreateGroupModal visible={showModal} onCancel={handleClickShowModal} />
+      <Button text="create course" onClick={handleClickShowModal} />
+      <CreateCourseModal visible={showModal} onCancel={handleClickShowModal} />
     </>
   );
 };
 
-export default CreateGroup;
+export default CreateCourse;

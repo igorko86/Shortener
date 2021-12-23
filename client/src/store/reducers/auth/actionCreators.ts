@@ -1,26 +1,28 @@
 import axios from 'axios';
+import jwt from 'jwt-decode';
 
 import { IFormObjRequest } from 'shared/models/request/authRequest';
 import AuthService from 'shared/services/AuthService';
-import { IAuthResponse, ITutor } from 'shared/models/response/authResponse';
 import { ApiRoutes } from 'shared/services/apiRoutes.constants';
-import { AuthActionEnum, ISetAuthAction, ISetIsLoading, ISetTutor } from './types';
+import { ITokenResponse } from 'shared/models/response/authResponse';
+import { AuthActionEnum, ISetAuthAction, ISetIsLoading, ISetUser, IUser } from './types';
 import { AppDispatch, SetResetStore } from '../../interfaces';
 
 const authActions = {
   setIsAuth: (isAuth: boolean): ISetAuthAction => ({ type: AuthActionEnum.SET_IS_AUTH, payload: isAuth }),
   setIsLoading: (isLoading: boolean): ISetIsLoading => ({ type: AuthActionEnum.SET_IS_LOADING, payload: isLoading }),
-  setTutor: (tutor: ITutor | null): ISetTutor => ({ type: AuthActionEnum.SET_TUTOR, payload: tutor }),
+  setUser: (user: IUser | null): ISetUser => ({ type: AuthActionEnum.SET_TUTOR, payload: user }),
 };
 
 export const authThunks = {
   login: (formObj: IFormObjRequest) => async (dispatch: AppDispatch) => {
     try {
-      const { accessToken, tutor } = await AuthService.login(formObj);
+      const token = await AuthService.login(formObj);
+      const { id, name, role }: ITokenResponse = jwt(token);
 
-      localStorage.setItem('token', accessToken);
+      localStorage.setItem('token', token);
 
-      dispatch(authActions.setTutor(tutor));
+      dispatch(authActions.setUser({ id, name, role }));
       dispatch(authActions.setIsAuth(true));
 
       return null;
@@ -30,13 +32,14 @@ export const authThunks = {
   },
   checkAuth: () => async (dispatch: AppDispatch) => {
     try {
-      const { data } = await axios.get<IAuthResponse>(`${process.env.REACT_APP_SERVER_URL}/api${ApiRoutes.Refresh}`, {
+      const { data: token } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api${ApiRoutes.Refresh}`, {
         withCredentials: true,
       });
+      const { id, name, role }: ITokenResponse = jwt(token);
 
-      localStorage.setItem('token', data.accessToken);
+      localStorage.setItem('token', token);
 
-      dispatch(authActions.setTutor(data.tutor));
+      dispatch(authActions.setUser({ id, name, role }));
       dispatch(authActions.setIsAuth(true));
 
       return null;
