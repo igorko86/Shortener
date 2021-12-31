@@ -82,7 +82,7 @@ class PlanService {
         'planCard.libraryCardIds',
         'subCard.id',
         'libraryCard.id',
-        'libraryCard.title',
+        'libraryCard.name',
       ])
       .leftJoin('plan.planCards', 'planCard')
       .leftJoin('planCard.subCards', 'subCard')

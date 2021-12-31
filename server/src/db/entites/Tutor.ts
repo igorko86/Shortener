@@ -3,6 +3,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { Group } from './Group';
 import { Role } from '../../services/interfaces';
+import { Student } from './Student';
 
 @Entity('tutor')
 export class Tutor extends CreateUpdateDate {
@@ -38,4 +39,7 @@ export class Tutor extends CreateUpdateDate {
 
   @OneToMany(() => Group, (group) => group.tutor)
   groups: Group[];
+
+  @OneToMany(() => Student, (student) => student.tutor)
+  students: Student[];
 }

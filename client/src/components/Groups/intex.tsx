@@ -23,7 +23,7 @@ const Groups: FC = () => {
 
   useEffect(() => {
     if (groups.length && plan) {
-      setSelectedValue(groups[0].id);
+      setSelectedValue(plan.groupId);
     }
   }, [groups]);
 
@@ -46,7 +46,8 @@ const Groups: FC = () => {
         placeholder="Select group"
         optionFilterProp="children"
         onChange={handleChangeGroup}
-        filterOption={(input, option) => option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        // @ts-ignore
+        filterOption={(input, option) => option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
       >
         {groups.map((group) => {
           const { groupName, id } = group;

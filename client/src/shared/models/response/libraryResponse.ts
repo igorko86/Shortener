@@ -1,6 +1,6 @@
 export interface ILibraryCardResponse {
   id: string;
-  title: string;
+  name: string;
   description: string;
 }
 

@@ -9,7 +9,7 @@ export class LibraryCard extends CreateUpdateDate {
   id: string;
 
   @Column()
-  title: string;
+  name: string;
 
   @Column()
   description: string;

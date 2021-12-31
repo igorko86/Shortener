@@ -11,7 +11,7 @@ import { IAuthLoginRequest, IUserRequest } from '../models/request/auth.request'
 import { User } from '../db/entites/User';
 
 class UserService {
-  async register(data: IUserRequest, link?: string) {
+  async register(data: IUserRequest, link?: string): Promise<User> {
     const { name: userName, email: userEmail, password, role } = data;
     const user = await User.findOne({ email: userEmail });
 
@@ -31,6 +31,8 @@ class UserService {
     const activationLink = (link || `${process.env.SERVER_URL}/api/auth/activation/${Role.Viewer}/`) + id;
 
     await mailService.sendActivationMail(email, activationLink);
+
+    return savedUser;
   }
 
   async activate(id: string) {

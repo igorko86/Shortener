@@ -8,6 +8,10 @@ class LibraryService {
     return $api.get<ILibraryCardResponse[]>(ApiRoutes.GetCards).then(({ data }) => data);
   }
 
+  static async getMyLibraryCards(): Promise<ILibraryCardResponse[]> {
+    return $api.get<ILibraryCardResponse[]>(ApiRoutes.GetMyCards).then(({ data }) => data);
+  }
+
   static async createLibraryCard(body: ILibraryCardRequest): Promise<void> {
     return $api.post(ApiRoutes.CreateCard, body);
   }

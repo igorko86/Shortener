@@ -11,7 +11,7 @@ class LibraryService {
 
   async getLibraryCards(): Promise<ILibraryCardsResponse[]> {
     return await LibraryCard.createQueryBuilder('libraryCard')
-      .select(['libraryCard.id', 'libraryCard.title', 'libraryCard.description'])
+      .select(['libraryCard.id', 'libraryCard.name', 'libraryCard.description'])
       .getMany();
   }
 

@@ -21,7 +21,7 @@ export interface ISubCard {
   id: string;
   cardId?: string;
   description: string;
-  title: string;
+  name: string;
 }
 
 export type LibraryCardType = Omit<ISubCard, 'cardId'>;

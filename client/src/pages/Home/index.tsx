@@ -8,8 +8,9 @@ import Plan from 'components/Plan';
 import Library from 'components/Library';
 import CardContent from 'components/CardContent';
 import Groups from 'components/Groups/intex';
+import TutorLibrary from 'components/TutorLibrary';
 
-const Main: FC = () => {
+const Home: FC = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout.Content>
@@ -17,6 +18,7 @@ const Main: FC = () => {
           <Plan />
           <CardContent />
           <Groups />
+          <TutorLibrary />
           <Library />
         </div>
         <Layout.Footer>Footer</Layout.Footer>
@@ -25,4 +27,4 @@ const Main: FC = () => {
   );
 };
 
-export default Main;
+export default Home;

@@ -1,7 +1,10 @@
+// External
 import { FC } from 'react';
+// Internal
+import { useActionCreator } from 'shared/hooks/useActionCreator';
 import EditableTitle from '../EditableTitle';
+// Styles
 import { SpanTitleColumn, TitleColumnPosition } from './styles';
-import { useActionCreator } from '../../../shared/hooks/useActionCreator';
 
 interface IProps {
   planName: string;

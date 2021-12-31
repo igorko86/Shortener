@@ -34,7 +34,7 @@ export const groupThunks = {
       const { groupName, id, plan } = groupPlanData;
       const subCards = convertSubCardsArrayToObj(plan.planCards);
 
-      dispatch(groupActions.setPlan({ ...plan, subCards }));
+      dispatch(groupActions.setPlan({ ...plan, groupId: id, subCards }));
       dispatch(groupActions.setGroups([{ id, groupName }, ...groups]));
       return null;
     } catch {
@@ -112,11 +112,12 @@ export const groupThunks = {
       GroupService.getPlanById(groupId),
       GroupService.getStudentsById(groupId),
     ]);
+
     if (planResponse.status === 'fulfilled') {
       const { value: plan } = planResponse;
       const subCards = convertSubCardsArrayToObj(plan.planCards);
 
-      dispatch(groupActions.setPlan({ ...plan, subCards }));
+      dispatch(groupActions.setPlan({ ...plan, groupId, subCards }));
     }
     if (studentsResponse.status === 'fulfilled') {
       console.log(studentsResponse);
@@ -126,8 +127,7 @@ export const groupThunks = {
     try {
       const plan = await GroupService.getPlanById(groupId);
       const subCards = convertSubCardsArrayToObj(plan.planCards);
-
-      dispatch(groupActions.setPlan({ ...plan, subCards }));
+      dispatch(groupActions.setPlan({ ...plan, groupId, subCards }));
       return null;
     } catch {
       return null;

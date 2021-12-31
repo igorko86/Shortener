@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { Layout } from 'antd';
 import { ThemeProvider } from 'styled-components';
 // Internal
-import AppRouter from 'components/AppRouter';
+import AppRouter from 'AppRouter';
 import AppHeader from 'components/AppHeader';
 import { theme } from 'theme';
 

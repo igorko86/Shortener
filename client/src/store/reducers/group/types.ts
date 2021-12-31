@@ -31,6 +31,7 @@ export interface IPlanCard {
 }
 export interface IPlan {
   planName: string;
+  groupId: string;
   id: string;
   planCards: IPlanCard[];
   subCards: any;

@@ -7,7 +7,7 @@ import { privateRoutes, publicRoutes } from 'routes';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { isAuthSelector } from 'store/reducers/auth/selectors';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
-import AppSubHeader from '../AppSubHeader';
+import AppSubHeader from '../components/AppSubHeader';
 
 const AppRouter: FC = () => {
   const { checkAuth } = useActionCreator();

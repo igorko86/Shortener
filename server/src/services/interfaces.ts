@@ -97,7 +97,7 @@ export interface ICreatePlanCardByIdResponse {
 
 export interface ILibraryCardsResponse {
   id: string;
-  title: string;
+  name: string;
   description: string;
 }
 
@@ -128,4 +128,11 @@ export enum Role {
   Tutor = 'Tutor',
   Viewer = 'Viewer',
   Student = 'Student',
+}
+
+export interface IAddNewStudent {
+  email: string;
+  name: string;
+  groupId: string | undefined;
+  tutorId: string;
 }

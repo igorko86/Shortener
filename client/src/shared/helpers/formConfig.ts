@@ -83,7 +83,7 @@ export const config: Record<FormItem, any> = {
   },
   [FormItem.DESCRIPTION]: {
     name: FormItem.DESCRIPTION,
-    label: FormItem.DESCRIPTION,
+    label: 'Description',
     rules: rules[RulesType.REQUIRED_FILED],
   },
   [FormItem.PLAN_NAME]: {

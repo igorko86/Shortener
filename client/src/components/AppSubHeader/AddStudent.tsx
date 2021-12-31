@@ -13,7 +13,7 @@ const AddStudent: FC = () => {
 
   return (
     <>
-      <Button text="Add student" onClick={handleClickShowModal} />
+      <Button text="Add new student" onClick={handleClickShowModal} />
       <AddStudentModal visible={showModal} onCancel={handleClickShowModal} />
     </>
   );

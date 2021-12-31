@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { Role } from '../../services/interfaces';
+import { Student } from './Student';
 
 @Entity('user')
 export class User extends CreateUpdateDate {
@@ -34,4 +35,7 @@ export class User extends CreateUpdateDate {
 
   @Column({ type: 'timestamptz', onUpdate: 'NOW()', nullable: true, name: 'allow_to' })
   allowTo: Date;
+
+  @OneToMany(() => Student, (student) => student.user)
+  students: Student[];
 }

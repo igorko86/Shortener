@@ -4,6 +4,8 @@ import { Form, Input, Modal } from 'antd';
 // Internal
 import { config, FormItem } from 'shared/helpers/formConfig';
 import StudentService from 'shared/services/StudentService';
+import { useAppSelector } from 'shared/hooks/storeHooks';
+import { userSelector } from 'store/reducers/auth/selectors';
 
 interface IProps {
   visible: boolean;
@@ -12,6 +14,7 @@ interface IProps {
 
 const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
   const [form] = Form.useForm();
+  const tutor = useAppSelector(userSelector);
   const [creating, setCreating] = useState(false);
 
   const handleCancel = () => {
@@ -25,7 +28,9 @@ const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
     try {
       const validFields = await form.validateFields();
 
-      StudentService.addStudent(validFields);
+      if (tutor) {
+        StudentService.addStudent({ ...validFields, tutorId: tutor.id, groupId: null });
+      }
 
       handleCancel();
       setCreating(false);
@@ -56,7 +61,7 @@ const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
         <Form.Item {...config[FormItem.EMAIL]}>
           <Input disabled={creating} />
         </Form.Item>
-        {/* TODO Add select to select group */}
+        {/* TODO Add select for select group */}
       </Form>
     </Modal>
   );

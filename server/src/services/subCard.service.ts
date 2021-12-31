@@ -32,7 +32,7 @@ class SubCardService {
       const subCard = SubCard.create({
         cardId,
         libraryCardId,
-        libraryCardName: library?.title,
+        libraryCardName: library?.name,
         planCard,
         library,
       });

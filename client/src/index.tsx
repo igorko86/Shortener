@@ -11,7 +11,11 @@ import './antStyles.css';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <Router
+      getUserConfirmation={() => {
+        /* Empty callback to block the default browser prompt */
+      }}
+    >
       <App />
     </Router>
   </Provider>,

@@ -6,6 +6,7 @@ export enum ApiRoutes {
   Refresh = '/auth/refresh',
   // Library
   GetCards = '/library/cards',
+  GetMyCards = '/myLibrary/cards',
   CreateCard = '/library/card',
   CardContent = '/library/card/content',
   // Croups
