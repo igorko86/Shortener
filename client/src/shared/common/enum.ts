@@ -4,6 +4,6 @@ export enum AppPath {
   LOGOUT = '/logout',
   REGISTRATION = '/registration',
   SUCCESS = '/success',
-  CREATE_CARD = '/create-card',
+  LIBRARY_CARD = '/library-card',
   INFORMATION = '/information',
 }

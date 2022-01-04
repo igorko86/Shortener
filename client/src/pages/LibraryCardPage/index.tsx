@@ -13,7 +13,7 @@ import { confirm } from 'components/Items/Confirm';
 
 const { TabPane } = Tabs;
 
-const CreateCard: FC = () => {
+const LibraryCardPage: FC = () => {
   const [createCardForm] = Form.useForm();
 
   const [creatingNewCard, setCreatingNewCard] = useState(false);
@@ -104,4 +104,4 @@ const CreateCard: FC = () => {
   );
 };
 
-export default CreateCard;
+export default LibraryCardPage;

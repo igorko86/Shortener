@@ -8,6 +8,7 @@ import {
   IUpdatePlanName,
 } from '../models/request/groupReguest';
 import { IGroupResponse, IPlanCard, IPlanResponse } from '../models/response/groupResponse';
+import { IExerciseResponse } from '../models/response/libraryResponse';
 
 class GroupService {
   static getGroupsById(tutorId: string): Promise<IGroupResponse[]> {
@@ -52,6 +53,10 @@ class GroupService {
 
   static deleteSubCard(body: { cardId: string; subCardId: string; newIds: string[] }): Promise<any> {
     return $api.delete(ApiRoutes.DeleteSubCardIds, { data: body }).then(({ data }) => data);
+  }
+
+  static createExercise(body: any): Promise<IExerciseResponse> {
+    return $api.post(ApiRoutes.Exercise, body).then(({ data }) => data);
   }
 }
 

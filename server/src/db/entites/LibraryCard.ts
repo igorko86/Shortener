@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { SubCard } from './SubCard';
+import { Exercise } from './Exercise';
 
 @Entity('library_card')
 export class LibraryCard extends CreateUpdateDate {
@@ -19,4 +20,7 @@ export class LibraryCard extends CreateUpdateDate {
 
   @OneToMany(() => SubCard, (subCard) => subCard.library)
   subCards: SubCard[];
+
+  @OneToMany(() => Exercise, (exercise) => exercise.libraryCard)
+  exercises: Exercise[];
 }

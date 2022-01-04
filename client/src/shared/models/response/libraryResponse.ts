@@ -7,3 +7,8 @@ export interface ILibraryCardResponse {
 export interface ICardContentResponse {
   htmlContent: string;
 }
+
+export interface IExerciseResponse {
+  id: string;
+  name: string;
+}

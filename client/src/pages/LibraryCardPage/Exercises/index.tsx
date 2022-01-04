@@ -18,7 +18,7 @@ const Exercises: FC<IProps> = ({ onClose, showExerciseBlock }) => {
       ) : (
         <>
           <Button onClick={onClose} icon={<PlusOutlined />} text="Add exercise" />
-          <List data={[]} />
+          <List />
         </>
       )}
     </>

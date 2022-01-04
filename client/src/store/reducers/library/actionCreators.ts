@@ -1,5 +1,14 @@
 import LibraryService from 'shared/services/LibraryService';
-import { ILibraryCard, ISetCardContent, ISetLibraryCards, ISetMyLibraryCards, LibraryActionEnum } from './types';
+import GroupService from 'shared/services/GroupService';
+import {
+  IExercise,
+  ILibraryCard,
+  ISetCardContent,
+  ISetExercise,
+  ISetLibraryCards,
+  ISetMyLibraryCards,
+  LibraryActionEnum,
+} from './types';
 import { AppDispatch } from '../../interfaces';
 
 export const libraryActions = {
@@ -14,6 +23,10 @@ export const libraryActions = {
   setCardContent: (content: any): ISetCardContent => ({
     type: LibraryActionEnum.SET_CARD_CONTENT,
     payload: content,
+  }),
+  setExercise: (exercise: IExercise): ISetExercise => ({
+    type: LibraryActionEnum.SET_EXERCISE,
+    payload: exercise,
   }),
 };
 
@@ -50,6 +63,16 @@ export const libraryThunks = {
         return null;
       }
     },
+  createExercise: () => async () => {
+    try {
+      const exercise = await GroupService.createExercise({});
+
+      libraryActions.setExercise(exercise);
+      return null;
+    } catch {
+      return null;
+    }
+  },
 };
 
 export default {

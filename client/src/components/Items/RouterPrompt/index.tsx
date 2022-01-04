@@ -25,7 +25,7 @@ const RouterPrompt: FC<IProps> = ({ getFieldsValue, onOK, title, okText, cancelT
       const defaultValue = '<p><br></p>'; // default value in reach text editor
       const isValuesNotEmpty = Object.values(getFieldsValue()).some((value) => !!value && value !== defaultValue);
 
-      if (isValuesNotEmpty) {
+      if (isValuesNotEmpty && history.location.pathname !== prompt.pathname) {
         setCurrentPath(prompt.pathname);
         setShowPrompt(true);
 

@@ -9,6 +9,7 @@ import { PlanCard } from './entites/PlanCard';
 import { SubCard } from './entites/SubCard';
 import { Student } from './entites/Student';
 import { User } from './entites/User';
+import { Exercise } from './entites/Exercise';
 
 export const connectDB = async () => {
   const host = process.env.DB_HOST as unknown as string;
@@ -25,7 +26,7 @@ export const connectDB = async () => {
       username,
       password,
       database,
-      entities: [Tutor, Token, LibraryCard, Group, Plan, PlanCard, SubCard, Student, User],
+      entities: [Tutor, Token, LibraryCard, Group, Plan, PlanCard, SubCard, Student, User, Exercise],
       synchronize: true,
     });
     console.log('Connected to postgres');

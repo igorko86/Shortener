@@ -5,7 +5,7 @@ import Login from 'pages/Login';
 import Success from 'pages/Success';
 import { AppPath } from 'shared/common/enum';
 import Home from 'pages/Home';
-import CreateCard from 'pages/CreateCard';
+import LibraryCardPage from 'pages/LibraryCardPage';
 import Information from 'pages/Information';
 
 interface IRouter {
@@ -36,8 +36,8 @@ export const privateRoutes: IRouter[] = [
     exact: true,
   },
   {
-    path: AppPath.CREATE_CARD,
-    component: CreateCard,
+    path: AppPath.LIBRARY_CARD,
+    component: LibraryCardPage,
   },
   {
     path: AppPath.INFORMATION,
