@@ -63,11 +63,11 @@ export const libraryThunks = {
         return null;
       }
     },
-  createExercise: () => async () => {
+  createExercise: (data: { type: string; name: string; content: any[] }) => async (dispatch: AppDispatch) => {
     try {
-      const exercise = await GroupService.createExercise({});
+      const exercise = await GroupService.createExercise(data);
 
-      libraryActions.setExercise(exercise);
+      dispatch(libraryActions.setExercise(exercise));
       return null;
     } catch {
       return null;

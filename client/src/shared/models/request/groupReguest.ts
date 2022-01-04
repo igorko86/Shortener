@@ -27,3 +27,9 @@ export interface IMoveSubCardIdRequest {
   dragCardId?: string;
   libraryCardId?: string;
 }
+
+export interface IDeleteSubCardRequest {
+  cardId: string;
+  subCardId: string;
+  newIds: string[];
+}

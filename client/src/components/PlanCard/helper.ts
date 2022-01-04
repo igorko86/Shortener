@@ -54,9 +54,9 @@ export const updateSubCards = ({
   let newIds;
 
   if (typeof libraryCardIndex === 'number') {
-    const { id, title } = libraryCards[libraryCardIndex];
+    const { id, name } = libraryCards[libraryCardIndex];
 
-    libraryCard = { id, title };
+    libraryCard = { id, name };
   }
 
   switch (true) {

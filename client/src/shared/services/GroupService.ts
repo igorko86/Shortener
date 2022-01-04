@@ -2,6 +2,7 @@ import { ApiRoutes } from './apiRoutes.constants';
 import $api from '../../http';
 import {
   ICreateGroupAndPlanRequest,
+  IDeleteSubCardRequest,
   IMovePlanCardRequest,
   IMoveSubCardIdRequest,
   IUpdateCardName,
@@ -9,6 +10,7 @@ import {
 } from '../models/request/groupReguest';
 import { IGroupResponse, IPlanCard, IPlanResponse } from '../models/response/groupResponse';
 import { IExerciseResponse } from '../models/response/libraryResponse';
+import { ICreateExerciseRequest } from '../models/request/studentRequest';
 
 class GroupService {
   static getGroupsById(tutorId: string): Promise<IGroupResponse[]> {
@@ -51,12 +53,12 @@ class GroupService {
     return $api.put(ApiRoutes.MoveSubCardId, cardInfo).then(({ data }) => data);
   }
 
-  static deleteSubCard(body: { cardId: string; subCardId: string; newIds: string[] }): Promise<any> {
+  static deleteSubCard(body: IDeleteSubCardRequest): Promise<any> {
     return $api.delete(ApiRoutes.DeleteSubCardIds, { data: body }).then(({ data }) => data);
   }
 
-  static createExercise(body: any): Promise<IExerciseResponse> {
-    return $api.post(ApiRoutes.Exercise, body).then(({ data }) => data);
+  static createExercise(body: ICreateExerciseRequest): Promise<IExerciseResponse> {
+    return $api.post(ApiRoutes.CreateExercise, body).then(({ data }) => data);
   }
 }
 

@@ -20,13 +20,11 @@ export class Exercise extends CreateUpdateDate {
 
   @Column({
     name: 'content',
-    type: 'jsonb',
+    type: 'json',
     nullable: false,
-    array: true,
     default: [],
   })
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  content: object[];
+  content: any[];
 
   @ManyToOne(() => LibraryCard, (libraryCard) => libraryCard.exercises)
   libraryCard: LibraryCard;

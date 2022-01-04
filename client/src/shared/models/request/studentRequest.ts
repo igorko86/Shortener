@@ -4,3 +4,9 @@ export interface IAddStudentRequest {
   tutorId: string;
   groupId?: string;
 }
+
+export interface ICreateExerciseRequest {
+  type: string;
+  name: string;
+  content: any[];
+}
