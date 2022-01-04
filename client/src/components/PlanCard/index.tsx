@@ -55,6 +55,7 @@ const PlanCard: FC<IProps> = ({
 
   const ref = useRef<HTMLDivElement>(null);
   const { updateCardName } = useActionCreator();
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [{ isDragging, handlerId }, connectDrag] = useDrag(
     {
@@ -130,6 +131,7 @@ const PlanCard: FC<IProps> = ({
       setNewCardName(result);
       await updateCardName({ cardId: card.id, cardName: result, cardIndex });
     }
+    setIsDisabled(true);
   };
 
   connectDrag(ref);
@@ -146,7 +148,14 @@ const PlanCard: FC<IProps> = ({
     >
       <DivNameWithPopover>
         <div>
-          <EditableTitle title={newCardName} setName={setNewCardName} cardId={cardId} handleBluer={handleBluer} />
+          <EditableTitle
+            title={newCardName}
+            setName={setNewCardName}
+            cardId={cardId}
+            handleBluer={handleBluer}
+            isDisabled={isDisabled}
+            setIsDisabled={setIsDisabled}
+          />
         </div>
         <Button onClick={handleRemoveCard} icon={<Close />} />
       </DivNameWithPopover>

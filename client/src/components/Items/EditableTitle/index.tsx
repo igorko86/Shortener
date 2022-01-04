@@ -1,4 +1,6 @@
-import { FC } from 'react';
+import { FC, MutableRefObject, useRef } from 'react';
+import { EditOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { InputChangeName } from './styles';
 
 interface IProps {
@@ -6,11 +8,17 @@ interface IProps {
   handleBluer: any;
   setName?: any;
   cardId?: string;
+  isDisabled: boolean;
+  setIsDisabled: any;
 }
 
-const EditableTitle: FC<IProps> = ({ title, setName, cardId, handleBluer }) => {
-  const handleClick = (e: any) => {
-    e.target.select();
+const EditableTitle: FC<IProps> = ({ title, setName, cardId, handleBluer, isDisabled, setIsDisabled }) => {
+  const textInput: MutableRefObject<any> = useRef();
+
+  const handleClick = () => {
+    setIsDisabled(false);
+    textInput.current.focus();
+    textInput.current.select();
   };
 
   const handleChange = (e: any) => {
@@ -18,14 +26,21 @@ const EditableTitle: FC<IProps> = ({ title, setName, cardId, handleBluer }) => {
   };
 
   return (
-    <InputChangeName
-      placeholder="Enter title"
-      onClick={(e) => handleClick(e)}
-      value={title}
-      onChange={(e) => handleChange(e)}
-      onBlur={handleBluer}
-      style={{ fontSize: cardId ? '15px' : '20px' }}
-    />
+    <>
+      <InputChangeName
+        placeholder="Enter title"
+        value={title}
+        onChange={(e) => handleChange(e)}
+        onBlur={handleBluer}
+        style={{ fontSize: cardId ? '15px' : '20px' }}
+        ref={textInput}
+        readOnly={isDisabled}
+        isdisabled={isDisabled}
+      />
+      <Button onClick={() => handleClick()} type="text">
+        <EditOutlined />
+      </Button>
+    </>
   );
 };
 

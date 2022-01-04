@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { Input } from 'antd';
 
-export const InputChangeName = styled(Input)`
+interface TitleProps {
+  readonly isdisabled: boolean;
+}
+
+export const InputChangeName = styled(Input)<TitleProps>`
   background: transparent;
   border: none;
   outline: none;
@@ -10,6 +14,6 @@ export const InputChangeName = styled(Input)`
   cursor: pointer;
 
   &:focus {
-    background: white;
+    background: ${({ isdisabled }) => (isdisabled ? 'transparent' : 'white')};
   }
 `;
