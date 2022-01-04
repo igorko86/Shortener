@@ -2,6 +2,7 @@ import { GroupActionEnum, IGroupState, GroupActions } from './types';
 
 const initialState: IGroupState = {
   groups: [],
+  students: [],
   plan: null,
 };
 
@@ -11,6 +12,8 @@ const groupReducer = (state = initialState, action: GroupActions): IGroupState =
       return { ...state, groups: action.payload };
     case GroupActionEnum.SET_PLAN:
       return { ...state, plan: action.payload };
+    case GroupActionEnum.SET_STUDENTS:
+      return { ...state, students: action.payload };
     default:
       return state;
   }

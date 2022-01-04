@@ -1,7 +1,7 @@
 import GroupService from 'shared/services/GroupService';
 import { ICreateGroupAndPlanRequest, IUpdateCardName, IUpdatePlanName } from 'shared/models/request/groupReguest';
 import { IDropCardInfo } from 'components/Plan/interfaces';
-import { GroupActionEnum, IGroup, IPlan, ISetGroups, ISetPlan } from './types';
+import { GroupActionEnum, IGroup, IPlan, ISetGroups, ISetPlan, ISetStudents, IStudent } from './types';
 import { AppDispatch } from '../../interfaces';
 import { convertSubCardsArrayToObj } from '../../helpers';
 
@@ -13,6 +13,10 @@ export const groupActions = {
   setPlan: (plan: IPlan): ISetPlan => ({
     type: GroupActionEnum.SET_PLAN,
     payload: plan,
+  }),
+  setStudent: (students: IStudent[]): ISetStudents => ({
+    type: GroupActionEnum.SET_STUDENTS,
+    payload: students,
   }),
 };
 
@@ -121,6 +125,7 @@ export const groupThunks = {
     }
     if (studentsResponse.status === 'fulfilled') {
       console.log(studentsResponse);
+      dispatch(groupActions.setStudent([...studentsResponse.value]));
     }
   },
   getPlanById: (groupId: string) => async (dispatch: AppDispatch) => {
@@ -133,10 +138,10 @@ export const groupThunks = {
       return null;
     }
   },
-  getStudentsById: (groupId: string) => async () => {
+  getStudentsById: (groupId: string) => async (dispatch: AppDispatch) => {
     try {
       const students = await GroupService.getStudentsById(groupId);
-      console.log(students);
+      dispatch(groupActions.setStudent([...students]));
       return null;
     } catch {
       return null;

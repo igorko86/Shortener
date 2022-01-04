@@ -9,6 +9,7 @@ import Library from 'components/Library';
 import CardContent from 'components/CardContent';
 import Groups from 'components/Groups/intex';
 import TutorLibrary from 'components/TutorLibrary';
+import Students from 'components/Students/intex';
 
 const Home: FC = () => {
   return (
@@ -18,6 +19,7 @@ const Home: FC = () => {
           <Plan />
           <CardContent />
           <Groups />
+          <Students />
           <TutorLibrary />
           <Library />
         </div>

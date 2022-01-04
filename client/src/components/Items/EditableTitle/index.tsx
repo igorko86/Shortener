@@ -1,7 +1,6 @@
 import { FC, MutableRefObject, useRef } from 'react';
 import { EditOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import { InputChangeName } from './styles';
+import { EditButton, InputChangeName, InputWrapper } from './styles';
 
 interface IProps {
   title: string;
@@ -26,7 +25,7 @@ const EditableTitle: FC<IProps> = ({ title, setName, cardId, handleBluer, isDisa
   };
 
   return (
-    <>
+    <InputWrapper>
       <InputChangeName
         placeholder="Enter title"
         value={title}
@@ -35,12 +34,10 @@ const EditableTitle: FC<IProps> = ({ title, setName, cardId, handleBluer, isDisa
         style={{ fontSize: cardId ? '15px' : '20px' }}
         ref={textInput}
         readOnly={isDisabled}
-        isdisabled={isDisabled}
+        isdisabled={+isDisabled}
       />
-      <Button onClick={() => handleClick()} type="text">
-        <EditOutlined />
-      </Button>
-    </>
+      {isDisabled ? <EditButton onClick={() => handleClick()} icon={<EditOutlined />} /> : ''}
+    </InputWrapper>
   );
 };
 

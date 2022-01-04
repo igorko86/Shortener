@@ -1,5 +1,5 @@
 // External
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Select } from 'antd';
 // Internal
 import { useAppSelector } from 'shared/hooks/storeHooks';
@@ -7,6 +7,7 @@ import { groupsSelector, planSelector } from 'store/reducers/group/selectors';
 import { userSelector } from 'store/reducers/auth/selectors';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import ColumnWrapper from '../Items/ColumnWrapper';
+import TitleColumn from '../Items/TitleColumn';
 
 // Internal
 
@@ -40,6 +41,7 @@ const Groups: FC = () => {
 
   return (
     <ColumnWrapper>
+      <TitleColumn planName="Groups" />
       <Select
         showSearch
         value={selectedValue}
