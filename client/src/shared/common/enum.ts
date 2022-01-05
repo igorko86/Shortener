@@ -6,4 +6,5 @@ export enum AppPath {
   SUCCESS = '/success',
   LIBRARY_CARD = '/library-card',
   INFORMATION = '/information',
+  STUDENTS = '/students',
 }

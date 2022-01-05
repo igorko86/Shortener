@@ -1,6 +1,6 @@
 // External
 import { FC, useState } from 'react';
-import { Button, Form, Input, Tabs } from 'antd';
+import { Form, Input, Tabs, Button as ButtonAnt } from 'antd';
 import { AndroidOutlined, AppleOutlined } from '@ant-design/icons';
 // Internal
 import RouterPrompt from 'components/Items/RouterPrompt';
@@ -10,11 +10,15 @@ import { TabName } from './helper';
 import ExplanationTab from './Explanation';
 import ExercisesTab from './Exercises';
 import { confirm } from 'components/Items/Confirm';
+import Button from '../../components/Items/Button';
+import { AppPath } from '../../shared/common/enum';
+import { useHistory } from 'react-router-dom';
 
 const { TabPane } = Tabs;
 
 const LibraryCardPage: FC = () => {
   const [createCardForm] = Form.useForm();
+  const history = useHistory();
 
   const [creatingNewCard, setCreatingNewCard] = useState(false);
   const [activeTab, setActiveTab] = useState(TabName.Explanation);
@@ -49,6 +53,10 @@ const LibraryCardPage: FC = () => {
 
   const handleChangeTabs = (tabName: string) => {
     setActiveTab(tabName as string as TabName);
+  };
+
+  const handleClickButton = (path: string) => {
+    history.push(path);
   };
 
   return (
@@ -95,9 +103,10 @@ const LibraryCardPage: FC = () => {
       </Tabs>
       {(activeTab === TabName.Explanation || !showExerciseBlock) && (
         <Form.Item>
-          <Button loading={creatingNewCard} type="primary" htmlType="submit">
+          <ButtonAnt loading={creatingNewCard} type="primary" htmlType="submit">
             Submit
-          </Button>
+          </ButtonAnt>
+          <Button text="Cancel" onClick={() => handleClickButton(AppPath.ROOT)} />
         </Form.Item>
       )}
     </Form>

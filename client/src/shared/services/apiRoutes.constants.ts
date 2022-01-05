@@ -25,6 +25,7 @@ export enum ApiRoutes {
   // Student
   GetStudents = '/students',
   AddStudent = '/students/student',
+  DeleteStudents = '/students/student',
   // Exercise
   CreateExercise = '/exercises/exercise',
 }

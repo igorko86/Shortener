@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { Select } from 'antd';
+import { ListWrapper } from '../Items/LibraryColumn/styles';
 
-export const StudentSelect = styled(Select)`
-  margin-bottom: 15px;
-`;
+export const StudentListWrapper = styled(ListWrapper)``;

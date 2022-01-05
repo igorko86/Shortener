@@ -1,59 +1,65 @@
 // External
-import React, { FC, useEffect, useState } from 'react';
-import { Select } from 'antd';
+import React, { FC } from 'react';
+import { List, Space } from 'antd';
 // Internal
-import { useAppSelector } from 'shared/hooks/storeHooks';
-import { planSelector, studentsSelector } from 'store/reducers/group/selectors';
+import { useAppDispatch, useAppSelector } from 'shared/hooks/storeHooks';
+import StudentService from 'shared/services/StudentService';
+import { groupActions } from 'store/reducers/group/actionCreators';
+import { studentsSelector } from 'store/reducers/group/selectors';
 import ColumnWrapper from '../Items/ColumnWrapper';
 import TitleColumn from '../Items/TitleColumn';
 import Button from '../Items/Button';
-import { StudentSelect } from './styles';
+import Search from '../Search';
+// Styles
+import { DivCard, SpanTitle } from '../Items/Card/styles';
+import Close from 'shared/assets/icons/close';
+import { StudentListWrapper } from './styles';
 
-// Internal
-
-const { Option } = Select;
-
-// interface IProps {}
+const { setStudent } = groupActions;
 
 const Students: FC = () => {
   const students = useAppSelector(studentsSelector);
-  const plan = useAppSelector(planSelector);
+  const dispatch = useAppDispatch();
 
-  const [selectedValue, setSelectedValue] = useState('');
+  const handleClickRemove = (id: string, index: number) => {
+    students.splice(index, 1);
+    dispatch(setStudent([...students]));
 
-  useEffect(() => {
-    if (students.length && plan) {
-      setSelectedValue('');
-    }
-  }, [students]);
-
-  const handleChangeGroup = (studentId: any) => {
-    setSelectedValue(studentId);
+    StudentService.deleteStudents([id]);
   };
 
   return (
     <ColumnWrapper>
       <TitleColumn planName="Students" />
-      <StudentSelect
-        showSearch
-        value={selectedValue}
-        placeholder="Select student"
-        optionFilterProp="children"
-        onChange={handleChangeGroup}
-        // @ts-ignore
-        filterOption={(input, option) => option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+      <Search />
+      <StudentListWrapper
+        grid={{
+          gutter: 16,
+          xs: 1,
+          sm: 1,
+          md: 1,
+          lg: 1,
+          xl: 1,
+          xxl: 1,
+        }}
+        dataSource={students}
       >
-        {students.map((student) => {
+        {students.map((student, index) => {
           const { name, id } = student;
 
           return (
-            <Option key={id} value={id}>
-              {name}
-            </Option>
+            <List.Item key={id}>
+              <DivCard key={id}>
+                <SpanTitle>{name}</SpanTitle>
+                <Button onClick={() => handleClickRemove(id, index)} data-name="remove" icon={<Close />} />
+              </DivCard>
+            </List.Item>
           );
         })}
-      </StudentSelect>
-      <Button onClick={() => console.log('hellooo')} text="+ Add student" />
+      </StudentListWrapper>
+      <Space size="middle">
+        <Button onClick={() => console.log('hellooo')} text="+ Add student" />
+      </Space>
     </ColumnWrapper>
   );
 };
