@@ -68,7 +68,7 @@ export const libraryThunks = {
       const exercise = await GroupService.createExercise(data);
 
       dispatch(libraryActions.setExercise(exercise));
-      return null;
+      return exercise.id;
     } catch {
       return null;
     }

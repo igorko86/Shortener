@@ -35,7 +35,7 @@ const LibraryCardPage: FC = () => {
 
   const submit = (values: any) => {
     setCreatingNewCard(true);
-
+    console.log(values);
     LibraryService.createLibraryCard(values).finally(() => {
       setCreatingNewCard(false);
       resetState();
@@ -90,7 +90,11 @@ const LibraryCardPage: FC = () => {
           }
           key={TabName.Exercises}
         >
-          <ExercisesTab onClose={toggleExerciseBlock} showExerciseBlock={showExerciseBlock} />
+          <ExercisesTab
+            createCardForm={createCardForm}
+            onClose={toggleExerciseBlock}
+            showExerciseBlock={showExerciseBlock}
+          />
         </TabPane>
       </Tabs>
       {(activeTab === TabName.Explanation || !showExerciseBlock) && (

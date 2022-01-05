@@ -7,9 +7,10 @@ import { useActionCreator } from 'shared/hooks/useActionCreator';
 
 interface IProps {
   onClose: () => void;
+  createCardForm: any;
 }
 
-const ExerciseBlock: FC<IProps> = ({ onClose }) => {
+const ExerciseBlock: FC<IProps> = ({ onClose, createCardForm }) => {
   const { createExercise } = useActionCreator();
   const [creatingExercise, setCreatingExercise] = useState(false);
   const [form] = Form.useForm();
@@ -19,22 +20,24 @@ const ExerciseBlock: FC<IProps> = ({ onClose }) => {
       const validFields = await form.validateFields();
       const mockData = {
         type: 'Select',
-        name: 'Select',
+        name: 'Exercise with type Select',
         content: [],
       };
-      createExercise(mockData);
-
+      const exerciseId = await createExercise(mockData);
+      console.log(createCardForm.getFieldsValue());
+      const arrayIds = createCardForm.getFieldValue('newExercisesIds');
+      console.log(arrayIds);
+      createCardForm.setFieldsValue({
+        ...createCardForm.getFieldsValue(),
+        newExercisesIds: arrayIds ? [...arrayIds, exerciseId] : [],
+      });
       onClose();
       // eslint-disable-next-line no-empty
     } catch {}
   };
 
-  const onFinishFailed = () => {
-    console.log('Submit failed!');
-  };
-
   return (
-    <Form form={form} name="exerciseForm" scrollToFirstError onFinishFailed={onFinishFailed}>
+    <Form form={form} name="exerciseForm" scrollToFirstError>
       <Form.Item {...config[FormItem.NAME]}>
         <Input />
       </Form.Item>

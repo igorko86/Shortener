@@ -9,12 +9,13 @@ import ExerciseBlock from './ExerciseBlock';
 interface IProps {
   onClose: () => void;
   showExerciseBlock: boolean;
+  createCardForm: any;
 }
-const Exercises: FC<IProps> = ({ onClose, showExerciseBlock }) => {
+const Exercises: FC<IProps> = ({ onClose, showExerciseBlock, createCardForm }) => {
   return (
     <>
       {showExerciseBlock ? (
-        <ExerciseBlock onClose={onClose} />
+        <ExerciseBlock createCardForm={createCardForm} onClose={onClose} />
       ) : (
         <>
           <Button onClick={onClose} icon={<PlusOutlined />} text="Add exercise" />

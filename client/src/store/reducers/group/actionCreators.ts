@@ -132,7 +132,9 @@ export const groupThunks = {
     try {
       const plan = await GroupService.getPlanById(groupId);
       const subCards = convertSubCardsArrayToObj(plan.planCards);
+
       dispatch(groupActions.setPlan({ ...plan, groupId, subCards }));
+
       return null;
     } catch {
       return null;
