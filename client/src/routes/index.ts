@@ -7,6 +7,7 @@ import { AppPath } from 'shared/common/enum';
 import Home from 'pages/Home';
 import LibraryCardPage from 'pages/LibraryCardPage';
 import Information from 'pages/Information';
+import Index from 'pages/StudentsPage';
 
 interface IRouter {
   path: string;
@@ -42,5 +43,9 @@ export const privateRoutes: IRouter[] = [
   {
     path: AppPath.INFORMATION,
     component: Information,
+  },
+  {
+    path: AppPath.STUDENTS,
+    component: Index,
   },
 ];
