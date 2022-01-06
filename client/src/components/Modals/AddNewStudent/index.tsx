@@ -6,13 +6,14 @@ import { config, FormItem } from 'shared/helpers/formConfig';
 import StudentService from 'shared/services/StudentService';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { userSelector } from 'store/reducers/auth/selectors';
+import GroupsSelect from './GroupsSelect';
 
 interface IProps {
   visible: boolean;
   onCancel: (showModal: boolean) => void;
 }
 
-const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
+const AddNewStudentModal: FC<IProps> = ({ visible, onCancel }) => {
   const [form] = Form.useForm();
   const tutor = useAppSelector(userSelector);
   const [creating, setCreating] = useState(false);
@@ -29,7 +30,7 @@ const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
       const validFields = await form.validateFields();
 
       if (tutor) {
-        StudentService.addNewStudent({ ...validFields, tutorId: tutor.id, groupId: null });
+        StudentService.addNewStudent({ ...validFields, tutorId: tutor.id });
       }
 
       handleCancel();
@@ -38,6 +39,10 @@ const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
       setCreating(false);
       console.log('Validate Failed');
     }
+  };
+
+  const changeFormValue = (value: string) => {
+    form.setFieldsValue({ groupId: value });
   };
 
   return (
@@ -56,15 +61,17 @@ const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
     >
       <Form form={form} layout="vertical" name="form_in_modal">
         <Form.Item {...config[FormItem.NAME]} disabled>
-          <Input disabled={creating} />
+          <Input disabled={creating} placeholder="Name" />
         </Form.Item>
         <Form.Item {...config[FormItem.EMAIL]}>
-          <Input disabled={creating} />
+          <Input disabled={creating} placeholder="Email" />
         </Form.Item>
-        {/* TODO Add select for select group */}
+        <Form.Item name="groupId" label="Group name">
+          <GroupsSelect changeFormValue={changeFormValue} disabled={creating} />
+        </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-export default AddStudentModal;
+export default AddNewStudentModal;

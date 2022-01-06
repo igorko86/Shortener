@@ -32,8 +32,8 @@ class StudentService {
 
     const savedNewStudentData = await newStudent.save();
 
-    if (!groupId) {
-      const group = await Group.findOne({ id: '7940021b-b1aa-41c4-a5e7-1854dac6e898' });
+    if (groupId) {
+      const group = await Group.findOne({ id: groupId });
       const newStudentGroup = StudentGroup.create({ group, student: savedNewStudentData });
 
       await newStudentGroup.save();
