@@ -4,9 +4,9 @@ export interface IGroupResponse {
   plan: IPlanResponse;
 }
 
-export interface IStudentResponse {
-  name: string;
+export interface IStudentsInGroupResponse {
   id: string;
+  studentName: string;
 }
 
 interface ISubCard {

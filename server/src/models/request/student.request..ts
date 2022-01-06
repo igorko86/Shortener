@@ -1,17 +1,11 @@
 export interface IAddNewStudentRequest {
-  name: string;
   email: string;
+  name: string;
+  groupId: string | undefined;
   tutorId: string;
-  groupId?: string;
 }
 
 export interface IAddStudentRequest {
   studentId: string;
   groupId: string;
-}
-
-export interface ICreateExerciseRequest {
-  type: string;
-  name: string;
-  content: any[];
 }

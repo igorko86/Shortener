@@ -8,7 +8,7 @@ import {
   IUpdateCardName,
   IUpdatePlanName,
 } from '../models/request/groupReguest';
-import { IGroupResponse, IPlanCard, IPlanResponse, IStudentResponse } from '../models/response/groupResponse';
+import { IGroupResponse, IPlanCard, IPlanResponse, IStudentsInGroupResponse } from '../models/response/groupResponse';
 import { IExerciseResponse } from '../models/response/libraryResponse';
 import { ICreateExerciseRequest } from '../models/request/studentRequest';
 
@@ -19,10 +19,6 @@ class GroupService {
 
   static getPlanById(groupId: string): Promise<IPlanResponse> {
     return $api.get<IPlanResponse>(ApiRoutes.GetPlan, { params: { groupId } }).then(({ data }) => data);
-  }
-
-  static getStudentsById(groupId: string): Promise<IStudentResponse[]> {
-    return $api.get(ApiRoutes.GetStudents, { params: { groupId } }).then(({ data }) => data);
   }
 
   static createCourse(formObj: ICreateGroupAndPlanRequest): Promise<IGroupResponse> {

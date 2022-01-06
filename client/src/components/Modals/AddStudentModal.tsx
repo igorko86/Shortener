@@ -29,7 +29,7 @@ const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
       const validFields = await form.validateFields();
 
       if (tutor) {
-        StudentService.addStudent({ ...validFields, tutorId: tutor.id, groupId: null });
+        StudentService.addNewStudent({ ...validFields, tutorId: tutor.id, groupId: null });
       }
 
       handleCancel();

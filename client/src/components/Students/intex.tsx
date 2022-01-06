@@ -44,11 +44,11 @@ const Students: FC = () => {
         filterOption={(input, option) => option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
       >
         {students.map((student) => {
-          const { name, id } = student;
+          const { studentName, id } = student;
 
           return (
             <Option key={id} value={id}>
-              {name}
+              {studentName}
             </Option>
           );
         })}

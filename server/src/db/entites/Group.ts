@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'ty
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { Tutor } from './Tutor';
-import { Student } from './Student';
+import { StudentGroup } from './StudentGroup';
 
 @Entity('group')
 export class Group extends CreateUpdateDate {
@@ -17,6 +17,6 @@ export class Group extends CreateUpdateDate {
   @ManyToOne(() => Tutor, (tutor) => tutor.groups)
   tutor: Tutor;
 
-  @OneToMany(() => Student, (student) => student.group)
-  students: Student[];
+  @OneToMany(() => StudentGroup, (studentGroup) => studentGroup.group)
+  studentGroups: StudentGroup[];
 }

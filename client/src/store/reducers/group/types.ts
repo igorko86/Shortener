@@ -1,6 +1,6 @@
 export interface IGroupState {
   groups: IGroup[];
-  students: IStudent[];
+  students: IStudentInGroup[];
   plan: IPlan | null;
 }
 
@@ -16,7 +16,7 @@ export interface ISetGroups {
 }
 export interface ISetStudents {
   type: GroupActionEnum.SET_STUDENTS;
-  payload: IStudent[];
+  payload: IStudentInGroup[];
 }
 
 export interface ISetPlan {
@@ -36,9 +36,9 @@ export interface IPlanCard {
   planCardName: string;
 }
 
-export interface IStudent {
+export interface IStudentInGroup {
   id: string;
-  name: string;
+  studentName: string;
 }
 
 export interface IPlan {

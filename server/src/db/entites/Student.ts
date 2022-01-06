@@ -1,9 +1,9 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { User } from './User';
-import { Group } from './Group';
 import { Tutor } from './Tutor';
+import { StudentGroup } from './StudentGroup';
 
 @Entity('student')
 export class Student extends CreateUpdateDate {
@@ -16,9 +16,9 @@ export class Student extends CreateUpdateDate {
   @ManyToOne(() => User, (user) => user.students)
   user: User;
 
-  @ManyToOne(() => Group, (group) => group.students)
-  group: Group;
-
   @ManyToOne(() => Tutor, (tutor) => tutor.students)
   tutor: Tutor;
+
+  @OneToMany(() => StudentGroup, (studentGroup) => studentGroup.student)
+  studentGroups: StudentGroup[];
 }

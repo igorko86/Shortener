@@ -24,7 +24,11 @@ export enum ApiRoutes {
   DeleteSubCardIds = '/plans/plan/card/subCard',
   // Student
   GetStudents = '/students',
-  AddStudent = '/students/student',
+  DeleteStudents = '/students',
+  DeleteStudentsInGroup = '/students/student-groups',
+  GetStudentsInGroup = '/students/student-groups',
+  AddNewStudent = '/students/student',
+  AddStudent = '/students/student-group',
   // Exercise
   CreateExercise = '/exercises/exercise',
 }

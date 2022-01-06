@@ -1,9 +1,10 @@
 import GroupService from 'shared/services/GroupService';
 import { ICreateGroupAndPlanRequest, IUpdateCardName, IUpdatePlanName } from 'shared/models/request/groupReguest';
 import { IDropCardInfo } from 'components/Plan/interfaces';
-import { GroupActionEnum, IGroup, IPlan, ISetGroups, ISetPlan, ISetStudents, IStudent } from './types';
+import { GroupActionEnum, IGroup, IPlan, ISetGroups, ISetPlan, ISetStudents, IStudentInGroup } from './types';
 import { AppDispatch } from '../../interfaces';
 import { convertSubCardsArrayToObj } from '../../helpers';
+import StudentService from '../../../shared/services/StudentService';
 
 export const groupActions = {
   setGroups: (groups: IGroup[]): ISetGroups => ({
@@ -14,7 +15,7 @@ export const groupActions = {
     type: GroupActionEnum.SET_PLAN,
     payload: plan,
   }),
-  setStudent: (students: IStudent[]): ISetStudents => ({
+  setStudent: (students: IStudentInGroup[]): ISetStudents => ({
     type: GroupActionEnum.SET_STUDENTS,
     payload: students,
   }),
@@ -112,9 +113,9 @@ export const groupThunks = {
       }
     },
   getCourseData: (groupId: string) => async (dispatch: AppDispatch) => {
-    const [planResponse, studentsResponse] = await Promise.allSettled([
+    const [planResponse, studentsGroupResponse] = await Promise.allSettled([
       GroupService.getPlanById(groupId),
-      GroupService.getStudentsById(groupId),
+      StudentService.getStudentsInGroup(groupId),
     ]);
 
     if (planResponse.status === 'fulfilled') {
@@ -123,9 +124,8 @@ export const groupThunks = {
 
       dispatch(groupActions.setPlan({ ...plan, groupId, subCards }));
     }
-    if (studentsResponse.status === 'fulfilled') {
-      console.log(studentsResponse);
-      dispatch(groupActions.setStudent([...studentsResponse.value]));
+    if (studentsGroupResponse.status === 'fulfilled') {
+      dispatch(groupActions.setStudent([...studentsGroupResponse.value]));
     }
   },
   getPlanById: (groupId: string) => async (dispatch: AppDispatch) => {
@@ -140,7 +140,7 @@ export const groupThunks = {
   },
   getStudentsById: (groupId: string) => async (dispatch: AppDispatch) => {
     try {
-      const students = await GroupService.getStudentsById(groupId);
+      const students = await StudentService.getStudentsById(groupId);
       dispatch(groupActions.setStudent([...students]));
       return null;
     } catch {
@@ -149,7 +149,7 @@ export const groupThunks = {
   },
   getStudentsByTutorId: (tutorId: string) => async () => {
     try {
-      const students = await GroupService.getStudentsById(tutorId);
+      const students = await StudentService.getStudentsById(tutorId);
       console.log(students);
       return null;
     } catch {
