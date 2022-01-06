@@ -43,7 +43,7 @@ class StudentController {
 
   async deleteStudentInGroupByIds(req: Request, res: Response, next: NextFunction) {
     try {
-      await studentService.deleteStudentInGroupByIds(req.body.ids);
+      await studentService.deleteStudentInGroupByIds(req.body);
 
       return res.status(200).json('Success');
     } catch (error) {
@@ -53,7 +53,7 @@ class StudentController {
 
   async deleteStudentsByIds(req: Request, res: Response, next: NextFunction) {
     try {
-      await studentService.deleteStudentsByIds(req.body.ids);
+      await studentService.deleteStudentsByIds(req.body);
 
       return res.status(200).json('Success');
     } catch (error) {

@@ -3,9 +3,9 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import { Space } from 'antd';
 import update from 'immutability-helper';
 // Internal
-import ColumnWrapper from 'components/Items/ColumnWrapper';
 import Button from 'components/Items/Button';
 import { useAppDispatch, useAppSelector } from 'shared/hooks/storeHooks';
+import { ICard, IDropCardInfo, IItemInfo, IMoveSubCardDragInfo } from './interfaces';
 import { planSelector } from 'store/reducers/group/selectors';
 import { groupActions } from 'store/reducers/group/actionCreators';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
@@ -13,7 +13,7 @@ import TitleColumn from '../Items/TitleColumn';
 import Search from '../Search';
 import Cards from './Cards';
 // Styles
-import { ICard, IDropCardInfo, IItemInfo, IMoveSubCardDragInfo } from './interfaces';
+import { ColumnWrapper } from 'components/Items/Column/styles';
 
 export const cardsArray: ICard[] = [
   {

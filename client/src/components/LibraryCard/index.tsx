@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd';
 // Internal
 import { ItemTypeCard, LibraryCardType } from 'components/Plan/interfaces';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
-import Card from '../Items/Card/intex';
+import Card from '../Items/Card';
 
 interface IProps {
   card: LibraryCardType;

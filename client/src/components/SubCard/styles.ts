@@ -1,4 +1,4 @@
-import Card from 'components/Items/Card/intex';
+import Card from 'components/Items/Card';
 import styled from 'styled-components';
 
 export const DivSubCard = styled(Card)`

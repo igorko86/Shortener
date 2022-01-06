@@ -1,4 +1,6 @@
 import styled from 'styled-components';
-import { ListWrapper } from '../Items/LibraryColumn/styles';
+import { List } from 'antd';
 
-export const StudentListWrapper = styled(ListWrapper)``;
+export const ItemWrapper = styled(List.Item)`
+  cursor: pointer;
+`;

@@ -1,19 +1,25 @@
-import React, { FC, useState } from 'react';
-import { Input, Space } from 'antd';
-
+// External
+import { FC, useState } from 'react';
+import { Input as InputAnt, Space } from 'antd';
+import { ArrowDownOutlined, ArrowUpOutlined, SearchOutlined } from '@ant-design/icons';
+// Internal
 import Button from 'components/Items/Button';
-import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import Arrow from 'shared/assets/icons/arrow';
+// Styles
 import { InputSearch } from './styles';
 
-const { Search: SearchAnt } = Input;
+interface IProps {
+  setIsOpen?: any;
+  isOpen?: boolean;
+}
 
-const Search: FC = () => {
+const Search: FC<IProps> = ({ setIsOpen, isOpen }) => {
   const [isSearch, setSearch] = useState(false);
   const maxMatch = 10;
   const [matchCount, setMatchCount] = useState(5);
 
-  const onSearch = (value: string) => {
-    setSearch(Boolean(value));
+  const onSearch = (e: any) => {
+    setSearch(Boolean(e.target.value));
   };
 
   const previousMatch = () => {
@@ -28,12 +34,17 @@ const Search: FC = () => {
     setMatchCount(count);
   };
 
+  const handleCLickOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div>
-      <InputSearch>
-        <SearchAnt placeholder="Search topic" onSearch={onSearch} enterButton />
+    <>
+      <InputSearch isOpen={isOpen}>
+        <InputAnt placeholder="Search" onChange={(e) => onSearch(e)} suffix={<SearchOutlined />} />
+        {setIsOpen && <Button icon={<Arrow />} onClick={handleCLickOpen} />}
       </InputSearch>
-      {isSearch ? (
+      {isSearch && (
         <Space>
           <div>
             {matchCount}/{maxMatch}
@@ -43,10 +54,8 @@ const Search: FC = () => {
             <Button icon={<ArrowDownOutlined />} onClick={nextMatch} isDisabled={matchCount >= maxMatch} />
           </div>
         </Space>
-      ) : (
-        ''
       )}
-    </div>
+    </>
   );
 };
 

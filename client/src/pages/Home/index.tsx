@@ -7,9 +7,9 @@ import { Layout } from 'antd';
 import Plan from 'components/Plan';
 import Library from 'components/Library';
 import CardContent from 'components/CardContent';
-import Groups from 'components/Groups/intex';
+import Groups from 'components/Groups';
 import TutorLibrary from 'components/TutorLibrary';
-import Students from 'components/Students/intex';
+import Students from 'components/Students';
 
 const Home: FC = () => {
   return (
