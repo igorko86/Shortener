@@ -39,6 +39,7 @@ export interface IPlanCard {
 export interface IStudentInGroup {
   id: string;
   studentName: string;
+  studentId: string;
 }
 
 export interface IPlan {

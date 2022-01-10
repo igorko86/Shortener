@@ -6,6 +6,6 @@ export interface IAddNewStudentRequest {
 }
 
 export interface IAddStudentRequest {
-  studentId: string;
+  studentIds: string[];
   groupId: string;
 }

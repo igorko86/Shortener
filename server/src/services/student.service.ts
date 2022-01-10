@@ -41,31 +41,40 @@ class StudentService {
   }
 
   async addStudent(data: IAddStudentRequest) {
-    const { groupId, studentId } = data;
+    const { groupId, studentIds } = data;
 
-    const student = await Student.findOne({ id: studentId });
+    const promisesStudentIds = studentIds.map((studentId) => Student.findOne({ id: studentId }));
+
+    const studentsData = await Promise.all(promisesStudentIds);
     const group = await Group.findOne({ id: groupId });
 
-    const newStudentGroup = StudentGroup.create({ group, student });
+    const newStudentGroups = studentsData.map((student) => {
+      const newStudentGroup = StudentGroup.create({ group, student });
 
-    await newStudentGroup.save();
+      return newStudentGroup.save();
+    });
+
+    await Promise.all(newStudentGroups);
   }
 
-  async getStudentsById(id: string) {
-    return await Student.find({
-      where: [{ tutor: id }],
-    });
+  async getStudentsById(tutorId: string) {
+    const students = await Student.createQueryBuilder('student')
+      .select(['student.id', 'student.name'])
+      .where('student.tutor = :tutorId', { tutorId })
+      .getMany();
+
+    return students;
   }
 
   async getStudentsInGroup(groupId: string): Promise<IGetStudentsInGroupResponse[]> {
     const studentGroups = await StudentGroup.createQueryBuilder('studentGroup')
-      .select(['studentGroup.id', 'student.name'])
+      .select(['studentGroup.id', 'student.name', 'student.id'])
       .leftJoin('studentGroup.student', 'student')
       .where('studentGroup.groupId = :groupId', { groupId })
       .getMany();
-
+    console.log(studentGroups);
     return studentGroups.map((item) => {
-      return { id: item.id, studentName: item.student.name };
+      return { id: item.id, studentName: item.student.name, studentId: item.student.id };
     });
   }
 

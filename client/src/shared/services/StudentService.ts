@@ -1,7 +1,7 @@
 import { ApiRoutes } from './apiRoutes.constants';
 import $api from '../../http';
 import { IAddNewStudentRequest, IAddStudentRequest } from '../models/request/studentRequest';
-import { IStudentsInGroupResponse } from '../models/response/groupResponse';
+import { IGetStudentsByIdResponse, IStudentsInGroupResponse } from 'shared/models/response/studentResponse';
 
 class StudentService {
   static addNewStudent(body: IAddNewStudentRequest): Promise<void> {
@@ -16,7 +16,7 @@ class StudentService {
     return $api.get(ApiRoutes.GetStudentsInGroup, { params: { groupId } }).then(({ data }) => data);
   }
 
-  static getStudentsById(tutorId: string): Promise<any> {
+  static getStudentsById(tutorId: string): Promise<IGetStudentsByIdResponse[]> {
     return $api.get(ApiRoutes.GetStudents, { params: { tutorId } }).then(({ data }) => data);
   }
 

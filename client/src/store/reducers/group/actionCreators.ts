@@ -138,19 +138,21 @@ export const groupThunks = {
       return null;
     }
   },
-  getStudentsById: (groupId: string) => async (dispatch: AppDispatch) => {
+  getStudentsByTutorId: (tutorId: string) => async () => {
     try {
-      const students = await StudentService.getStudentsById(groupId);
-      dispatch(groupActions.setStudent([...students]));
+      const students = await StudentService.getStudentsById(tutorId);
+      console.log(students);
       return null;
     } catch {
       return null;
     }
   },
-  getStudentsByTutorId: (tutorId: string) => async () => {
+  getStudentsInGroupByGroupId: (groupId: string) => async (dispatch: AppDispatch) => {
     try {
-      const students = await StudentService.getStudentsById(tutorId);
-      console.log(students);
+      const studentsInGroup = await StudentService.getStudentsInGroup(groupId);
+
+      dispatch(groupActions.setStudent(studentsInGroup));
+
       return null;
     } catch {
       return null;

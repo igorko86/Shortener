@@ -8,7 +8,7 @@ import {
   IUpdateCardName,
   IUpdatePlanName,
 } from '../models/request/groupReguest';
-import { IGroupResponse, IPlanCard, IPlanResponse, IStudentsInGroupResponse } from '../models/response/groupResponse';
+import { IGroupResponse, IPlanCard, IPlanResponse } from '../models/response/groupResponse';
 import { IExerciseResponse } from '../models/response/libraryResponse';
 import { ICreateExerciseRequest } from '../models/request/studentRequest';
 

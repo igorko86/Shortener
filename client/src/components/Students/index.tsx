@@ -11,6 +11,7 @@ import Button from '../Items/Button';
 // Styles
 import { ItemWrapper } from './styles';
 import { SpanTitle } from '../Items/Card/styles';
+import AddStudent from 'components/Modals/AddStudent';
 
 const { setStudent } = groupActions;
 
@@ -18,6 +19,7 @@ const Students: FC = () => {
   const students = useAppSelector(studentsSelector);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleClickRemove = (id: string, index: number) => {
     students.splice(index, 1);
@@ -26,27 +28,34 @@ const Students: FC = () => {
     StudentService.deleteStudentsInGroupByIds([id]);
   };
 
-  return (
-    <Column
-      title="Students"
-      buttonText="+ Add student"
-      onClickAdd={() => console.log('hellooo')}
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      cards={students}
-      textItem="students"
-    >
-      {students.map((student: any, index: number) => {
-        const { studentName, id } = student;
+  const handleClickAddStudent = () => {
+    setShowModal(true);
+  };
 
-        return (
-          <ItemWrapper key={id}>
-            <SpanTitle>{studentName}</SpanTitle>
-            <Button onClick={() => handleClickRemove(id, index)} icon={<Close />} />
-          </ItemWrapper>
-        );
-      })}
-    </Column>
+  return (
+    <>
+      <Column
+        title="Students"
+        buttonText="+ Add student"
+        onClickAdd={handleClickAddStudent}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        cards={students}
+        textItem="students"
+      >
+        {students.map((student: any, index: number) => {
+          const { studentName, id } = student;
+
+          return (
+            <ItemWrapper key={id}>
+              <SpanTitle>{studentName}</SpanTitle>
+              <Button onClick={() => handleClickRemove(id, index)} icon={<Close />} />
+            </ItemWrapper>
+          );
+        })}
+      </Column>
+      <AddStudent visible={showModal} onCancel={setShowModal} />
+    </>
   );
 };
 
