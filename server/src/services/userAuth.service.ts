@@ -9,9 +9,10 @@ import ApiErrorService from './apiError.service';
 import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants';
 import { IAuthLoginRequest, IUserRequest } from '../models/request/auth.request';
 import { User } from '../db/entites/User';
+import { userMailHtml } from './common/mailHtmls';
 
-class UserService {
-  async register(data: IUserRequest, link?: string): Promise<User> {
+export default class UserAuthService {
+  async register(data: IUserRequest): Promise<User> {
     const { name: userName, email: userEmail, password, role } = data;
     const user = await User.findOne({ email: userEmail });
 
@@ -24,13 +25,15 @@ class UserService {
       email: userEmail,
       password: hashPassword,
       name: userName,
-      role: role as unknown as Role,
+      role: role,
     });
     const savedUser = await newUser.save();
     const { id, email } = savedUser;
-    const activationLink = (link || `${process.env.SERVER_URL}/api/auth/activation/${Role.Viewer}/`) + id;
 
-    await mailService.sendActivationMail(email, activationLink);
+    const link = `${process.env.SERVER_URL}/api/auth/activation/${role}/${id}`;
+    const html = userMailHtml({ link });
+
+    await mailService.sendActivationMail(email, html);
 
     return savedUser;
   }
@@ -85,5 +88,3 @@ class UserService {
     return true;
   }
 }
-
-export default new UserService();

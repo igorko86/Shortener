@@ -8,8 +8,9 @@ import apiErrorService from './apiError.service';
 import ApiErrorService from './apiError.service';
 import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants';
 import { IAuthLoginRequest, ITutorRequest } from '../models/request/auth.request';
+import { tutorMailHtml } from './common/mailHtmls';
 
-class TutorService {
+export default class TutorAuthService {
   async register(data: ITutorRequest) {
     const { name: tutorName, email: tutorEmail, password } = data;
     const tutor = await Tutor.findOne({ email: tutorEmail });
@@ -26,9 +27,10 @@ class TutorService {
     });
     const savedTutor = await newTutor.save();
     const { id, email } = savedTutor;
-    const activationLink = `${process.env.SERVER_URL}/api/auth/activation/${Role.Tutor}/${id}`;
+    const link = `${process.env.SERVER_URL}/api/auth/activation/${Role.Tutor}/${id}`;
+    const html = tutorMailHtml({ link });
 
-    await mailService.sendActivationMail(email, activationLink);
+    await mailService.sendActivationMail(email, html);
   }
 
   async activate(id: string) {
@@ -74,5 +76,3 @@ class TutorService {
     return await tokenService.generateSaveTokens(tutor);
   }
 }
-
-export default new TutorService();

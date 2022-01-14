@@ -2,8 +2,9 @@ import tokenService from './token.service';
 import { Role, IServicesByRole, IGenerateTokensResult } from './interfaces';
 import { IAuthLoginRequest, IAuthRegistrationRequest } from 'src/models/request/auth.request';
 
-import userService from './user.service';
-import tutorService from './tutor.service';
+import UserAuthService from './userAuth.service';
+import TutorAuthService from './tutorAuth.service';
+import StudentAuthService from './studentAuth.service';
 import ApiErrorService from './apiError.service';
 import { Token } from '../db/entites/Token';
 
@@ -16,19 +17,18 @@ class AuthService {
 
   async register(data: IAuthRegistrationRequest) {
     // @ts-ignore
-    await this.services[data.role].register(data);
+    await this.services[data.role]?.register(data);
   }
 
   async activate(params: any) {
     const { link: id, role } = params;
-
     // @ts-ignore
-    await this.services[role].activate(id);
+    await this.services[role]?.activate(id);
   }
 
   async login(body: IAuthLoginRequest): Promise<IGenerateTokensResult> {
     // @ts-ignore
-    return this.services[body.role].login(body);
+    return this.services[body.role]?.login(body);
   }
 
   async logout(refreshToken: string) {
@@ -51,11 +51,12 @@ class AuthService {
     }
 
     // @ts-ignore
-    return await this.services[userData.role].refresh(userData.id);
+    return await this.services[userData.role]?.refresh(userData.id);
   }
 }
 
 export default new AuthService({
-  [Role.Viewer]: userService,
-  [Role.Tutor]: tutorService,
+  [Role.Viewer]: new UserAuthService(),
+  [Role.Tutor]: new TutorAuthService(),
+  [Role.Student]: new StudentAuthService(),
 });

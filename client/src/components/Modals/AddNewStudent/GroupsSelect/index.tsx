@@ -1,5 +1,5 @@
 // External
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Select } from 'antd';
 // Internal
 import { useAppSelector } from 'shared/hooks/storeHooks';
@@ -16,15 +16,7 @@ interface IProps {
 
 const GroupsSelect: FC<IProps> = ({ changeFormValue, disabled }) => {
   const groups = useAppSelector(groupsSelector);
-  const tutor = useAppSelector(userSelector);
-  const { getGroupsById } = useActionCreator();
-  const [selectedValue, setSelectedValue] = useState<null | string>(null);
-
-  useEffect(() => {
-    if (tutor) {
-      getGroupsById(tutor.id);
-    }
-  }, []);
+  const [selectedValue, setSelectedValue] = useState<string>();
 
   const handleChange = (id: string) => {
     setSelectedValue(id);

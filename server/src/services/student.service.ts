@@ -1,6 +1,5 @@
 import { User } from '../db/entites/User';
-import userService from './user.service';
-import { IAddNewStudent, Role } from './interfaces';
+import { Role } from './interfaces';
 import { Student } from '../db/entites/Student';
 import { Group } from '../db/entites/Group';
 import { Tutor } from '../db/entites/Tutor';
@@ -8,36 +7,57 @@ import { StudentGroup } from '../db/entites/StudentGroup';
 import ApiErrorService from './apiError.service';
 import { IGetStudentsInGroupResponse } from '../models/response/student.response.';
 import { IAddNewStudentRequest, IAddStudentRequest } from '../models/request/student.request.';
+import { studentMailHtml } from './common/mailHtmls';
+import { generatePassword } from '../helpers';
+import mailService from './mail.service';
+import { Token } from '../db/entites/Token';
+import StudentAuthService from './studentAuth.service';
 
 class StudentService {
   async addNewStudent(data: IAddNewStudentRequest) {
     const { email, name, groupId, tutorId } = data;
 
     let userData = await User.findOne({ email });
+    const role = Role.Student;
+    let password = '';
 
     if (!userData) {
-      const link = `${process.env.SERVER_URL}/password/${Role.Student}/`;
+      password = generatePassword();
 
-      userData = await userService.register({ email, name, role: Role.Student, password: name }, link);
+      userData = await StudentAuthService.getInstance().register({
+        email,
+        password,
+        name,
+        role,
+      });
     } else {
-      await User.update({ id: userData.id }, { role: Role.Student });
+      await User.update({ id: userData.id }, { role });
+      await Token.delete({ userTutorId: userData.id });
     }
     const tutor = await Tutor.findOne({ id: tutorId });
     const currentStudent = await Student.findOne({ user: userData });
 
+    if (!tutor) {
+      throw ApiErrorService.badRequest(`Tutor with such ${tutorId} id doesn't exist`);
+    }
     if (currentStudent) {
-      throw ApiErrorService.badRequest(`Student with such ${email} exists`);
+      throw ApiErrorService.badRequest(`Student with such ${email} email exists in list of our students`);
     }
     const newStudent = Student.create({ name, user: userData, tutor });
 
     const savedNewStudentData = await newStudent.save();
+    let group;
 
     if (groupId) {
-      const group = await Group.findOne({ id: groupId });
+      group = await Group.findOne({ id: groupId });
       const newStudentGroup = StudentGroup.create({ group, student: savedNewStudentData });
 
       await newStudentGroup.save();
     }
+    const link = `${process.env.SERVER_URL}/api/auth/activation/${role}/${userData.id}`;
+    const html = studentMailHtml({ link, password, groupName: group?.groupName, tutorName: tutor.name });
+
+    await mailService.sendActivationMail(email, html);
   }
 
   async addStudent(data: IAddStudentRequest) {
@@ -72,7 +92,7 @@ class StudentService {
       .leftJoin('studentGroup.student', 'student')
       .where('studentGroup.groupId = :groupId', { groupId })
       .getMany();
-    console.log(studentGroups);
+
     return studentGroups.map((item) => {
       return { id: item.id, studentName: item.student.name, studentId: item.student.id };
     });

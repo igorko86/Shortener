@@ -53,7 +53,7 @@ const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
   };
 
   useEffect(() => {
-    if (tutor && visible) {
+    if (tutor && visible && plan) {
       StudentService.getStudentsById(tutor.id).then((studentsData) => {
         const students = studentsData.reduce((acc: { label: string; value: string }[], student) => {
           if (!studentsInGroup.some((stdInGroup) => stdInGroup.studentId === student.id)) {

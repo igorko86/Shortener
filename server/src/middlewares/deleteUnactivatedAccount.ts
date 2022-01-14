@@ -24,31 +24,17 @@ const deleteUnactivatedUsers = async () => {
     .execute();
 };
 
-const deleteUnactivatedStudents = async () => {
-  await createQueryBuilder('student')
-    .delete()
-    .from(Student, 'student')
-    .where('isActive = false')
-    .andWhere("created_at <= now() - interval '20 hours'")
-    .execute();
-};
-
 const unactivatedAction = {
   [Role.Tutor]: deleteUnactivatedTutors,
   [Role.Viewer]: deleteUnactivatedUsers,
-  // [Role.Student]: deleteUnactivatedStudents,
+  [Role.Student]: deleteUnactivatedUsers,
 };
 
 export const deleteUnactivatedAccount = (req: Request, res: Response, next: NextFunction) => {
   try {
     const { role } = req.params;
-
-    if (role === Role.Viewer) {
-      unactivatedAction[Role.Viewer]();
-    } else {
-      // @ts-ignore
-      unactivatedAction[role as unknown as IAuthRole]();
-    }
+    // @ts-ignore
+    unactivatedAction[role as unknown as IAuthRole]();
 
     next();
   } catch (error) {

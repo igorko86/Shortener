@@ -1,5 +1,6 @@
-import userService from './user.service';
-import tutorService from './tutor.service';
+import UserAuthService from './userAuth.service';
+import TutorAuthService from './tutorAuth.service';
+import StudentAuthService from './studentAuth.service';
 
 export interface IGenerateTokensResult {
   accessToken: string;
@@ -114,8 +115,9 @@ export interface ICardContentResponse {
 }
 
 export interface IServicesByRole {
-  [Role.Viewer]: typeof userService;
-  [Role.Tutor]: typeof tutorService;
+  [Role.Viewer]: UserAuthService;
+  [Role.Tutor]: TutorAuthService;
+  [Role.Student]: StudentAuthService;
 }
 
 export interface IAuthRole {
