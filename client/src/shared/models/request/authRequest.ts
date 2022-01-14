@@ -15,3 +15,14 @@ export interface IFormObjRequest {
   name?: string;
   role: Role;
 }
+
+export interface IForgotPasswordRequest {
+  email: string;
+  role: Role;
+}
+
+export interface IResetPasswordRequest {
+  password: string;
+  role: Role;
+  id: string;
+}

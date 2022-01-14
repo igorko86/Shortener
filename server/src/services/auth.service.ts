@@ -1,6 +1,11 @@
 import tokenService from './token.service';
 import { Role, IServicesByRole, IGenerateTokensResult } from './interfaces';
-import { IAuthLoginRequest, IAuthRegistrationRequest } from 'src/models/request/auth.request';
+import {
+  IAuthLoginRequest,
+  IAuthRegistrationRequest,
+  IForgotPasswordRequest,
+  IResetPasswordRequest,
+} from 'src/models/request/auth.request';
 
 import UserAuthService from './userAuth.service';
 import TutorAuthService from './tutorAuth.service';
@@ -29,6 +34,16 @@ class AuthService {
   async login(body: IAuthLoginRequest): Promise<IGenerateTokensResult> {
     // @ts-ignore
     return this.services[body.role]?.login(body);
+  }
+
+  async forgotPassword(body: IForgotPasswordRequest): Promise<IGenerateTokensResult> {
+    // @ts-ignore
+    return this.services[body.role]?.forgotPassword(body.email);
+  }
+
+  async resetPassword(body: IResetPasswordRequest): Promise<IGenerateTokensResult> {
+    // @ts-ignore
+    return this.services[body.role]?.resetPassword(body);
   }
 
   async logout(refreshToken: string) {

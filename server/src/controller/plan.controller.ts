@@ -29,7 +29,7 @@ class PlanController {
     try {
       await planCardService.deletePlanCardById(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }
@@ -39,7 +39,7 @@ class PlanController {
     try {
       await planService.movePlanCardId(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }
@@ -49,7 +49,7 @@ class PlanController {
     try {
       await subCardService.moveSubCard(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }
@@ -61,7 +61,7 @@ class PlanController {
       await subCardService.deleteSubCard({ cardId, libraryCardId: subCardId });
       await planCardService.updatePlanCardIds({ cardId, newIds });
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }
@@ -70,7 +70,7 @@ class PlanController {
     try {
       await planService.updatePlanName(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }
@@ -79,7 +79,7 @@ class PlanController {
     try {
       await planService.updateCardName(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }

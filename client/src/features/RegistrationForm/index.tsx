@@ -1,16 +1,29 @@
+// Internal
 import { FC } from 'react';
 import { Button, Form, Input, Switch } from 'antd';
+// External
 import { config, FormItem } from 'shared/helpers/formConfig';
+import { useHistory } from 'react-router-dom';
+import AuthService from 'shared/services/AuthService';
+import { Role } from 'shared/models/request/authRequest';
+import { AppPath } from 'shared/common/enum';
+// Styles
 
-interface IProps {
-  onSubmit: (values: any) => void;
-}
-
-const RegistrationForm: FC<IProps> = ({ onSubmit }) => {
+const RegistrationForm: FC = () => {
   const [form] = Form.useForm();
 
+  const history = useHistory();
+
+  const handleSubmit = async (values: any) => {
+    const { name, email, password, isTutor } = values;
+
+    await AuthService.register({ name, email, password, role: isTutor ? Role.Tutor : Role.Viewer });
+
+    history.push(AppPath.SUCCESS);
+  };
+
   return (
-    <Form onFinish={onSubmit} layout="vertical" form={form} name="register" scrollToFirstError autoComplete="off">
+    <Form onFinish={handleSubmit} layout="vertical" form={form} name="register" scrollToFirstError autoComplete="off">
       <Form.Item {...config[FormItem.NAME]}>
         <Input />
       </Form.Item>

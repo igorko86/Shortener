@@ -8,6 +8,8 @@ import Home from 'pages/Home';
 import LibraryCardPage from 'pages/LibraryCardPage';
 import Information from 'pages/Information';
 import Index from 'pages/StudentsPage';
+import ForgotPassword from '../pages/ForgotPassword';
+import ResetPassword from '../pages/ResetPassword';
 
 interface IRouter {
   path: string;
@@ -27,6 +29,18 @@ export const publicRoutes: IRouter[] = [
   {
     path: AppPath.SUCCESS,
     component: Success,
+  },
+  {
+    path: AppPath.SUCCESS,
+    component: Success,
+  },
+  {
+    path: AppPath.FORGOT_PASSWORD,
+    component: ForgotPassword,
+  },
+  {
+    path: `${AppPath.RESET_PASSWORD}`,
+    component: ResetPassword,
   },
 ];
 

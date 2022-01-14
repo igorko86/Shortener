@@ -41,6 +41,26 @@ class AuthController {
     }
   }
 
+  async forgotPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      await authService.forgotPassword(req.body);
+
+      return res.sendStatus(200);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async resetPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      await authService.resetPassword(req.body);
+
+      return res.sendStatus(200);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async logout(req: Request, res: Response, next: NextFunction) {
     try {
       await authService.logout(req.cookies.refreshToken);

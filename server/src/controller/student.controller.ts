@@ -25,7 +25,7 @@ class StudentController {
     try {
       await studentService.addNewStudent(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }
@@ -35,7 +35,7 @@ class StudentController {
     try {
       await studentService.addStudent(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }
@@ -45,7 +45,7 @@ class StudentController {
     try {
       await studentService.deleteStudentInGroupByIds(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }
@@ -55,7 +55,7 @@ class StudentController {
     try {
       await studentService.deleteStudentsByIds(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }

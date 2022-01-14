@@ -4,6 +4,8 @@ export enum ApiRoutes {
   Login = '/auth/login',
   Logout = '/auth/logout',
   Refresh = '/auth/refresh',
+  ForgotPassword = '/auth/forgot-password',
+  ResetPassword = '/auth/reset-password',
   // Library
   GetCards = '/library/cards',
   GetMyCards = '/myLibrary/cards',

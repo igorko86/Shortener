@@ -1,4 +1,4 @@
-export const userMailHtml = ({ link }: { link: string }) => {
+export const registerMailHtml = ({ link }: { link: string }) => {
   return `
         <div>
             <h1>To activate, follow the link</h1>
@@ -7,16 +7,7 @@ export const userMailHtml = ({ link }: { link: string }) => {
       `;
 };
 
-export const tutorMailHtml = ({ link }: { link: string }) => {
-  return `
-        <div>
-            <h1>To activate, follow the link</h1>
-            <a href="${link}">${link}</a>
-        </div>
-      `;
-};
-
-export const studentMailHtml = ({
+export const registerStudentMailHtml = ({
   link,
   password,
   groupName = '',
@@ -47,4 +38,13 @@ export const studentMailHtml = ({
       `;
 
   return password ? templateWithPassword : templateStandard;
+};
+
+export const forgotPasswordMailHtml = ({ link }: { link: string }) => {
+  return `
+        <div>
+            <h1>To reset password, follow the link</h1>
+            <a href="${link}">${link}</a>
+        </div>
+      `;
 };

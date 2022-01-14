@@ -11,3 +11,12 @@ export type ITutorRequest = IAuthRegistrationRequest;
 export type IUserRequest = IAuthRegistrationRequest;
 
 export type IAuthLoginRequest = Omit<IAuthRegistrationRequest, 'name'>;
+
+export interface IForgotPasswordRequest {
+  email: string;
+}
+export interface IResetPasswordRequest {
+  password: string;
+  role: Role;
+  id: string;
+}

@@ -1,4 +1,9 @@
-import { IFormObjRequest, IUserRequest } from '../models/request/authRequest';
+import {
+  IForgotPasswordRequest,
+  IFormObjRequest,
+  IResetPasswordRequest,
+  IUserRequest,
+} from '../models/request/authRequest';
 import $api from '../../http';
 import { ApiRoutes } from './apiRoutes.constants';
 
@@ -13,6 +18,14 @@ class AuthService {
 
   static logout(): Promise<void> {
     return $api.delete(ApiRoutes.Logout);
+  }
+
+  static forgotPassword(body: IForgotPasswordRequest): Promise<void> {
+    return $api.post(ApiRoutes.ForgotPassword, body);
+  }
+
+  static resetPassword(body: IResetPasswordRequest): Promise<void> {
+    return $api.post(ApiRoutes.ResetPassword, body);
   }
 }
 

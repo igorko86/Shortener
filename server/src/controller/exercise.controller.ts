@@ -37,7 +37,7 @@ class ExerciseController {
     try {
       await exerciseService.updateExercise(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }
@@ -47,7 +47,7 @@ class ExerciseController {
     try {
       await exerciseService.deleteExercisesById(req.body);
 
-      return res.status(200).json('Success');
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }

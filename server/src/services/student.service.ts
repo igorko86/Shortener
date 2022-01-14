@@ -7,11 +7,12 @@ import { StudentGroup } from '../db/entites/StudentGroup';
 import ApiErrorService from './apiError.service';
 import { IGetStudentsInGroupResponse } from '../models/response/student.response.';
 import { IAddNewStudentRequest, IAddStudentRequest } from '../models/request/student.request.';
-import { studentMailHtml } from './common/mailHtmls';
+import { registerStudentMailHtml } from './common/mailHtmls';
 import { generatePassword } from '../helpers';
 import mailService from './mail.service';
 import { Token } from '../db/entites/Token';
 import StudentAuthService from './studentAuth.service';
+import { ACTIVATION } from './common/links';
 
 class StudentService {
   async addNewStudent(data: IAddNewStudentRequest) {
@@ -54,8 +55,8 @@ class StudentService {
 
       await newStudentGroup.save();
     }
-    const link = `${process.env.SERVER_URL}/api/auth/activation/${role}/${userData.id}`;
-    const html = studentMailHtml({ link, password, groupName: group?.groupName, tutorName: tutor.name });
+    const link = `${process.env.SERVER_URL}${ACTIVATION}${role}/${userData.id}`;
+    const html = registerStudentMailHtml({ link, password, groupName: group?.groupName, tutorName: tutor.name });
 
     await mailService.sendActivationMail(email, html);
   }
