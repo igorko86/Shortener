@@ -5,6 +5,7 @@ const initialState: ILibraryState = {
   myLibraryCards: [],
   cardContent: null,
   exercises: [],
+  exerciseIds: null,
 };
 
 const libraryReducer = (state = initialState, action: LibraryActions): ILibraryState => {
@@ -16,7 +17,9 @@ const libraryReducer = (state = initialState, action: LibraryActions): ILibraryS
     case LibraryActionEnum.SET_CARD_CONTENT:
       return { ...state, cardContent: action.payload };
     case LibraryActionEnum.SET_EXERCISE:
-      return { ...state, exercises: [...state.exercises, action.payload] };
+      return { ...state, exercises: action.payload ? [...state.exercises, action.payload] : [] };
+    case LibraryActionEnum.SET_EXERCISE_IDS:
+      return { ...state, exerciseIds: action.payload ? [...(state.exerciseIds || []), action.payload] : null };
     default:
       return state;
   }

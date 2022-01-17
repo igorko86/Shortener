@@ -32,6 +32,7 @@ export interface ICardRequest {
   title: string;
   description: string;
   htmlContent: string;
+  exerciseIds: string[];
 }
 
 export interface IGroupAndPlanRequest {

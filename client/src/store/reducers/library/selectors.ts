@@ -7,3 +7,5 @@ export const myLibraryCardsSelector = ({ library }: AppState) => library.myLibra
 export const cardContentSelector = ({ library }: AppState) => library.cardContent;
 
 export const exercisesSelector = ({ library }: AppState) => library.exercises;
+
+export const exerciseIdsSelector = ({ library }: AppState) => library.exerciseIds;

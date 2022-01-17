@@ -23,7 +23,7 @@ const Column: FC<IProps> = ({ cards, title, onClickAdd, buttonText, isOpen, setI
 
   return (
     <ColumnWrapper>
-      <TitleColumn planName={title} />
+      <TitleColumn title={title} />
       <Search setIsOpen={setIsOpen} isOpen={isOpen} />
       {isOpen && (
         <ListWrapper

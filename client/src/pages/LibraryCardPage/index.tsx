@@ -1,6 +1,6 @@
 // External
-import { FC, useState } from 'react';
-import { Form, Input, Tabs, Button as ButtonAnt } from 'antd';
+import { FC, useEffect, useState } from 'react';
+import { Form, Input, Tabs } from 'antd';
 import { AndroidOutlined, AppleOutlined } from '@ant-design/icons';
 // Internal
 import RouterPrompt from 'components/Items/RouterPrompt';
@@ -9,24 +9,34 @@ import LibraryService from 'shared/services/LibraryService';
 import { TabName } from './helper';
 import ExplanationTab from './Explanation';
 import ExercisesTab from './Exercises';
-import { confirm } from 'components/Items/Confirm';
-import Button from '../../components/Items/Button';
-import { AppPath } from '../../shared/common/enum';
-import { useHistory } from 'react-router-dom';
+import { confirm, leaveCreateCardConfirm } from 'pages/LibraryCardPage/Confirm';
+import Button from 'components/Items/Button';
+import { useAppDispatch, useAppSelector } from 'shared/hooks/storeHooks';
+import { exerciseIdsSelector } from 'store/reducers/library/selectors';
+import { libraryActions } from 'store/reducers/library/actionCreators';
+import { ILibraryCardRequest } from 'shared/models/request/libraryRequest';
 
 const { TabPane } = Tabs;
+const { setExercise, setExerciseIds } = libraryActions;
 
 const LibraryCardPage: FC = () => {
   const [createCardForm] = Form.useForm();
-  const history = useHistory();
+  const exerciseIds = useAppSelector(exerciseIdsSelector);
+  const dispatch = useAppDispatch();
 
   const [creatingNewCard, setCreatingNewCard] = useState(false);
   const [activeTab, setActiveTab] = useState(TabName.Explanation);
   const [showExerciseBlock, setShowExerciseBlock] = useState(false);
 
+  useEffect(() => {
+    const { setFieldsValue, getFieldsValue } = createCardForm;
+
+    setFieldsValue({ ...getFieldsValue(), exerciseIds });
+  }, [exerciseIds]);
+
   const handleSubmit = (values: any) => {
     if (showExerciseBlock) {
-      confirm({ onOk: () => submit(values) });
+      confirm({ ...leaveCreateCardConfirm, onOk: () => submit(values) });
     } else {
       submit(values);
     }
@@ -35,16 +45,18 @@ const LibraryCardPage: FC = () => {
   const resetState = () => {
     setActiveTab(TabName.Explanation);
     setShowExerciseBlock(false);
+    setCreatingNewCard(false);
+    dispatch(setExerciseIds(null));
+    dispatch(setExercise(null));
+    createCardForm.resetFields();
   };
 
-  const submit = (values: any) => {
+  const submit = async (values: ILibraryCardRequest) => {
     setCreatingNewCard(true);
 
-    LibraryService.createLibraryCard(values).finally(() => {
-      setCreatingNewCard(false);
-      resetState();
-      createCardForm.resetFields();
-    });
+    await LibraryService.createLibraryCard(values);
+
+    resetState();
   };
 
   const toggleExerciseBlock = () => {
@@ -55,8 +67,10 @@ const LibraryCardPage: FC = () => {
     setActiveTab(tabName as string as TabName);
   };
 
-  const handleClickButton = (path: string) => {
-    history.push(path);
+  const handleOk = () => {
+    resetState();
+
+    return Promise.resolve(true);
   };
 
   return (
@@ -66,7 +80,7 @@ const LibraryCardPage: FC = () => {
         title="Leave this page"
         cancelText="Cancel"
         okText="Confirm"
-        onOK={() => Promise.resolve(true)}
+        onOK={handleOk}
       />
       <Form.Item {...config[FormItem.NAME]}>
         <Input />
@@ -98,15 +112,14 @@ const LibraryCardPage: FC = () => {
           }
           key={TabName.Exercises}
         >
-          <ExercisesTab onClose={toggleExerciseBlock} showExerciseBlock={showExerciseBlock} />
+          <Form.Item name="exerciseIds">
+            <ExercisesTab onClose={toggleExerciseBlock} showExerciseBlock={showExerciseBlock} />
+          </Form.Item>
         </TabPane>
       </Tabs>
       {(activeTab === TabName.Explanation || !showExerciseBlock) && (
         <Form.Item>
-          <ButtonAnt loading={creatingNewCard} type="primary" htmlType="submit">
-            Submit
-          </ButtonAnt>
-          <Button text="Cancel" onClick={() => handleClickButton(AppPath.ROOT)} />
+          <Button text="Submit" type="primary" htmlType="submit" />
         </Form.Item>
       )}
     </Form>

@@ -28,6 +28,12 @@ class ExerciseService {
     await Exercise.update(id, { content });
   }
 
+  async updateExercises(ids: string[], data: any): Promise<void> {
+    const arrayEntities = ids.map((id) => Exercise.update(id, data));
+
+    await Promise.allSettled(arrayEntities);
+  }
+
   async getExerciseById(exerciseId: string): Promise<IGetExerciseByIdResponse> {
     const exerciseData = await Exercise.findOne(exerciseId);
 

@@ -4,8 +4,6 @@ import { Select } from 'antd';
 // Internal
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { groupsSelector } from 'store/reducers/group/selectors';
-import { userSelector } from 'store/reducers/auth/selectors';
-import { useActionCreator } from 'shared/hooks/useActionCreator';
 
 const { Option } = Select;
 

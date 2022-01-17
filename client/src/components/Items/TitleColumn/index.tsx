@@ -7,7 +7,7 @@ import EditableTitle from '../EditableTitle';
 import { SpanTitleColumn, TitleColumnPosition } from './styles';
 
 interface IProps {
-  planName: string;
+  title: string;
   previousTitle?: any;
   titlePosition?: string;
   isChange?: boolean;
@@ -15,13 +15,13 @@ interface IProps {
   plan?: any;
 }
 
-const TitleColumn: FC<IProps> = ({ planName, plan, titlePosition, isChange, setNewPlanName }) => {
+const TitleColumn: FC<IProps> = ({ title, plan, titlePosition, isChange, setNewPlanName }) => {
   const { updatePlanName } = useActionCreator();
   const [isDisabled, setIsDisabled] = useState(true);
 
   const handleBluer = async () => {
-    if (plan.planName !== planName) {
-      const result = planName || 'Plan name';
+    if (plan.planName !== title) {
+      const result = title || 'Plan name';
 
       setNewPlanName(result);
       await updatePlanName({ planId: plan.id, planName: result });
@@ -33,14 +33,14 @@ const TitleColumn: FC<IProps> = ({ planName, plan, titlePosition, isChange, setN
     <TitleColumnPosition titlePosition={titlePosition}>
       {isChange && plan ? (
         <EditableTitle
-          title={planName}
+          title={title}
           setName={setNewPlanName}
           handleBluer={handleBluer}
           isDisabled={isDisabled}
           setIsDisabled={setIsDisabled}
         />
       ) : (
-        <SpanTitleColumn>{planName}</SpanTitleColumn>
+        <SpanTitleColumn>{title}</SpanTitleColumn>
       )}
     </TitleColumnPosition>
   );

@@ -136,7 +136,7 @@ const Plan: FC = () => {
   return (
     <ColumnWrapper>
       <TitleColumn
-        planName={plan ? newPlanName : 'Plan Name'}
+        title={plan ? newPlanName : 'Plan Name'}
         setNewPlanName={setNewPlanName}
         isChange
         titlePosition="left"

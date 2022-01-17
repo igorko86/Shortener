@@ -5,6 +5,7 @@ import {
   ILibraryCard,
   ISetCardContent,
   ISetExercise,
+  ISetExerciseIds,
   ISetLibraryCards,
   ISetMyLibraryCards,
   LibraryActionEnum,
@@ -24,8 +25,13 @@ export const libraryActions = {
     type: LibraryActionEnum.SET_CARD_CONTENT,
     payload: content,
   }),
-  setExercise: (exercise: IExercise): ISetExercise => ({
+  setExercise: (exercise: IExercise | null): ISetExercise => ({
     type: LibraryActionEnum.SET_EXERCISE,
+    payload: exercise,
+  }),
+
+  setExerciseIds: (exercise: string | null): ISetExerciseIds => ({
+    type: LibraryActionEnum.SET_EXERCISE_IDS,
     payload: exercise,
   }),
 };
@@ -36,7 +42,6 @@ export const libraryThunks = {
       const libraryCards = await LibraryService.getLibraryCards();
 
       dispatch(libraryActions.setLibraryCards(libraryCards));
-      return null;
     } catch {
       return null;
     }
@@ -46,7 +51,6 @@ export const libraryThunks = {
       const libraryCards = await LibraryService.getMyLibraryCards();
 
       dispatch(libraryActions.setMyLibraryCards(libraryCards));
-      return null;
     } catch {
       return null;
     }
@@ -58,7 +62,6 @@ export const libraryThunks = {
         const cardContent = await LibraryService.getCardContent(cardId);
 
         dispatch(libraryActions.setCardContent(cardContent.htmlContent));
-        return null;
       } catch {
         return null;
       }
@@ -68,7 +71,7 @@ export const libraryThunks = {
       const exercise = await GroupService.createExercise(data);
 
       dispatch(libraryActions.setExercise(exercise));
-      return null;
+      dispatch(libraryActions.setExerciseIds(exercise.id));
     } catch {
       return null;
     }

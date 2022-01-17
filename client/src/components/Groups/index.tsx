@@ -24,7 +24,9 @@ const Groups: FC = () => {
   }, []);
 
   const handleChangeGroup = (groupId: any) => {
-    getCourseData(groupId);
+    if (plan?.groupId !== groupId) {
+      getCourseData(groupId);
+    }
   };
 
   return (

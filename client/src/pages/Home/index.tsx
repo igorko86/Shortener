@@ -6,7 +6,7 @@ import { Layout } from 'antd';
 // Internal
 import Plan from 'components/Plan';
 import Library from 'components/Library';
-import CardContent from 'components/CardContent';
+import CardContent from 'pages/Home/CardContent';
 import Groups from 'components/Groups';
 import TutorLibrary from 'components/TutorLibrary';
 import Students from 'components/Students';

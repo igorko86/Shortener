@@ -1,5 +1,9 @@
+// External
 import { FC, ReactElement } from 'react';
+import { ButtonProps } from 'antd/lib/button/button';
+// Internal
 
+// Styles
 import { ButtonStyle } from './styles';
 
 interface IProps {
@@ -9,7 +13,7 @@ interface IProps {
   isDisabled?: boolean;
 }
 
-const Button: FC<IProps> = ({ text, ...props }) => {
+const Button: FC<IProps & ButtonProps> = ({ text, ...props }) => {
   return <ButtonStyle {...props}>{text}</ButtonStyle>;
 };
 
