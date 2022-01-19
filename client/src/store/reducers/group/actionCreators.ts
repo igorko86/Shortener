@@ -5,6 +5,7 @@ import { GroupActionEnum, IGroup, IPlan, ISetGroups, ISetPlan, ISetStudents, ISt
 import { AppDispatch } from '../../interfaces';
 import { convertSubCardsArrayToObj } from '../../helpers';
 import StudentService from '../../../shared/services/StudentService';
+import { AppState } from '../../index';
 
 export const groupActions = {
   setGroups: (groups: IGroup[]): ISetGroups => ({
@@ -32,82 +33,85 @@ export const groupThunks = {
       return null;
     }
   },
-  createCourse: (validFields: ICreateGroupAndPlanRequest) => async (dispatch: AppDispatch, getState: any) => {
-    try {
-      const { groups } = getState().group;
-      const groupPlanData = await GroupService.createCourse(validFields);
-      const { groupName, id, plan } = groupPlanData;
-      const subCards = convertSubCardsArrayToObj(plan.planCards);
+  createCourse:
+    (validFields: ICreateGroupAndPlanRequest) =>
+    async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {
+      try {
+        const { groups } = getState().group;
+        const groupPlanData = await GroupService.createCourse(validFields);
+        const { groupName, id, plan } = groupPlanData;
+        const subCards = convertSubCardsArrayToObj(plan.planCards);
 
-      dispatch(groupActions.setPlan({ ...plan, groupId: id, subCards }));
-      dispatch(groupActions.setGroups([{ id, groupName }, ...groups]));
-      return null;
-    } catch {
-      return null;
-    }
-  },
+        dispatch(groupActions.setPlan({ ...plan, groupId: id, subCards }));
+        dispatch(groupActions.setGroups([{ id, groupName }, ...groups]));
+      } catch {
+        return null;
+      }
+    },
   createPlanCard:
     (planId: string) =>
-    async (dispatch: AppDispatch, getState: any): Promise<any> => {
+    async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {
       try {
         const { plan } = getState().group;
-        const planCard = await GroupService.createPlanCard(planId);
 
-        plan.planCards.push(planCard);
-        plan.subCards = { ...plan.subCards, [planCard.id]: [] };
+        if (plan) {
+          const planCard = await GroupService.createPlanCard(planId);
 
-        dispatch(groupActions.setPlan({ ...plan }));
-        const { id, planCardName } = planCard;
+          plan.planCards.push(planCard);
+          plan.subCards = { ...plan.subCards, [planCard.id]: [] };
 
-        return { id, planCardName };
+          dispatch(groupActions.setPlan({ ...plan }));
+        }
       } catch {
         return null;
       }
     },
   updatePlanName:
     (planInfo: IUpdatePlanName) =>
-    async (dispatch: AppDispatch, getState: any): Promise<any> => {
+    async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {
       try {
         const { plan } = getState().group;
-        const { planId, planName } = planInfo;
 
-        await GroupService.updatePlanName({ planId, planName });
-        plan.planName = planName;
-        dispatch(groupActions.setPlan(plan));
+        if (plan) {
+          const { planId, planName } = planInfo;
 
-        return null;
+          await GroupService.updatePlanName({ planId, planName });
+          plan.planName = planName;
+          dispatch(groupActions.setPlan(plan));
+        }
       } catch {
         return null;
       }
     },
   updateCardName:
     (cardInfo: IUpdateCardName) =>
-    async (dispatch: AppDispatch, getState: any): Promise<any> => {
+    async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {
       try {
         const { plan } = getState().group;
-        const { cardId, cardName, cardIndex } = cardInfo;
 
-        await GroupService.updateCardName({ cardId, cardName, cardIndex });
-        plan.planCards[cardIndex].planCardName = cardName;
-        dispatch(groupActions.setPlan(plan));
+        if (plan) {
+          const { cardId, cardName, cardIndex } = cardInfo;
 
-        return null;
+          await GroupService.updateCardName({ cardId, cardName, cardIndex });
+          plan.planCards[cardIndex].planCardName = cardName;
+          dispatch(groupActions.setPlan(plan));
+        }
       } catch {
         return null;
       }
     },
   deletePlanCard:
     (cardId: string, index: number) =>
-    async (dispatch: AppDispatch, getState: any): Promise<any> => {
+    async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {
       try {
         const { plan } = getState().group;
 
-        plan.planCards.splice(index, 1);
-        dispatch(groupActions.setPlan({ ...plan }));
+        if (plan) {
+          plan.planCards.splice(index, 1);
+          dispatch(groupActions.setPlan({ ...plan }));
 
-        GroupService.deletePlanCard(cardId, plan.id, index);
-
-        return null;
+          GroupService.deletePlanCard(cardId, plan.id, index);
+        }
       } catch {
         return null;
       }
@@ -158,49 +162,51 @@ export const groupThunks = {
       return null;
     }
   },
-  movePlanCardId: (cardInfo: IDropCardInfo) => async (dispatch: AppDispatch, getState: any) => {
-    try {
-      const { plan } = getState().group;
-      const { index, dragIndex } = cardInfo;
+  movePlanCardId:
+    (cardInfo: IDropCardInfo) =>
+    async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {
+      try {
+        const { plan } = getState().group;
+        const { index, dragIndex } = cardInfo;
 
-      GroupService.movePlanCardId({ dragIndex, index, planId: plan.id });
-
-      return null;
-    } catch {
-      return null;
-    }
-  },
-  moveSubCardId: (updatedSubCardsInfo: any) => async (dispatch: AppDispatch, getState: any) => {
-    try {
-      const { plan } = getState().group;
-      const { updatedSubCards, ...res } = updatedSubCardsInfo;
-
-      if (updatedSubCardsInfo.libraryCardId) {
-        plan.subCards = updatedSubCards;
-        dispatch(groupActions.setPlan({ ...plan }));
+        if (plan) {
+          GroupService.movePlanCardId({ dragIndex, index, planId: plan.id });
+        }
+      } catch {
+        return null;
       }
+    },
+  moveSubCardId:
+    (updatedSubCardsInfo: any) =>
+    async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {
+      try {
+        const { plan } = getState().group;
+        const { updatedSubCards, ...res } = updatedSubCardsInfo;
 
-      GroupService.moveSubCardId(res);
+        if (updatedSubCardsInfo.libraryCardId && plan) {
+          plan.subCards = updatedSubCards;
+          dispatch(groupActions.setPlan({ ...plan }));
+        }
 
-      return null;
-    } catch {
-      return null;
-    }
-  },
+        GroupService.moveSubCardId(res);
+      } catch {
+        return null;
+      }
+    },
   deleteSubCard:
     ({ cardId, subCards, subCardId }: { cardId: string; subCardId: string; subCards: string[] }) =>
-    async (dispatch: AppDispatch, getState: any): Promise<any> => {
+    async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {
       try {
         const { plan } = getState().group;
 
-        plan.subCards[cardId] = subCards;
-        dispatch(groupActions.setPlan({ ...plan }));
+        if (plan) {
+          plan.subCards[cardId] = subCards;
+          dispatch(groupActions.setPlan({ ...plan }));
 
-        const newIds = subCards.map((item: any) => item.id);
+          const newIds = subCards.map((item: any) => item.id);
 
-        GroupService.deleteSubCard({ cardId, newIds, subCardId });
-
-        return null;
+          GroupService.deleteSubCard({ cardId, newIds, subCardId });
+        }
       } catch {
         return null;
       }

@@ -9,3 +9,5 @@ export interface IGetExerciseByIdResponse {
   type: string;
   content: any[];
 }
+
+export type IGetExerciseListResponse = ICreateExerciseResponse;

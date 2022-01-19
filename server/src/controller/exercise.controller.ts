@@ -3,9 +3,9 @@ import { NextFunction, Request, Response } from 'express';
 import exerciseService from '../services/exercise.service';
 
 class ExerciseController {
-  async getExercises(req: Request, res: Response, next: NextFunction) {
+  async getExercisesList(req: Request, res: Response, next: NextFunction) {
     try {
-      const exercisesData = await exerciseService.getExercises(req.query.cardId as string);
+      const exercisesData = await exerciseService.getExercisesList(req.query.cardId as string);
 
       return res.status(200).json(exercisesData);
     } catch (error) {

@@ -33,4 +33,6 @@ export enum ApiRoutes {
   AddStudent = '/students/student-group',
   // Exercise
   CreateExercise = '/exercises/exercise',
+  RemoveExercisesByIds = '/exercises/exercise',
+  GetExerciseList = '/exercises',
 }

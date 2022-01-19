@@ -5,6 +5,8 @@ import { XYCoord } from 'dnd-core';
 // Internal
 import { IMoveSubCardDragInfo, ISubCard, ItemTypeCard } from 'components/Plan/interfaces';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
+import { useAppSelector } from 'shared/hooks/storeHooks';
+import { cardContentLoadingSelector } from 'store/reducers/library/selectors';
 // Styles
 import { DivSubCard } from './styles';
 
@@ -26,7 +28,8 @@ interface IProps {
 
 const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId, removeSubCard, subCard }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const { getCardContent } = useActionCreator();
+  const { setActiveCardId } = useActionCreator();
+  const loadingCard = useAppSelector(cardContentLoadingSelector);
 
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypeCard.SUB_CARD,
@@ -78,7 +81,9 @@ const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId, r
   });
 
   const handleShowContent = () => {
-    getCardContent(subCard.id);
+    if (!loadingCard) {
+      setActiveCardId(subCard.id);
+    }
   };
 
   const handleRemoveCard = (e: any) => {

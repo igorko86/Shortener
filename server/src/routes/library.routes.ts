@@ -5,6 +5,6 @@ const libraryRouter = Router();
 
 libraryRouter.get('/cards', libraryController.getLibraryCards);
 libraryRouter.post('/card', libraryController.createLibraryCard);
-libraryRouter.get('/card/content', libraryController.getCardContent);
+libraryRouter.get('/card/content', libraryController.getCardExplanation);
 
 export { libraryRouter as libraryRoutes };

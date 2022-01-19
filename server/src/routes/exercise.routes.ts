@@ -4,7 +4,7 @@ import exerciseController from '../controller/exercise.controller';
 
 const exerciseRouter = Router();
 
-exerciseRouter.get('', exerciseController.getExercises);
+exerciseRouter.get('', exerciseController.getExercisesList);
 exerciseRouter.get('/exercise', exerciseController.getExerciseById);
 exerciseRouter.post('/exercise', exerciseController.createExercise);
 exerciseRouter.put('/exercise', exerciseController.updateExercise);

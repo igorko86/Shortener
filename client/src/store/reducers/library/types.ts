@@ -1,9 +1,11 @@
 export interface ILibraryState {
   libraryCards: ILibraryCard[];
   myLibraryCards: ILibraryCard[];
-  cardContent: string | null;
+  cardContent: ICardContent;
   exercises: IExercise[];
   exerciseIds: string[] | null;
+  activeCardId: string | null;
+  cardContentLoading: boolean;
 }
 
 export enum LibraryActionEnum {
@@ -12,6 +14,8 @@ export enum LibraryActionEnum {
   SET_CARD_CONTENT = 'SET_CARD_CONTENT',
   SET_EXERCISE = 'SET_EXERCISE',
   SET_EXERCISE_IDS = 'SET_EXERCISE_IDS',
+  SET_CURRENT_CARD_ID = 'SET_CURRENT_CARD_ID',
+  SET_CARD_CONTENT_LOADING = 'SET_CARD_CONTENT_LOADING',
 }
 
 export interface ISetLibraryCards {
@@ -26,7 +30,7 @@ export interface ISetMyLibraryCards {
 
 export interface ISetCardContent {
   type: LibraryActionEnum.SET_CARD_CONTENT;
-  payload: string;
+  payload: ICardContent;
 }
 
 export interface ISetExercise {
@@ -39,7 +43,24 @@ export interface ISetExerciseIds {
   payload: string | null;
 }
 
-export type LibraryActions = ISetLibraryCards | ISetMyLibraryCards | ISetCardContent | ISetExercise | ISetExerciseIds;
+export interface ISetCurrentCardId {
+  type: LibraryActionEnum.SET_CURRENT_CARD_ID;
+  payload: string | null;
+}
+
+export interface ISetCardContentLoading {
+  type: LibraryActionEnum.SET_CARD_CONTENT_LOADING;
+  payload: boolean;
+}
+
+export type LibraryActions =
+  | ISetLibraryCards
+  | ISetMyLibraryCards
+  | ISetCardContent
+  | ISetExercise
+  | ISetExerciseIds
+  | ISetCurrentCardId
+  | ISetCardContentLoading;
 
 export interface ILibraryCard {
   id: string;
@@ -50,4 +71,11 @@ export interface ILibraryCard {
 export interface IExercise {
   id: string;
   name: string;
+}
+
+export interface ICardContent {
+  explanation: string;
+  exercisesList: IExercise[];
+  name: string;
+  description: string;
 }

@@ -113,6 +113,8 @@ export interface IMoveSubCardRequest {
 
 export interface ICardContentResponse {
   htmlContent: string;
+  name: string;
+  description: string;
 }
 
 export interface IServicesByRole {

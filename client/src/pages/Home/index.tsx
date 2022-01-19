@@ -16,12 +16,18 @@ const Home: FC = () => {
     <DndProvider backend={HTML5Backend}>
       <Layout.Content>
         <div style={{ display: 'flex' }}>
-          <Plan />
-          <CardContent />
-          <Groups />
-          <Students />
-          <TutorLibrary />
-          <Library />
+          <div style={{ width: '260px' }}>
+            <Plan />
+          </div>
+          <div>
+            <div style={{ display: 'flex' }}>
+              <Groups />
+              <Students />
+              <TutorLibrary />
+              <Library />
+            </div>
+            <CardContent />
+          </div>
         </div>
         <Layout.Footer>Footer</Layout.Footer>
       </Layout.Content>

@@ -6,6 +6,8 @@ export interface ILibraryCardResponse {
 
 export interface ICardContentResponse {
   htmlContent: string;
+  name: string;
+  description: string;
 }
 
 export interface IExerciseResponse {

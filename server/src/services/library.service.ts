@@ -23,14 +23,15 @@ class LibraryService {
       .getMany();
   }
 
-  async getCardContent(id: any): Promise<ICardContentResponse> {
+  async getCardExplanation(id: any): Promise<ICardContentResponse> {
     const libraryCardData = await LibraryCard.findOne(id);
 
     if (!libraryCardData) {
       throw apiErrorService.badRequest(`Card with such "${id}" id doesn't exists`);
     }
+    const { name, htmlContent, description } = libraryCardData;
 
-    return { htmlContent: libraryCardData.htmlContent };
+    return { htmlContent, name, description };
   }
 }
 

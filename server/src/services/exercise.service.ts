@@ -1,7 +1,11 @@
 import { Student } from '../db/entites/Student';
 import { ICreateExerciseRequest, IUpdateExerciseRequest } from '../models/request/exercise.request';
 import { Exercise } from '../db/entites/Exercise';
-import { ICreateExerciseResponse, IGetExerciseByIdResponse } from '../models/response/exercise.response.';
+import {
+  ICreateExerciseResponse,
+  IGetExerciseByIdResponse,
+  IGetExerciseListResponse,
+} from '../models/response/exercise.response.';
 import apiErrorService from './apiError.service';
 
 class ExerciseService {
@@ -51,10 +55,12 @@ class ExerciseService {
     };
   }
 
-  async getExercises(id: string) {
-    return await Student.find({
-      where: [{ libraryCardId: id }],
-    });
+  async getExercisesList(cardId: string): Promise<IGetExerciseListResponse[]> {
+    return await Exercise.createQueryBuilder('exercise')
+      .select('exercise.id')
+      .addSelect('exercise.name')
+      .where('exercise.libraryCardId = :cardId', { cardId })
+      .getMany();
   }
 
   async deleteExercisesById(ids: string[]) {

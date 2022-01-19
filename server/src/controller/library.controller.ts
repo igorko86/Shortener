@@ -23,9 +23,9 @@ class LibraryController {
     }
   }
 
-  async getCardContent(req: Request, res: Response, next: NextFunction) {
+  async getCardExplanation(req: Request, res: Response, next: NextFunction) {
     try {
-      const newCard = await libraryService.getCardContent(req.query.cardId);
+      const newCard = await libraryService.getCardExplanation(req.query.cardId);
 
       return res.status(200).json(newCard);
     } catch (error) {

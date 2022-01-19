@@ -11,18 +11,17 @@ import ExplanationTab from './Explanation';
 import ExercisesTab from './Exercises';
 import { confirm, leaveCreateCardConfirm } from 'pages/LibraryCardPage/Confirm';
 import Button from 'components/Items/Button';
-import { useAppDispatch, useAppSelector } from 'shared/hooks/storeHooks';
+import { useAppSelector } from 'shared/hooks/storeHooks';
 import { exerciseIdsSelector } from 'store/reducers/library/selectors';
-import { libraryActions } from 'store/reducers/library/actionCreators';
 import { ILibraryCardRequest } from 'shared/models/request/libraryRequest';
+import { useActionCreator } from 'shared/hooks/useActionCreator';
 
 const { TabPane } = Tabs;
-const { setExercise, setExerciseIds } = libraryActions;
 
 const LibraryCardPage: FC = () => {
   const [createCardForm] = Form.useForm();
   const exerciseIds = useAppSelector(exerciseIdsSelector);
-  const dispatch = useAppDispatch();
+  const { setExerciseIds, setExercise } = useActionCreator();
 
   const [creatingNewCard, setCreatingNewCard] = useState(false);
   const [activeTab, setActiveTab] = useState(TabName.Explanation);
@@ -46,8 +45,8 @@ const LibraryCardPage: FC = () => {
     setActiveTab(TabName.Explanation);
     setShowExerciseBlock(false);
     setCreatingNewCard(false);
-    dispatch(setExerciseIds(null));
-    dispatch(setExercise(null));
+    setExerciseIds(null);
+    setExercise(null);
     createCardForm.resetFields();
   };
 
@@ -68,7 +67,11 @@ const LibraryCardPage: FC = () => {
   };
 
   const handleOk = () => {
-    resetState();
+    if (exerciseIds) {
+      LibraryService.removeExercisesByIds(exerciseIds);
+    }
+    setExerciseIds(null);
+    setExercise(null);
 
     return Promise.resolve(true);
   };
