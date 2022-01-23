@@ -10,7 +10,11 @@ import LibraryCard from '../LibraryCard';
 import Column from '../Items/Column';
 // Styles
 
-const Library: FC = () => {
+interface IProps {
+  setIsLibraryOpen: any;
+}
+
+const Library: FC<IProps> = ({ setIsLibraryOpen }) => {
   const libraryCards = useAppSelector(libraryCardsSelector);
   const { getLibraryCards } = useActionCreator();
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +22,10 @@ const Library: FC = () => {
   useEffect(() => {
     getLibraryCards();
   }, []);
+
+  useEffect(() => {
+    setIsLibraryOpen(isOpen);
+  }, [isOpen]);
 
   return (
     <Column

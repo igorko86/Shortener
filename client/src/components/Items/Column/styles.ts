@@ -13,6 +13,7 @@ export const ColumnWrapper = styled.div`
   border-radius: 8px;
   padding: 5px 10px 10px;
   height: fit-content;
+  z-index: 5;
 `;
 
 export const ListWrapper = styled(List)`

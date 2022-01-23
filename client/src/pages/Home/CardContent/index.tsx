@@ -68,7 +68,7 @@ const CardContent: FC = () => {
   }, []);
 
   return activeCardId ? (
-    <div>
+    <div className="cardContent">
       <CloseCircleFilled onClick={handleClose} />
       {name && <div>{name}</div>}
       {description && <div>{description}</div>}
@@ -87,7 +87,7 @@ const CardContent: FC = () => {
       </Tabs>
     </div>
   ) : (
-    <div>
+    <div className="cardContent">
       <div style={{ width: '100%' }}>Default CardContent</div>
     </div>
   );

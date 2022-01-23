@@ -8,7 +8,6 @@ import Home from 'shared/assets/icons/home';
 import Button from 'components/Items/Button';
 import Plans from 'shared/assets/icons/plans';
 import Students from 'shared/assets/icons/students';
-import AddStudents from 'shared/assets/icons/addStudent';
 import CreateCourse from './CreateCourse';
 import AddStudent from './AddStudent';
 // Styles

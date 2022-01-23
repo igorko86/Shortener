@@ -10,7 +10,11 @@ import LibraryCard from '../LibraryCard';
 import Column from '../Items/Column';
 // Styles
 
-const TutorLibrary: FC = () => {
+interface IProps {
+  setIsTutorLibraryOpen: any;
+}
+
+const TutorLibrary: FC<IProps> = ({ setIsTutorLibraryOpen }) => {
   const myLibraryCards = useAppSelector(myLibraryCardsSelector);
   const { getMyLibraryCards } = useActionCreator();
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +22,10 @@ const TutorLibrary: FC = () => {
   useEffect(() => {
     getMyLibraryCards();
   }, []);
+
+  useEffect(() => {
+    setIsTutorLibraryOpen(isOpen);
+  }, [isOpen]);
 
   return (
     <Column
