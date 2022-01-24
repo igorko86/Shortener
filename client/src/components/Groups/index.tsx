@@ -23,7 +23,7 @@ const Groups: FC = () => {
     }
   }, []);
 
-  const handleChangeGroup = (groupId: any) => {
+  const handleChangeGroup = (groupId: string) => {
     if (plan?.groupId !== groupId) {
       getCourseData(groupId);
     }
@@ -33,7 +33,6 @@ const Groups: FC = () => {
     <Column
       title="Groups"
       buttonText="+ Add group"
-      onClickAdd={() => console.log('hellooo')}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       cards={groups}

@@ -13,6 +13,7 @@ import {
 import ExerciseList from '../ExerciseList';
 import Loader from 'components/Loader';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
+import { DivCardContent } from './styles';
 // Styles
 
 const { TabPane } = Tabs;
@@ -68,7 +69,7 @@ const CardContent: FC = () => {
   }, []);
 
   return activeCardId ? (
-    <div className="cardContent">
+    <DivCardContent>
       <CloseCircleFilled onClick={handleClose} />
       {name && <div>{name}</div>}
       {description && <div>{description}</div>}
@@ -85,10 +86,10 @@ const CardContent: FC = () => {
           {loadingContent && <Loader position={'relative'} />}
         </TabPane>
       </Tabs>
-    </div>
+    </DivCardContent>
   ) : (
-    <div className="cardContent">
-      <div style={{ width: '100%' }}>Default CardContent</div>
+    <div>
+      <div>Default CardContent</div>
     </div>
   );
 };

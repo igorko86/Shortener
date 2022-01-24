@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 
-export const DivWrapperPage = styled.div`
+export const DivWrapperLayout = styled.div`
   display: flex;
-  justify-content: space-between;
+`;
+
+export const DivPlan = styled.div`
+  width: 250px;
 `;
 
 export const GridBlock = styled.div<{ isTutorOpen: boolean; isLibraryOpen: boolean }>`
