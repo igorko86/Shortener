@@ -1,5 +1,5 @@
 import { LibraryCard } from '../db/entites/LibraryCard';
-import { ICardContentResponse, ICardRequest, ILibraryCardsResponse } from './interfaces';
+import { ICardContentResponse, ICardRequest, ILibraryCardsResponse, LibraryType } from './interfaces';
 import apiErrorService from './apiError.service';
 import exerciseService from './exercise.service';
 
@@ -17,10 +17,19 @@ class LibraryService {
     return savedCard;
   }
 
-  async getLibraryCards(): Promise<ILibraryCardsResponse[]> {
-    return await LibraryCard.createQueryBuilder('libraryCard')
+  async getLibraryCards(libraryType: LibraryType, value?: string): Promise<ILibraryCardsResponse[]> {
+    const query = LibraryCard.createQueryBuilder('libraryCard')
       .select(['libraryCard.id', 'libraryCard.name', 'libraryCard.description'])
-      .getMany();
+      .where('libraryCard.type = :type', { type: libraryType });
+
+    if (value) {
+      query
+        .andWhere('libraryCard.name like :value', { value: `%${value}%` })
+        .orWhere('libraryCard.description like :value', { value: `%${value}%` })
+        .andWhere('libraryCard.type = :type', { type: libraryType });
+    }
+
+    return await query.getMany();
   }
 
   async getCardExplanation(id: any): Promise<ICardContentResponse> {

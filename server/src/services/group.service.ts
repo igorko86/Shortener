@@ -16,13 +16,16 @@ class GroupService {
     return await newGroup.save();
   }
 
-  async getGroupsById(tutorId: any): Promise<any> {
-    const result = await Group.createQueryBuilder('group')
+  async getGroupsById(tutorId: string, search: string): Promise<any> {
+    const query = Group.createQueryBuilder('group')
       .select(['group.id', 'group.groupName'])
-      .where('group.tutorId = :tutorId', { tutorId })
-      .getMany();
+      .where('group.tutorId = :tutorId', { tutorId });
 
-    return result;
+    if (search) {
+      query.andWhere('group.groupName like :value', { value: `%${search}%` });
+    }
+
+    return await query.getMany();
   }
 }
 

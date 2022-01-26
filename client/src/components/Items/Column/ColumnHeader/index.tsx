@@ -1,10 +1,11 @@
 // External
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { Input as InputAnt } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 // Internal
-import TitleColumn from '../TitleColumn';
 import Arrow from 'shared/assets/icons/arrow';
+import useDebounce from 'shared/hooks/useDebaunce';
+import TitleColumn from '../../TitleColumn';
 // Styles
 import { Button, Div } from './styles';
 
@@ -12,11 +13,14 @@ interface IProps {
   title: string;
   placeholder?: string;
   setCollapsedPanel: (collapsedPanel: string) => void;
+  searchDataByValue?: (value: string) => void;
 }
 
-const ColumnHeader: FC<IProps> = ({ title, setCollapsedPanel, placeholder = 'Search' }) => {
+const ColumnHeader: FC<IProps> = ({ title, setCollapsedPanel, placeholder = 'Search', searchDataByValue }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+
+  const debouncedValue = useDebounce(inputValue.trim(), 800);
 
   const handleCLick = () => {
     setCollapsedPanel(!isOpen ? 'collapse' : '');
@@ -26,6 +30,12 @@ const ColumnHeader: FC<IProps> = ({ title, setCollapsedPanel, placeholder = 'Sea
   const handleChange = (e: ChangeEvent) => {
     setInputValue((e.target as HTMLInputElement).value);
   };
+
+  useEffect(() => {
+    if (searchDataByValue) {
+      searchDataByValue(debouncedValue);
+    }
+  }, [debouncedValue]);
 
   return (
     <>

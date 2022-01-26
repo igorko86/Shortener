@@ -79,3 +79,8 @@ export interface ICardContent {
   name: string;
   description: string;
 }
+
+export enum LibraryType {
+  Public = 'public',
+  Private = 'private',
+}

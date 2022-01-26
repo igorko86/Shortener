@@ -3,14 +3,11 @@ import { ILibraryCardRequest } from '../models/request/libraryRequest';
 import { ICardContentResponse, IExerciseResponse, ILibraryCardResponse } from '../models/response/libraryResponse';
 import { ApiRoutes } from './apiRoutes.constants';
 import { ICreateExerciseRequest } from '../models/request/studentRequest';
+import { LibraryType } from 'store/reducers/library/types';
 
 class LibraryService {
-  static async getLibraryCards(): Promise<ILibraryCardResponse[]> {
-    return $api.get<ILibraryCardResponse[]>(ApiRoutes.GetCards).then(({ data }) => data);
-  }
-
-  static async getMyLibraryCards(): Promise<ILibraryCardResponse[]> {
-    return $api.get<ILibraryCardResponse[]>(ApiRoutes.GetMyCards).then(({ data }) => data);
+  static async getLibraryCards(search: string, type: LibraryType): Promise<ILibraryCardResponse[]> {
+    return $api.get<ILibraryCardResponse[]>(ApiRoutes.GetCards, { params: { search, type } }).then(({ data }) => data);
   }
 
   static async createLibraryCard(body: ILibraryCardRequest): Promise<void> {

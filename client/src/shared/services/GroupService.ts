@@ -11,8 +11,8 @@ import {
 import { IGroupResponse, IPlanCard, IPlanResponse } from '../models/response/groupResponse';
 
 class GroupService {
-  static getGroupsById(tutorId: string): Promise<IGroupResponse[]> {
-    return $api.get(ApiRoutes.GetGroups, { params: { tutorId } }).then(({ data }) => data);
+  static getGroupsById(tutorId: string, search: string): Promise<IGroupResponse[]> {
+    return $api.get(ApiRoutes.GetGroups, { params: { tutorId, search } }).then(({ data }) => data);
   }
 
   static getPlanById(groupId: string): Promise<IPlanResponse> {

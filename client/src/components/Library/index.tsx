@@ -11,31 +11,26 @@ import Column from '../Items/Column';
 // Styles
 
 interface IProps {
-  setIsLibraryOpen: any;
+  setIsLibraryOpen: (val: boolean) => void;
 }
 
 const Library: FC<IProps> = ({ setIsLibraryOpen }) => {
   const libraryCards = useAppSelector(libraryCardsSelector);
   const { getLibraryCards } = useActionCreator();
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getLibraryCards();
   }, []);
 
-  useEffect(() => {
-    setIsLibraryOpen(isOpen);
-  }, [isOpen]);
-
   return (
     <Column
       cards={libraryCards}
       title="Library"
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
       buttonText="+ Add card"
       onClickAdd={() => console.log('hellooo')}
       textItem="cards"
+      setIsOpenPanel={setIsLibraryOpen}
+      searchDataByValue={getLibraryCards}
     >
       {libraryCards.map((card: LibraryCardType, index: number) => {
         return (

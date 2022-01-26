@@ -141,3 +141,8 @@ export interface IAddNewStudent {
   groupId: string | undefined;
   tutorId: string;
 }
+
+export enum LibraryType {
+  Public = 'public',
+  Private = 'private',
+}

@@ -23,16 +23,18 @@ export const groupActions = {
 };
 
 export const groupThunks = {
-  getGroupsById: (tutorId: string) => async (dispatch: AppDispatch) => {
-    try {
-      const groups = await GroupService.getGroupsById(tutorId);
+  getGroupsById:
+    (tutorId: string, value = '') =>
+    async (dispatch: AppDispatch) => {
+      try {
+        const groups = await GroupService.getGroupsById(tutorId, value);
 
-      dispatch(groupActions.setGroups(groups));
-      return null;
-    } catch {
-      return null;
-    }
-  },
+        dispatch(groupActions.setGroups(groups));
+        return null;
+      } catch {
+        return null;
+      }
+    },
   createCourse:
     (validFields: ICreateGroupAndPlanRequest) =>
     async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {

@@ -8,7 +8,6 @@ export enum ApiRoutes {
   ResetPassword = '/auth/reset-password',
   // Library
   GetCards = '/library/cards',
-  GetMyCards = '/myLibrary/cards',
   CreateCard = '/library/card',
   CardContent = '/library/card/content',
   // Croups

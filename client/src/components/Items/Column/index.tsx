@@ -1,31 +1,54 @@
 // External
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Collapse, Space } from 'antd';
 // Internal
 import Button from '../Button';
+import ColumnHeader from './ColumnHeader';
 // Styles
 import { ColumnWrapper, ListWrapper } from './styles';
-import ColumnHeader from '../ColumnHeader';
 
 interface IProps {
   cards: any;
   title: string;
   onClickAdd?: any;
   buttonText?: string;
-  isOpen?: boolean;
-  setIsOpen?: (val: boolean) => void;
+  setIsOpenPanel?: (val: boolean) => void;
   textItem?: string;
   placeholder?: string;
+  searchDataByValue?: (val: string) => void;
 }
 
-const Column: FC<IProps> = ({ placeholder, cards, title, onClickAdd, buttonText, textItem = '', children }) => {
+const Column: FC<IProps> = ({
+  searchDataByValue,
+  placeholder,
+  cards,
+  title,
+  setIsOpenPanel,
+  onClickAdd,
+  buttonText,
+  textItem = '',
+  children,
+}) => {
   const [collapsedPanel, setCollapsedPanel] = useState('');
+
+  useEffect(() => {
+    if (setIsOpenPanel) {
+      setIsOpenPanel(!!collapsedPanel);
+    }
+  }, [collapsedPanel]);
 
   return (
     <ColumnWrapper>
       <Collapse activeKey={collapsedPanel} destroyInactivePanel={true}>
         <Collapse.Panel
-          header={<ColumnHeader title={title} setCollapsedPanel={setCollapsedPanel} placeholder={placeholder} />}
+          header={
+            <ColumnHeader
+              title={title}
+              setCollapsedPanel={setCollapsedPanel}
+              placeholder={placeholder}
+              searchDataByValue={searchDataByValue}
+            />
+          }
           key="collapse"
           showArrow={false}
         >

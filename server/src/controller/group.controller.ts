@@ -5,7 +5,8 @@ import groupService from '../services/group.service';
 class GroupController {
   async getGroupsById(req: Request, res: Response, next: NextFunction) {
     try {
-      const groups = await groupService.getGroupsById(req.query.tutorId);
+      const { tutorId, search = '' } = req.query;
+      const groups = await groupService.getGroupsById(tutorId as string, search as string);
 
       return res.status(200).json(groups);
     } catch (error) {

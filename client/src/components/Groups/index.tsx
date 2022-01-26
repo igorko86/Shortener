@@ -1,5 +1,6 @@
 // External
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
+import { Empty } from 'antd';
 // Internal
 import { groupsSelector, planSelector } from 'store/reducers/group/selectors';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
@@ -15,7 +16,6 @@ const Groups: FC = () => {
   const plan = useAppSelector(planSelector);
   const user = useAppSelector(userSelector);
   const { getCourseData, getGroupsById } = useActionCreator();
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (!plan && user) {
@@ -29,24 +29,27 @@ const Groups: FC = () => {
     }
   };
 
-  return (
-    <Column
-      title="Groups"
-      buttonText="+ Add group"
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      cards={groups}
-      textItem="groups"
-    >
-      {groups.map((group: any) => {
-        const { id, groupName } = group;
+  const searchGroups = (value: string) => {
+    if (user) {
+      getGroupsById(user.id, value);
+    }
+  };
 
-        return (
-          <ItemWrapper key={id} onClick={() => handleChangeGroup(id)}>
-            <SpanTitle>{groupName}</SpanTitle>
-          </ItemWrapper>
-        );
-      })}
+  return (
+    <Column title="Groups" buttonText="+ Add group" cards={groups} textItem="groups" searchDataByValue={searchGroups}>
+      {groups.length ? (
+        groups.map((group: any) => {
+          const { id, groupName } = group;
+
+          return (
+            <ItemWrapper key={id} onClick={() => handleChangeGroup(id)}>
+              <SpanTitle>{groupName}</SpanTitle>
+            </ItemWrapper>
+          );
+        })
+      ) : (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      )}
     </Column>
   );
 };

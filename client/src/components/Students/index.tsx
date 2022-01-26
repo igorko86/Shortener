@@ -1,29 +1,29 @@
 // External
 import { FC, useState } from 'react';
+import { Empty } from 'antd';
 // Internal
-import { useAppDispatch, useAppSelector } from 'shared/hooks/storeHooks';
-import { groupActions } from 'store/reducers/group/actionCreators';
-import { studentsSelector } from 'store/reducers/group/selectors';
+import { useAppSelector } from 'shared/hooks/storeHooks';
 import StudentService from 'shared/services/StudentService';
-import Close from '../../shared/assets/icons/close';
+import Close from 'shared/assets/icons/close';
+import { useActionCreator } from 'shared/hooks/useActionCreator';
+import AddStudent from 'components/Modals/AddStudent';
+import { studentsSelector } from 'store/reducers/group/selectors';
+import { IStudentInGroup } from 'store/reducers/group/types';
 import Column from '../Items/Column';
 import Button from '../Items/Button';
 // Styles
-import { ItemWrapper } from './styles';
 import { SpanTitle } from '../Items/Card/styles';
-import AddStudent from 'components/Modals/AddStudent';
-
-const { setStudent } = groupActions;
+import { ItemWrapper } from './styles';
 
 const Students: FC = () => {
   const students = useAppSelector(studentsSelector);
-  const dispatch = useAppDispatch();
-  const [isOpen, setIsOpen] = useState(false);
+  const { setStudent } = useActionCreator();
   const [showModal, setShowModal] = useState(false);
+  const [currentStudents, setCurrentStudents] = useState<IStudentInGroup[] | null>(null);
 
   const handleClickRemove = (id: string, index: number) => {
     students.splice(index, 1);
-    dispatch(setStudent([...students]));
+    setStudent([...students]);
 
     StudentService.deleteStudentsInGroupByIds([id]);
   };
@@ -32,27 +32,42 @@ const Students: FC = () => {
     setShowModal(true);
   };
 
+  const searchStudents = (value: string) => {
+    if (value) {
+      const filteredStudentsByValue = students.filter((student) => student.studentName.includes(value));
+
+      setCurrentStudents(filteredStudentsByValue);
+    } else {
+      setCurrentStudents(null);
+    }
+  };
+
+  const std = currentStudents || students;
+
   return (
     <>
       <Column
         title="Students"
         buttonText="+ Add student"
         onClickAdd={handleClickAddStudent}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
         cards={students}
         textItem="students"
+        searchDataByValue={searchStudents}
       >
-        {students.map((student: any, index: number) => {
-          const { studentName, id } = student;
+        {std.length ? (
+          std.map((student, index: number) => {
+            const { studentName, id } = student;
 
-          return (
-            <ItemWrapper key={id}>
-              <SpanTitle>{studentName}</SpanTitle>
-              <Button onClick={() => handleClickRemove(id, index)} icon={<Close />} />
-            </ItemWrapper>
-          );
-        })}
+            return (
+              <ItemWrapper key={id}>
+                <SpanTitle>{studentName}</SpanTitle>
+                <Button onClick={() => handleClickRemove(id, index)} icon={<Close />} />
+              </ItemWrapper>
+            );
+          })
+        ) : (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        )}
       </Column>
       <AddStudent visible={showModal} onCancel={setShowModal} />
     </>

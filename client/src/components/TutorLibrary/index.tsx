@@ -11,21 +11,16 @@ import Column from '../Items/Column';
 // Styles
 
 interface IProps {
-  setIsTutorLibraryOpen: any;
+  setIsTutorLibraryOpen: (val: boolean) => void;
 }
 
 const TutorLibrary: FC<IProps> = ({ setIsTutorLibraryOpen }) => {
   const myLibraryCards = useAppSelector(myLibraryCardsSelector);
   const { getMyLibraryCards } = useActionCreator();
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getMyLibraryCards();
   }, []);
-
-  useEffect(() => {
-    setIsTutorLibraryOpen(isOpen);
-  }, [isOpen]);
 
   return (
     <Column
@@ -33,9 +28,9 @@ const TutorLibrary: FC<IProps> = ({ setIsTutorLibraryOpen }) => {
       title="My Library"
       buttonText="+ Add card"
       onClickAdd={() => console.log('hellooo')}
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
+      setIsOpenPanel={setIsTutorLibraryOpen}
       textItem="cards"
+      searchDataByValue={getMyLibraryCards}
     >
       {myLibraryCards.map((card: LibraryCardType, index: number) => {
         return (

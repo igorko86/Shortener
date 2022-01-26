@@ -11,6 +11,7 @@ import {
   ISetLibraryCards,
   ISetMyLibraryCards,
   LibraryActionEnum,
+  LibraryType,
 } from './types';
 import { AppDispatch } from '../../interfaces';
 import { AppState } from '../../index';
@@ -47,24 +48,28 @@ export const libraryActions = {
 };
 
 export const libraryThunks = {
-  getLibraryCards: () => async (dispatch: AppDispatch) => {
-    try {
-      const libraryCards = await LibraryService.getLibraryCards();
+  getLibraryCards:
+    (value = '') =>
+    async (dispatch: AppDispatch) => {
+      try {
+        const libraryCards = await LibraryService.getLibraryCards(value, LibraryType.Public);
 
-      dispatch(libraryActions.setLibraryCards(libraryCards));
-    } catch {
-      return null;
-    }
-  },
-  getMyLibraryCards: () => async (dispatch: AppDispatch) => {
-    try {
-      const libraryCards = await LibraryService.getMyLibraryCards();
+        dispatch(libraryActions.setLibraryCards(libraryCards));
+      } catch {
+        return null;
+      }
+    },
+  getMyLibraryCards:
+    (value = '') =>
+    async (dispatch: AppDispatch) => {
+      try {
+        const libraryCards = await LibraryService.getLibraryCards(value, LibraryType.Private);
 
-      dispatch(libraryActions.setMyLibraryCards(libraryCards));
-    } catch {
-      return null;
-    }
-  },
+        dispatch(libraryActions.setMyLibraryCards(libraryCards));
+      } catch {
+        return null;
+      }
+    },
   getCardExplanation:
     () =>
     async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {
