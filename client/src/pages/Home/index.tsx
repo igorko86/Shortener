@@ -10,7 +10,8 @@ import CardContent from 'pages/Home/CardContent';
 import Groups from 'components/Groups';
 import TutorLibrary from 'components/TutorLibrary';
 import Students from 'components/Students';
-import { GridBlock } from './styles';
+// Styles
+import { DivPlan, GridBlock, DivWrapperLayout } from './styles';
 
 const Home: FC = () => {
   const [isTutorLibraryOpen, setIsTutorLibraryOpen] = useState(false);
@@ -19,10 +20,10 @@ const Home: FC = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout.Content>
-        <div style={{ display: 'flex' }}>
-          <div style={{ width: '260px' }}>
+        <DivWrapperLayout>
+          <DivPlan>
             <Plan />
-          </div>
+          </DivPlan>
           <GridBlock isTutorOpen={isTutorLibraryOpen} isLibraryOpen={isLibraryOpen}>
             <Groups />
             <Students />
@@ -30,7 +31,7 @@ const Home: FC = () => {
             <Library setIsLibraryOpen={setIsLibraryOpen} />
             <CardContent />
           </GridBlock>
-        </div>
+        </DivWrapperLayout>
         <Layout.Footer>Footer</Layout.Footer>
       </Layout.Content>
     </DndProvider>

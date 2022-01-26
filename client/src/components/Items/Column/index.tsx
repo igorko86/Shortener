@@ -1,12 +1,11 @@
 // External
-import { FC } from 'react';
-import { Space } from 'antd';
+import { FC, useState } from 'react';
+import { Collapse, Space } from 'antd';
 // Internal
-import TitleColumn from '../TitleColumn';
-import Search from 'components/Search';
 import Button from '../Button';
 // Styles
 import { ColumnWrapper, ListWrapper } from './styles';
+import ColumnHeader from '../ColumnHeader';
 
 interface IProps {
   cards: any;
@@ -16,37 +15,43 @@ interface IProps {
   isOpen?: boolean;
   setIsOpen?: (val: boolean) => void;
   textItem?: string;
+  placeholder?: string;
 }
 
-const Column: FC<IProps> = ({ cards, title, onClickAdd, buttonText, isOpen, setIsOpen, textItem = '', children }) => {
-  const listLength = cards.length;
+const Column: FC<IProps> = ({ placeholder, cards, title, onClickAdd, buttonText, textItem = '', children }) => {
+  const [collapsedPanel, setCollapsedPanel] = useState('');
 
   return (
     <ColumnWrapper>
-      <TitleColumn title={title} />
-      <Search setIsOpen={setIsOpen} isOpen={isOpen} />
-      {isOpen && (
-        <ListWrapper
-          grid={{
-            gutter: 16,
-            xs: 1,
-            sm: 1,
-            md: 1,
-            lg: 1,
-            xl: 1,
-            xxl: 1,
-          }}
-          dataSource={cards}
+      <Collapse activeKey={collapsedPanel} destroyInactivePanel={true}>
+        <Collapse.Panel
+          header={<ColumnHeader title={title} setCollapsedPanel={setCollapsedPanel} placeholder={placeholder} />}
+          key="collapse"
+          showArrow={false}
         >
-          {!!listLength && children}
-        </ListWrapper>
-      )}
-      {buttonText && (
+          <ListWrapper
+            grid={{
+              gutter: 16,
+              xs: 1,
+              sm: 1,
+              md: 1,
+              lg: 1,
+              xl: 1,
+              xxl: 1,
+            }}
+            dataSource={cards}
+          >
+            {!!cards.length && children}
+          </ListWrapper>
+        </Collapse.Panel>
+      </Collapse>
+
+      {onClickAdd && (
         <Space size="middle" style={{ justifyContent: 'space-between' }}>
           <Button onClick={onClickAdd} text={buttonText} />
-          {!!listLength && (
+          {!!cards.length && (
             <div>
-              {listLength} {textItem}
+              {cards.length} {textItem}
             </div>
           )}
         </Space>

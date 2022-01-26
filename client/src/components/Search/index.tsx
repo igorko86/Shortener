@@ -11,9 +11,10 @@ import { InputSearch } from './styles';
 interface IProps {
   setIsOpen?: any;
   isOpen?: boolean;
+  placeholder?: string;
 }
 
-const Search: FC<IProps> = ({ setIsOpen, isOpen }) => {
+const Search: FC<IProps> = ({ isOpen, placeholder = 'Search' }) => {
   const [isSearch, setSearch] = useState(false);
   const maxMatch = 10;
   const [matchCount, setMatchCount] = useState(5);
@@ -34,15 +35,10 @@ const Search: FC<IProps> = ({ setIsOpen, isOpen }) => {
     setMatchCount(count);
   };
 
-  const handleCLickOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <>
-      <InputSearch isOpen={isOpen}>
-        <InputAnt placeholder="Search" onChange={(e) => onSearch(e)} suffix={<SearchOutlined />} />
-        {setIsOpen && <Button icon={<Arrow />} onClick={handleCLickOpen} />}
+      <InputSearch>
+        <InputAnt placeholder={placeholder} onChange={(e) => onSearch(e)} suffix={<SearchOutlined />} />
       </InputSearch>
       {isSearch && (
         <Space>
