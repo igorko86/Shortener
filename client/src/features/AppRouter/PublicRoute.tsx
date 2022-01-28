@@ -9,7 +9,6 @@ interface IProps {
   path?: string;
 }
 const PublicRoute: FC<IProps> = ({ children, isAuthenticated, ...rest }) => {
-  console.log(rest);
   return (
     <Route
       {...rest}
@@ -18,8 +17,7 @@ const PublicRoute: FC<IProps> = ({ children, isAuthenticated, ...rest }) => {
           location.state?.from && location.state.from.pathname !== AppPath.ROOT
             ? location.state.from.pathname
             : AppPath.HOME;
-        console.log(pathname);
-        console.log(location);
+
         return !isAuthenticated ? (
           children
         ) : (

@@ -7,12 +7,10 @@ interface IProps {
   path?: string | string[];
 }
 const PrivateRoutes: FC<IProps> = ({ children, isAuthenticated, ...rest }) => {
-  console.log('here', children);
   return (
     <Route
       {...rest}
       render={({ location }) => {
-        console.log('location', location);
         return isAuthenticated ? (
           children
         ) : (

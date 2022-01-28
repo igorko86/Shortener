@@ -1,5 +1,5 @@
 // External
-import { FC } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { List as ListAnt } from 'antd';
 import withScrolling from 'react-dnd-scrolling';
 // Internal
@@ -7,6 +7,7 @@ import PlanCard from 'components/PlanCard';
 import { ICard, IDropCardInfo, IItemInfo, IMoveSubCardDragInfo, ISubCards } from './interfaces';
 // Styles
 import { DivScrollZone } from './styles';
+import useScroll from '../../shared/hooks/useScroll';
 
 const ScrollZone = withScrolling(DivScrollZone);
 
@@ -22,6 +23,21 @@ interface IProps {
 }
 
 const Cards: FC<IProps> = ({ cards, ...props }) => {
+  const [executeScroll, elRef] = useScroll();
+
+  useEffect(() => {
+    // @ts-ignore
+    executeScroll();
+  }, [cards]);
+
+  const addRef = useCallback(({ ref, index }: { ref: HTMLDivElement | null; index: number }) => {
+    // TODO fix 4 when logic will be ready for active card
+    if (index === 4 && ref) {
+      // @ts-ignore
+      elRef.current = ref;
+    }
+  }, []);
+
   return (
     <ScrollZone>
       <ListAnt
@@ -41,7 +57,9 @@ const Cards: FC<IProps> = ({ cards, ...props }) => {
 
           return (
             <ListAnt.Item key={id}>
-              <PlanCard {...props} cardIndex={index} card={card} />
+              <div ref={(ref) => addRef({ ref, index })}>
+                <PlanCard {...props} cardIndex={index} card={card} />
+              </div>
             </ListAnt.Item>
           );
         })}

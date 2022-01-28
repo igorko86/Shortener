@@ -5,7 +5,6 @@ import Loader from 'components/Loader';
 import { privateRoutes } from 'features/AppRouter/routes';
 
 const ProtectedRoutes = () => {
-  console.log('location');
   return (
     <Switch>
       <Suspense fallback={<Loader />}>
