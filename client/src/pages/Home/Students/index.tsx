@@ -66,7 +66,7 @@ const Students: FC = () => {
             return (
               <ItemWrapper key={id}>
                 <SpanTitle>{studentName}</SpanTitle>
-                <Button onClick={() => handleClickRemove(id, index)} icon={<Close />} />
+                {show && <Button onClick={() => handleClickRemove(id, index)} icon={<Close />} />}
               </ItemWrapper>
             );
           })

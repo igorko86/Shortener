@@ -19,6 +19,8 @@ import Button from '../Items/Button';
 import { DivCard } from './styles';
 import EditableTitle from '../Items/EditableTitle';
 import { useActionCreator } from '../../shared/hooks/useActionCreator';
+import useCheckAccess from '../../shared/hooks/useCheckAccess';
+import { Role } from '../../shared/models/request/authRequest';
 
 interface IDragItem {
   index: number;
@@ -55,12 +57,15 @@ const PlanCard: FC<IProps> = ({
 
   const ref = useRef<HTMLDivElement>(null);
   const { updateCardName } = useActionCreator();
+  const forbid = useCheckAccess([Role.Admin, Role.Tutor]);
+
   const [isDisabled, setIsDisabled] = useState(true);
 
   const [{ isDragging, handlerId }, connectDrag] = useDrag(
     {
       type: ItemTypeCard.CARD,
       item: { id: cardId, index: cardIndex },
+      canDrag: forbid,
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
         handlerId: monitor.getHandlerId(),
@@ -157,7 +162,7 @@ const PlanCard: FC<IProps> = ({
             setIsDisabled={setIsDisabled}
           />
         </div>
-        <Button onClick={handleRemoveCard} icon={<Close />} />
+        {forbid && <Button onClick={handleRemoveCard} icon={<Close />} />}
       </DivNameWithPopover>
 
       <PlanCardContent

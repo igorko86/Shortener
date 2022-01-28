@@ -4,6 +4,8 @@ import { FC } from 'react';
 import Close from 'shared/assets/icons/close';
 import { ISubCard } from 'pages/Home/Plan/interfaces';
 import Button from '../Button';
+import useCheckAccess from 'shared/hooks/useCheckAccess';
+import { Role } from 'shared/models/request/authRequest';
 // Styles
 import { DivCard, SpanDescription, SpanTitle } from './styles';
 
@@ -18,6 +20,7 @@ interface IProps {
 
 const Card: FC<IProps> = ({ onShowContent, card, isDragging, onRemove, drag, isDescription }) => {
   const { name, description } = card;
+  const show = useCheckAccess([Role.Tutor, Role.Admin]);
 
   return (
     <DivCard ref={drag} isOpacity={isDragging} onClick={onShowContent}>
@@ -25,7 +28,7 @@ const Card: FC<IProps> = ({ onShowContent, card, isDragging, onRemove, drag, isD
         <SpanTitle>{name}</SpanTitle>
         {isDescription && <SpanDescription>{description}</SpanDescription>}
       </div>
-      {onRemove && <Button onClick={onRemove} data-name="remove" icon={<Close />} />}
+      {onRemove && show && <Button onClick={onRemove} data-name="remove" icon={<Close />} />}
     </DivCard>
   );
 };

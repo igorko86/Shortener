@@ -1,6 +1,8 @@
 import { FC, MutableRefObject, useRef } from 'react';
 import { EditOutlined } from '@ant-design/icons';
 import { EditButton, InputChangeName, InputWrapper } from './styles';
+import useCheckAccess from '../../../shared/hooks/useCheckAccess';
+import { Role } from '../../../shared/models/request/authRequest';
 
 interface IProps {
   title: string;
@@ -13,6 +15,7 @@ interface IProps {
 
 const EditableTitle: FC<IProps> = ({ title, setName, cardId, handleBluer, isDisabled, setIsDisabled }) => {
   const textInput: MutableRefObject<any> = useRef();
+  const forbid = useCheckAccess([Role.Admin, Role.Tutor]);
 
   const handleClick = () => {
     setIsDisabled(false);
@@ -36,7 +39,7 @@ const EditableTitle: FC<IProps> = ({ title, setName, cardId, handleBluer, isDisa
         readOnly={isDisabled}
         isdisabled={+isDisabled}
       />
-      {isDisabled ? <EditButton onClick={() => handleClick()} icon={<EditOutlined />} /> : ''}
+      {isDisabled && forbid ? <EditButton onClick={() => handleClick()} icon={<EditOutlined />} /> : ''}
     </InputWrapper>
   );
 };

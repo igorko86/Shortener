@@ -7,6 +7,8 @@ import { IMoveSubCardDragInfo, ISubCard, ItemTypeCard } from 'pages/Home/Plan/in
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { cardContentLoadingSelector } from 'store/reducers/library/selectors';
+import useCheckAccess from 'shared/hooks/useCheckAccess';
+import { Role } from 'shared/models/request/authRequest';
 // Styles
 import { DivSubCard } from './styles';
 
@@ -29,11 +31,13 @@ interface IProps {
 const SubCard: FC<IProps> = ({ subCardIndex, subCardId, onMoveSubCard, cardId, removeSubCard, subCard }) => {
   const ref = useRef<HTMLDivElement>(null);
   const { setActiveCardId } = useActionCreator();
+  const forbidDrag = useCheckAccess([Role.Admin, Role.Tutor]);
   const loadingCard = useAppSelector(cardContentLoadingSelector);
 
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypeCard.SUB_CARD,
     item: { hoverSubCardIndex: subCardIndex, cardId, subCardId },
+    canDrag: forbidDrag,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
