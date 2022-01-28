@@ -39,7 +39,9 @@ const Students: FC = () => {
 
   const searchStudents = (value: string) => {
     if (value) {
-      const filteredStudentsByValue = students.filter((student) => student.studentName.includes(value));
+      const filteredStudentsByValue = students.filter((student) =>
+        student.studentName.toLowerCase().includes(value.toLowerCase())
+      );
 
       setCurrentStudents(filteredStudentsByValue);
     } else {
