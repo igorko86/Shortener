@@ -5,19 +5,20 @@ export const DivWrapperLayout = styled.div`
 `;
 
 export const DivPlan = styled.div`
-  width: 250px;
+  grid-area: plan;
 `;
 
 export const GridBlock = styled.div<{ isTutorOpen: boolean; isLibraryOpen: boolean }>`
+  width: 100%;
+  padding: 10px;
   display: grid;
-  grid-template-columns: repeat(4, 300px);
-  grid-template-rows: repeat(2, 150px);
+  grid-template-rows: 150px auto;
+  grid-template-columns: repeat(5, 19.5%);
   grid-template-areas:
-    'a b c d'
-    'e e ${({ isTutorOpen }) =>
-      isTutorOpen ? 'c' : 'e'} ${({ isTutorOpen, isLibraryOpen }) => (isTutorOpen || isLibraryOpen ? 'd' : 'e')}';
-
-  .cardContent {
-    grid-area: e;
-  }
+    'plan group student myLib lib'
+    'plan cont cont ${({ isTutorOpen }) =>
+      isTutorOpen
+        ? 'myLib'
+        : 'cont'} ${({ isTutorOpen, isLibraryOpen }) => (isTutorOpen || isLibraryOpen ? 'lib' : 'cont')}';
+  grid-column-gap: 10px;
 `;

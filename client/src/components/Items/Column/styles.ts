@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { List } from 'antd';
+import { Collapse, List } from 'antd';
 
 export const ColumnWrapper = styled.div`
   max-height: calc(100vh - 115px);
@@ -19,7 +19,7 @@ export const ColumnWrapper = styled.div`
   }
 
   .ant-list {
-    max-height: calc(100vh - 115px);
+    max-height: calc(100vh - 250px);
   }
 `;
 
@@ -38,5 +38,33 @@ export const ListWrapper = styled(List)`
     height: 4px;
     width: 4px;
     background-color: transparent;
+  }
+`;
+
+export const CollapseOwn = styled(Collapse)`
+  background: none;
+  border: none;
+
+  & > .ant-collapse-item {
+    border: none;
+
+    & > .ant-collapse-header {
+      padding: 0;
+    }
+
+    &.ant-collapse-no-arrow > .ant-collapse-header {
+      padding: 0;
+    }
+  }
+`;
+
+export const Panel = styled(Collapse.Panel)`
+  .ant-collapse-content {
+    background: none;
+    border: none;
+
+    .ant-collapse-content-box {
+      padding: 0;
+    }
   }
 `;

@@ -26,8 +26,8 @@ const Home: FC = () => {
     <DndProvider backend={HTML5Backend}>
       <Layout.Content>
         <DivWrapperLayout>
-          <DivPlan>{showPlanCoursesStudents && <Plan />}</DivPlan>
           <GridBlock isTutorOpen={isTutorLibraryOpen} isLibraryOpen={isLibraryOpen}>
+            <DivPlan>{showPlanCoursesStudents && <Plan />}</DivPlan>
             {showPlanCoursesStudents && (
               <>
                 <Groups />
@@ -39,7 +39,6 @@ const Home: FC = () => {
             <CardContent />
           </GridBlock>
         </DivWrapperLayout>
-        <Layout.Footer>Footer</Layout.Footer>
       </Layout.Content>
     </DndProvider>
   );

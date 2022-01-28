@@ -1,11 +1,11 @@
 // External
 import { FC, useEffect, useState } from 'react';
-import { Collapse, Space } from 'antd';
+import { Space } from 'antd';
 // Internal
 import Button from '../Button';
 import ColumnHeader from './ColumnHeader';
 // Styles
-import { ColumnWrapper, ListWrapper } from './styles';
+import { CollapseOwn, ColumnWrapper, ListWrapper, Panel } from './styles';
 
 interface IProps {
   cards: any;
@@ -39,8 +39,8 @@ const Column: FC<IProps> = ({
 
   return (
     <ColumnWrapper>
-      <Collapse activeKey={collapsedPanel} destroyInactivePanel={true}>
-        <Collapse.Panel
+      <CollapseOwn activeKey={collapsedPanel} destroyInactivePanel={true}>
+        <Panel
           header={
             <ColumnHeader
               title={title}
@@ -66,8 +66,8 @@ const Column: FC<IProps> = ({
           >
             {!!cards.length && children}
           </ListWrapper>
-        </Collapse.Panel>
-      </Collapse>
+        </Panel>
+      </CollapseOwn>
 
       <Space size="middle" style={{ justifyContent: 'space-between' }}>
         {onClickAdd && <Button onClick={onClickAdd} text={buttonText} />}
