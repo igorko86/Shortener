@@ -5,9 +5,13 @@ import { List } from 'antd';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { libraryCardsSelector } from 'store/reducers/library/selectors';
-import { LibraryCardType } from '../Plan/interfaces';
-import LibraryCard from '../LibraryCard';
-import Column from '../Items/Column';
+import { LibraryCardType } from '../../../components/Plan/interfaces';
+import LibraryCard from '../../../components/LibraryCard';
+import Column from '../../../components/Items/Column';
+import { AppPath } from '../../../shared/common/enum';
+import { useHistory } from 'react-router-dom';
+import useCheckAccess from '../../../shared/hooks/useCheckAccess';
+import { Role } from 'shared/models/request/authRequest';
 // Styles
 
 interface IProps {
@@ -15,19 +19,25 @@ interface IProps {
 }
 
 const Library: FC<IProps> = ({ setIsLibraryOpen }) => {
+  const history = useHistory();
   const libraryCards = useAppSelector(libraryCardsSelector);
   const { getLibraryCards } = useActionCreator();
+  const show = useCheckAccess([Role.Admin]);
 
   useEffect(() => {
     getLibraryCards();
   }, []);
 
+  const handleClickNewCard = () => {
+    history.push(AppPath.NEW_CARD);
+  };
+
   return (
     <Column
       cards={libraryCards}
       title="Library"
-      buttonText="+ Add card"
-      onClickAdd={() => console.log('hellooo')}
+      buttonText="+ Create card"
+      onClickAdd={show ? handleClickNewCard : undefined}
       textItem="cards"
       setIsOpenPanel={setIsLibraryOpen}
       searchDataByValue={getLibraryCards}

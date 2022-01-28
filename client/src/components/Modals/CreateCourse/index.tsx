@@ -6,7 +6,7 @@ import { config, FormItem } from 'shared/helpers/formConfig';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { userSelector } from 'store/reducers/auth/selectors';
-import StudentService from '../../../shared/services/StudentService';
+import StudentService from 'shared/services/StudentService';
 
 interface IProps {
   visible: boolean;

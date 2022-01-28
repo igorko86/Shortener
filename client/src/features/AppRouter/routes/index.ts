@@ -20,7 +20,7 @@ export const privateRoutes: IRouter[] = [
     exact: true,
   },
   {
-    path: AppPath.LIBRARY_CARD,
+    path: AppPath.NEW_CARD,
     component: LibraryCardPage,
   },
   {

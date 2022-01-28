@@ -10,7 +10,7 @@ import {
   cardContentSelector,
   currentCardIdSelector,
 } from 'store/reducers/library/selectors';
-import ExerciseList from '../ExerciseList';
+import ExerciseList from './ExerciseList';
 import Loader from 'components/Loader';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { DivCardContent } from './styles';

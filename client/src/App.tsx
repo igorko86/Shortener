@@ -12,16 +12,19 @@ import { isAuthSelector } from 'store/reducers/auth/selectors';
 import { theme } from 'theme';
 // Styles
 import { DivMain } from 'styles';
+import useCheckAccess from './shared/hooks/useCheckAccess';
+import { Role } from './shared/models/request/authRequest';
 
 const App: FC = () => {
-  const isAuth = useAppSelector(isAuthSelector);
+  const show = useCheckAccess([Role.Admin, Role.Tutor]);
+
   return (
     <ThemeProvider theme={theme}>
       <Layout>
         <AppHeader />
         <Layout>
           <DivMain>
-            {isAuth && <AppSubHeader />}
+            {show && <AppSubHeader />}
             <AppRouter />
           </DivMain>
         </Layout>

@@ -4,35 +4,29 @@ import { Space } from 'antd';
 import update from 'immutability-helper';
 // Internal
 import Button from 'components/Items/Button';
-import { useAppDispatch, useAppSelector } from 'shared/hooks/storeHooks';
-import { ICard, IDropCardInfo, IItemInfo, IMoveSubCardDragInfo } from './interfaces';
+import { useAppSelector } from 'shared/hooks/storeHooks';
+import { IDropCardInfo, IItemInfo, IMoveSubCardDragInfo } from './interfaces';
 import { planSelector } from 'store/reducers/group/selectors';
-import { groupActions } from 'store/reducers/group/actionCreators';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import TitleColumn from '../Items/TitleColumn';
 import Search from '../Search';
 import Cards from './Cards';
+import useCheckAccess from 'shared/hooks/useCheckAccess';
+import { Role } from 'shared/models/request/authRequest';
 // Styles
 import { ColumnWrapper } from 'components/Items/Column/styles';
-
-export const cardsArray: ICard[] = [
-  {
-    id: '1',
-    planCardName: '',
-  },
-];
-const { setPlan } = groupActions;
 
 let pendingUpdateFn: any;
 let requestedFrame: number | undefined;
 
 const Plan: FC = () => {
-  const plan = useAppSelector(planSelector);
-  const dispatch = useAppDispatch();
-  const { subCards = [], planCards = [], planName = '' } = plan || {};
   const [newPlanName, setNewPlanName] = useState('');
 
-  const { createPlanCard, deletePlanCard, movePlanCardId, deleteSubCard } = useActionCreator();
+  const plan = useAppSelector(planSelector);
+  const { subCards = [], planCards = [], planName = '' } = plan || {};
+
+  const { createPlanCard, deletePlanCard, movePlanCardId, deleteSubCard, setPlan } = useActionCreator();
+  const show = useCheckAccess([Role.Admin, Role.Tutor]);
 
   useEffect(() => {
     setNewPlanName(planName);
@@ -42,7 +36,7 @@ const Plan: FC = () => {
     if (!plan) return;
     const nextState = update(plan, pendingUpdateFn);
 
-    dispatch(setPlan(nextState));
+    setPlan(nextState);
 
     pendingUpdateFn = undefined;
     requestedFrame = undefined;
@@ -93,7 +87,7 @@ const Plan: FC = () => {
       });
 
       if (!dragCard || !canMoveSubCard) {
-        dispatch(setPlan({ ...plan, subCards }));
+        setPlan({ ...plan, subCards });
       } else {
         const newSuBCards = update(subCards[currentCardId], {
           $splice: [
@@ -101,7 +95,7 @@ const Plan: FC = () => {
             [hoverItemIndex, 0, dragCard],
           ],
         });
-        dispatch(setPlan({ ...plan, subCards: { ...subCards, [currentCardId]: newSuBCards } }));
+        setPlan({ ...plan, subCards: { ...subCards, [currentCardId]: newSuBCards } });
       }
     },
     [plan]
@@ -153,9 +147,11 @@ const Plan: FC = () => {
         removeSubCard={removeSubCard}
         onDropCard={handleDropCard}
       />
-      <Space size="middle">
-        <Button onClick={addCard} text="+ Add module" />
-      </Space>
+      {show && (
+        <Space size="middle">
+          <Button onClick={addCard} text="+ Add module" />
+        </Space>
+      )}
     </ColumnWrapper>
   );
 };

@@ -1,13 +1,18 @@
 // External
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { List } from 'antd';
 // Internal
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { myLibraryCardsSelector } from 'store/reducers/library/selectors';
-import { LibraryCardType } from '../Plan/interfaces';
-import LibraryCard from '../LibraryCard';
-import Column from '../Items/Column';
+import { LibraryCardType } from 'components/Plan/interfaces';
+import LibraryCard from 'components/LibraryCard';
+import Column from 'components/Items/Column';
+import { AppPath } from 'shared/common/enum';
+import useCheckAccess from 'shared/hooks/useCheckAccess';
+import { Role } from 'shared/models/request/authRequest';
+
 // Styles
 
 interface IProps {
@@ -15,19 +20,25 @@ interface IProps {
 }
 
 const TutorLibrary: FC<IProps> = ({ setIsTutorLibraryOpen }) => {
+  const history = useHistory();
   const myLibraryCards = useAppSelector(myLibraryCardsSelector);
   const { getMyLibraryCards } = useActionCreator();
+  const show = useCheckAccess([Role.Admin, Role.Tutor]);
 
   useEffect(() => {
     getMyLibraryCards();
   }, []);
 
+  const handleClickNewCard = () => {
+    history.push(AppPath.NEW_CARD);
+  };
+
   return (
     <Column
       cards={myLibraryCards}
       title="My Library"
-      buttonText="+ Add card"
-      onClickAdd={() => console.log('hellooo')}
+      buttonText="+ Create card"
+      onClickAdd={show ? handleClickNewCard : undefined}
       setIsOpenPanel={setIsTutorLibraryOpen}
       textItem="cards"
       searchDataByValue={getMyLibraryCards}

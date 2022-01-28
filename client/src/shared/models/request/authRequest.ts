@@ -7,6 +7,8 @@ export interface IUserRequest {
 export enum Role {
   Viewer = 'Viewer',
   Tutor = 'Tutor',
+  Admin = 'Admin',
+  Student = 'Student',
 }
 
 export interface IFormObjRequest {

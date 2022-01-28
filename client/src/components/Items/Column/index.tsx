@@ -10,7 +10,7 @@ import { ColumnWrapper, ListWrapper } from './styles';
 interface IProps {
   cards: any;
   title: string;
-  onClickAdd?: any;
+  onClickAdd?: () => void | undefined;
   buttonText?: string;
   setIsOpenPanel?: (val: boolean) => void;
   textItem?: string;
@@ -69,16 +69,14 @@ const Column: FC<IProps> = ({
         </Collapse.Panel>
       </Collapse>
 
-      {onClickAdd && (
-        <Space size="middle" style={{ justifyContent: 'space-between' }}>
-          <Button onClick={onClickAdd} text={buttonText} />
-          {!!cards.length && (
-            <div>
-              {cards.length} {textItem}
-            </div>
-          )}
-        </Space>
-      )}
+      <Space size="middle" style={{ justifyContent: 'space-between' }}>
+        {onClickAdd && <Button onClick={onClickAdd} text={buttonText} />}
+        {!!cards.length && (
+          <div>
+            {cards.length} {textItem}
+          </div>
+        )}
+      </Space>
     </ColumnWrapper>
   );
 };

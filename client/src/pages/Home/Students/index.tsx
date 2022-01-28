@@ -9,17 +9,22 @@ import { useActionCreator } from 'shared/hooks/useActionCreator';
 import AddStudent from 'components/Modals/AddStudent';
 import { studentsSelector } from 'store/reducers/group/selectors';
 import { IStudentInGroup } from 'store/reducers/group/types';
-import Column from '../Items/Column';
-import Button from '../Items/Button';
+import Column from '../../../components/Items/Column';
+import Button from '../../../components/Items/Button';
 // Styles
-import { SpanTitle } from '../Items/Card/styles';
+import { SpanTitle } from '../../../components/Items/Card/styles';
 import { ItemWrapper } from './styles';
+import useCheckAccess from '../../../shared/hooks/useCheckAccess';
+import { Role } from '../../../shared/models/request/authRequest';
 
 const Students: FC = () => {
-  const students = useAppSelector(studentsSelector);
-  const { setStudent } = useActionCreator();
   const [showModal, setShowModal] = useState(false);
   const [currentStudents, setCurrentStudents] = useState<IStudentInGroup[] | null>(null);
+
+  const students = useAppSelector(studentsSelector);
+
+  const { setStudent } = useActionCreator();
+  const show = useCheckAccess([Role.Admin, Role.Tutor]);
 
   const handleClickRemove = (id: string, index: number) => {
     students.splice(index, 1);
@@ -49,7 +54,7 @@ const Students: FC = () => {
       <Column
         title="Students"
         buttonText="+ Add student"
-        onClickAdd={handleClickAddStudent}
+        onClickAdd={show ? handleClickAddStudent : undefined}
         cards={students}
         textItem="students"
         searchDataByValue={searchStudents}

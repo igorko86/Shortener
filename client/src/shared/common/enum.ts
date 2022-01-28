@@ -5,7 +5,7 @@ export enum AppPath {
   LOGOUT = '/logout',
   REGISTRATION = '/registration',
   SUCCESS = '/success',
-  LIBRARY_CARD = '/new-card',
+  NEW_CARD = '/new-card',
   INFORMATION = '/information',
   STUDENTS = '/students',
   FORGOT_PASSWORD = '/forgot-password',

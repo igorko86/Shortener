@@ -5,29 +5,36 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Layout } from 'antd';
 // Internal
 import Plan from 'components/Plan';
-import Library from 'components/Library';
+import Library from 'pages/Home/Library';
 import CardContent from 'pages/Home/CardContent';
-import Groups from 'components/Groups';
-import TutorLibrary from 'components/TutorLibrary';
-import Students from 'components/Students';
+import Groups from 'pages/Home/Courses';
+import TutorLibrary from 'pages/Home/TutorLibrary';
+import Students from 'pages/Home/Students';
 // Styles
-import { DivPlan, GridBlock, DivWrapperLayout } from './styles';
+import { DivPlan, DivWrapperLayout, GridBlock } from './styles';
+import useCheckAccess from '../../shared/hooks/useCheckAccess';
+import { Role } from '../../shared/models/request/authRequest';
 
 const Home: FC = () => {
   const [isTutorLibraryOpen, setIsTutorLibraryOpen] = useState(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState(false);
+  const showLibrary = useCheckAccess([Role.Admin, Role.Tutor]);
+  const showPlanCoursesStudents = useCheckAccess([Role.Admin, Role.Tutor, Role.Student]);
+  const show = useCheckAccess([Role.Admin, Role.Tutor]);
 
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout.Content>
         <DivWrapperLayout>
-          <DivPlan>
-            <Plan />
-          </DivPlan>
+          <DivPlan>{showPlanCoursesStudents && <Plan />}</DivPlan>
           <GridBlock isTutorOpen={isTutorLibraryOpen} isLibraryOpen={isLibraryOpen}>
-            <Groups />
-            <Students />
-            <TutorLibrary setIsTutorLibraryOpen={setIsTutorLibraryOpen} />
+            {showPlanCoursesStudents && (
+              <>
+                <Groups />
+                <Students />
+              </>
+            )}
+            {showLibrary && <TutorLibrary setIsTutorLibraryOpen={setIsTutorLibraryOpen} />}
             <Library setIsLibraryOpen={setIsLibraryOpen} />
             <CardContent />
           </GridBlock>
