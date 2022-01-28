@@ -41,11 +41,12 @@ export const groupThunks = {
       try {
         const { groups } = getState().group;
         const groupPlanData = await GroupService.createCourse(validFields);
-        const { groupName, id, plan } = groupPlanData;
+        const { groupName, id, plan, studentsInGroup } = groupPlanData;
         const subCards = convertSubCardsArrayToObj(plan.planCards);
 
         dispatch(groupActions.setPlan({ ...plan, groupId: id, subCards }));
         dispatch(groupActions.setGroups([{ id, groupName }, ...groups]));
+        dispatch(groupActions.setStudent(studentsInGroup));
       } catch {
         return null;
       }

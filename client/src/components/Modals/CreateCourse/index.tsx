@@ -1,11 +1,12 @@
 // External
-import { FC, useState } from 'react';
-import { Form, Input, Modal } from 'antd';
+import { FC, useEffect, useState } from 'react';
+import { Form, Input, Modal, Select } from 'antd';
 // Internal
 import { config, FormItem } from 'shared/helpers/formConfig';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { userSelector } from 'store/reducers/auth/selectors';
+import StudentService from '../../../shared/services/StudentService';
 
 interface IProps {
   visible: boolean;
@@ -14,8 +15,13 @@ interface IProps {
 
 const CreateCourseModal: FC<IProps> = ({ visible, onCancel }) => {
   const [form] = Form.useForm();
+
   const [creating, setCreating] = useState(false);
+  const [value, setValue] = useState<string[]>([]);
+  const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
+
   const tutor = useAppSelector(userSelector);
+
   const { createCourse } = useActionCreator();
 
   const handleCancel = () => {
@@ -28,6 +34,7 @@ const CreateCourseModal: FC<IProps> = ({ visible, onCancel }) => {
 
     try {
       const validFields = await form.validateFields();
+      console.log(validFields);
       if (tutor) {
         createCourse({ ...validFields, tutorId: tutor.id });
       }
@@ -38,6 +45,21 @@ const CreateCourseModal: FC<IProps> = ({ visible, onCancel }) => {
       setCreating(false);
       console.log('Validate Failed');
     }
+  };
+
+  useEffect(() => {
+    if (tutor && visible) {
+      StudentService.getStudentsById(tutor.id).then((studentsData) => {
+        const students = studentsData.map(({ name, id }) => ({ value: id, label: name }));
+
+        setOptions(students);
+      });
+    }
+  }, [visible]);
+
+  const handleChange = (newValue: string[]) => {
+    setValue(newValue);
+    form.setFieldsValue({ studentIds: newValue });
   };
 
   return (
@@ -60,6 +82,22 @@ const CreateCourseModal: FC<IProps> = ({ visible, onCancel }) => {
         </Form.Item>
         <Form.Item {...config[FormItem.GROUP_NAME]}>
           <Input disabled={creating} />
+        </Form.Item>
+        <Form.Item name="studentIds" label="Students">
+          <Select
+            mode="multiple"
+            value={value}
+            placeholder="Search to Select"
+            optionFilterProp="children"
+            onChange={handleChange}
+            options={options}
+            allowClear
+            maxTagCount="responsive"
+            showArrow
+            style={{ width: '100%' }} // TODO add to styles
+            // @ts-ignore
+            filterOption={(input, option) => option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+          />
         </Form.Item>
       </Form>
     </Modal>

@@ -61,7 +61,7 @@ class StudentService {
     await mailService.sendActivationMail(email, html);
   }
 
-  async addStudent(data: IAddStudentRequest) {
+  async addStudent(data: IAddStudentRequest): Promise<void> {
     const { groupId, studentIds } = data;
 
     const promisesStudentIds = studentIds.map((studentId) => Student.findOne({ id: studentId }));

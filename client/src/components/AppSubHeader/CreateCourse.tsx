@@ -1,7 +1,7 @@
 // External
 import { FC, useState } from 'react';
 // Internal
-import CreateCourseModal from 'components/Modals/CreateCourseModal';
+import CreateCourseModal from 'components/Modals/CreateCourse';
 import Button from 'components/Items/Button';
 
 const CreateCourse: FC = () => {

@@ -5,9 +5,9 @@ import withScrolling from 'react-dnd-scrolling';
 // Internal
 import PlanCard from 'components/PlanCard';
 import { ICard, IDropCardInfo, IItemInfo, IMoveSubCardDragInfo, ISubCards } from './interfaces';
+import useScroll from 'shared/hooks/useScroll';
 // Styles
 import { DivScrollZone } from './styles';
-import useScroll from '../../shared/hooks/useScroll';
 
 const ScrollZone = withScrolling(DivScrollZone);
 

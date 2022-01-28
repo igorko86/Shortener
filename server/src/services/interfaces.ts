@@ -1,6 +1,7 @@
 import UserAuthService from './userAuth.service';
 import TutorAuthService from './tutorAuth.service';
 import StudentAuthService from './studentAuth.service';
+import { IGetStudentsInGroupResponse } from '../models/response/student.response.';
 
 export interface IGenerateTokensResult {
   accessToken: string;
@@ -39,13 +40,14 @@ export interface IGroupAndPlanRequest {
   groupName: string;
   planName: string;
   tutorId: string;
-  students?: string[];
+  studentIds?: string[];
 }
 
 export interface IGroupAndPlanResponse {
   groupName: string;
   id: string;
   plan: ICreatePlan;
+  studentsInGroup: IGetStudentsInGroupResponse[] | null;
 }
 
 export interface ICreatePlan {

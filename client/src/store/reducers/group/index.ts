@@ -13,7 +13,7 @@ const groupReducer = (state = initialState, action: GroupActions): IGroupState =
     case GroupActionEnum.SET_PLAN:
       return { ...state, plan: action.payload };
     case GroupActionEnum.SET_STUDENTS:
-      return { ...state, students: action.payload };
+      return { ...state, students: action.payload || [] };
     default:
       return state;
   }
