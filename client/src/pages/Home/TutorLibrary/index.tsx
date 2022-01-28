@@ -6,7 +6,7 @@ import { List } from 'antd';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { myLibraryCardsSelector } from 'store/reducers/library/selectors';
-import { LibraryCardType } from 'components/Plan/interfaces';
+import { LibraryCardType } from 'pages/Home/Plan/interfaces';
 import LibraryCard from 'components/LibraryCard';
 import Column from 'components/Items/Column';
 import { AppPath } from 'shared/common/enum';

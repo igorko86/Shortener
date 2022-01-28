@@ -2,7 +2,7 @@
 import { FC } from 'react';
 import { useDrop } from 'react-dnd';
 // Internal
-import { IItemInfo, IMoveSubCardDragInfo, ISubCard, ItemTypeCard } from 'components/Plan/interfaces';
+import { IItemInfo, IMoveSubCardDragInfo, ISubCard, ItemTypeCard } from 'pages/Home/Plan/interfaces';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { libraryCardsSelector } from 'store/reducers/library/selectors';
 import { useActionCreator } from 'shared/hooks/useActionCreator';

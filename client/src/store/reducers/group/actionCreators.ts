@@ -1,6 +1,6 @@
 import GroupService from 'shared/services/GroupService';
 import { ICreateGroupAndPlanRequest, IUpdateCardName, IUpdatePlanName } from 'shared/models/request/groupReguest';
-import { IDropCardInfo } from 'components/Plan/interfaces';
+import { IDropCardInfo } from 'pages/Home/Plan/interfaces';
 import { GroupActionEnum, IGroup, IPlan, ISetGroups, ISetPlan, ISetStudents, IStudentInGroup } from './types';
 import { AppDispatch } from '../../interfaces';
 import { convertSubCardsArrayToObj } from '../../helpers';
@@ -23,13 +23,25 @@ export const groupActions = {
 };
 
 export const groupThunks = {
-  getGroupsById:
+  getCoursesByTutorId:
     (tutorId: string, value = '') =>
     async (dispatch: AppDispatch) => {
       try {
-        const groups = await GroupService.getGroupsById(tutorId, value);
+        const groups = await GroupService.getCoursesByTutorId(tutorId, value);
 
         dispatch(groupActions.setGroups(groups));
+        return null;
+      } catch {
+        return null;
+      }
+    },
+  getCoursesByStudentId:
+    (studentId: string, value = '') =>
+    async (dispatch: AppDispatch) => {
+      try {
+        const courses = await GroupService.getCoursesByStudentId(studentId, value);
+
+        dispatch(groupActions.setGroups(courses));
         return null;
       } catch {
         return null;

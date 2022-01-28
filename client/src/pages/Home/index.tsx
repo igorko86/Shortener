@@ -4,7 +4,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Layout } from 'antd';
 // Internal
-import Plan from 'components/Plan';
+import Plan from 'pages/Home/Plan';
 import Library from 'pages/Home/Library';
 import CardContent from 'pages/Home/CardContent';
 import Groups from 'pages/Home/Courses';

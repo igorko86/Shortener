@@ -1,4 +1,4 @@
-import { ISubCard, ISubCards } from '../Plan/interfaces';
+import { ISubCard, ISubCards } from 'pages/Home/Plan/interfaces';
 
 const removeItem = (arr: ISubCard[], id: string) => {
   return arr.reduce(

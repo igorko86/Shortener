@@ -3,7 +3,7 @@ import { FC, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 // Internal
-import { DivNameWithPopover } from 'components/Plan/styles';
+import { DivNameWithPopover } from 'pages/Home/Plan/styles';
 import Close from 'shared/assets/icons/close';
 import {
   ICard,
@@ -12,7 +12,7 @@ import {
   IMoveSubCardDragInfo,
   ISubCards,
   ItemTypeCard,
-} from 'components/Plan/interfaces';
+} from 'pages/Home/Plan/interfaces';
 import PlanCardContent from './PlanCardContent';
 import Button from '../Items/Button';
 // Styles

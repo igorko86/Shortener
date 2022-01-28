@@ -2,7 +2,7 @@
 import { FC } from 'react';
 import { useDrag } from 'react-dnd';
 // Internal
-import { ItemTypeCard, LibraryCardType } from 'components/Plan/interfaces';
+import { ItemTypeCard, LibraryCardType } from 'pages/Home/Plan/interfaces';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { cardContentLoadingSelector } from 'store/reducers/library/selectors';

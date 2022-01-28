@@ -11,8 +11,9 @@ export enum ApiRoutes {
   CreateCard = '/library/card',
   CardContent = '/library/card/content',
   // Croups
-  GetGroups = '/groups',
-  CreateCourse = '/course',
+  GetTutorCourses = '/courses/tutor',
+  GetStudentCourses = '/courses/student',
+  CreateCourse = '/courses/course',
   // Plan
   GetPlan = '/plans/plan',
   UpdatePlanName = '/plans/plan/name',

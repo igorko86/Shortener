@@ -11,8 +11,12 @@ import {
 import { IGroupResponse, IPlanCard, IPlanResponse } from '../models/response/groupResponse';
 
 class GroupService {
-  static getGroupsById(tutorId: string, search: string): Promise<IGroupResponse[]> {
-    return $api.get(ApiRoutes.GetGroups, { params: { tutorId, search } }).then(({ data }) => data);
+  static getCoursesByTutorId(tutorId: string, search: string): Promise<IGroupResponse[]> {
+    return $api.get(ApiRoutes.GetTutorCourses, { params: { tutorId, search } }).then(({ data }) => data);
+  }
+
+  static getCoursesByStudentId(studentId: string, search: string): Promise<IGroupResponse[]> {
+    return $api.get(ApiRoutes.GetStudentCourses, { params: { studentId, search } }).then(({ data }) => data);
   }
 
   static getPlanById(groupId: string): Promise<IPlanResponse> {

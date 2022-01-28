@@ -21,14 +21,26 @@ const Courses: FC = () => {
   const plan = useAppSelector(planSelector);
   const user = useAppSelector(userSelector);
 
-  const { getCourseData, getGroupsById } = useActionCreator();
-  const show = useCheckAccess([Role.Admin, Role.Tutor]);
+  const { getCourseData, getCoursesByTutorId, getCoursesByStudentId } = useActionCreator();
+  const hasAccess = useCheckAccess([Role.Admin, Role.Tutor]);
+  const hasAccessStudent = useCheckAccess([Role.Student]);
+
+  const fetchCourses = (value?: string) => {
+    if (!user) return;
+
+    if (hasAccess) {
+      getCoursesByTutorId(user.id, value);
+    }
+    if (hasAccessStudent) {
+      getCoursesByStudentId(user.id, value);
+    }
+  };
 
   useEffect(() => {
-    if (!plan && user) {
-      getGroupsById(user.id);
+    if (!plan) {
+      fetchCourses();
     }
-  }, []);
+  }, [hasAccess, user, hasAccessStudent]);
 
   const handleChangeGroup = (groupId: string) => {
     if (plan?.groupId !== groupId) {
@@ -37,9 +49,7 @@ const Courses: FC = () => {
   };
 
   const searchGroups = (value: string) => {
-    if (user) {
-      getGroupsById(user.id, value);
-    }
+    fetchCourses(value);
   };
 
   const handleClickShowModal = () => {
@@ -54,7 +64,7 @@ const Courses: FC = () => {
         cards={groups}
         textItem="courses"
         searchDataByValue={searchGroups}
-        onClickAdd={show ? handleClickShowModal : undefined}
+        onClickAdd={hasAccess ? handleClickShowModal : undefined}
       >
         {groups.length ? (
           groups.map((group: any) => {

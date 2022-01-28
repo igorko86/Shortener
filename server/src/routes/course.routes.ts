@@ -1,9 +1,11 @@
 import { Router } from 'express';
 
-import CourseController from '../controller/course.controller';
+import courseController from '../controller/course.controller';
 
 const courseRouter = Router();
 
-courseRouter.post('', CourseController.createCourse);
+courseRouter.post('/course', courseController.createCourse);
+courseRouter.get('/student', courseController.getCoursesByStudentId);
+courseRouter.get('/tutor', courseController.getCoursesByTutorId);
 
 export { courseRouter as courseRoutes };

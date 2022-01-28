@@ -1,17 +1,17 @@
 // External
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { List } from 'antd';
+import { useHistory } from 'react-router-dom';
 // Internal
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
-import { libraryCardsSelector } from 'store/reducers/library/selectors';
-import { LibraryCardType } from '../../../components/Plan/interfaces';
-import LibraryCard from '../../../components/LibraryCard';
-import Column from '../../../components/Items/Column';
-import { AppPath } from '../../../shared/common/enum';
-import { useHistory } from 'react-router-dom';
-import useCheckAccess from '../../../shared/hooks/useCheckAccess';
 import { Role } from 'shared/models/request/authRequest';
+import { AppPath } from 'shared/common/enum';
+import useCheckAccess from 'shared/hooks/useCheckAccess';
+import { libraryCardsSelector } from 'store/reducers/library/selectors';
+import LibraryCard from 'components/LibraryCard';
+import Column from 'components/Items/Column';
+import { LibraryCardType } from '../Plan/interfaces';
 // Styles
 
 interface IProps {
