@@ -20,7 +20,7 @@ const ColumnHeader: FC<IProps> = ({ title, setCollapsedPanel, placeholder = 'Sea
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
-  const debouncedValue = useDebounce(inputValue.trim(), 800);
+  const debouncedValue = useDebounce(inputValue.trim(), 300);
 
   const handleCLick = () => {
     setCollapsedPanel(!isOpen ? 'collapse' : '');

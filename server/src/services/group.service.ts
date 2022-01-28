@@ -24,7 +24,7 @@ class GroupService {
       .where('group.tutorId = :tutorId', { tutorId });
 
     if (search) {
-      query.andWhere('group.groupName like :value', { value: `%${search}%` });
+      query.andWhere('group.groupName ILIKE :value', { value: `%${search}%` });
     }
 
     return await query.getMany();
@@ -38,7 +38,7 @@ class GroupService {
       .where('student.userId = :userId', { userId: studentId });
 
     if (search) {
-      query.andWhere('group.groupName like :value', { value: `%${search}%` });
+      query.andWhere('group.groupName ILIKE :value', { value: `%${search}%` });
     }
 
     const data = await query.getOne();

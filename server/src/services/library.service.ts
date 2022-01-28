@@ -24,8 +24,8 @@ class LibraryService {
 
     if (value) {
       query
-        .andWhere('libraryCard.name like :value', { value: `%${value}%` })
-        .orWhere('libraryCard.description like :value', { value: `%${value}%` })
+        .andWhere('libraryCard.name ILIKE :value', { value: `%${value}%` })
+        .orWhere('libraryCard.description ILIKE :value', { value: `%${value}%` })
         .andWhere('libraryCard.type = :type', { type: libraryType });
     }
 
