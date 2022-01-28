@@ -12,6 +12,8 @@ import './antStyles.css';
 ReactDOM.render(
   <Provider store={store}>
     <Router
+      // @ts-ignore
+      history={history}
       getUserConfirmation={() => {
         /* Empty callback to block the default browser prompt */
       }}

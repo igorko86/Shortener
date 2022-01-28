@@ -32,6 +32,8 @@ export const authThunks = {
   },
   checkAuth: () => async (dispatch: AppDispatch) => {
     try {
+      dispatch(authActions.setIsLoading(true));
+
       const { data: token } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api${ApiRoutes.Refresh}`, {
         withCredentials: true,
       });
@@ -41,9 +43,11 @@ export const authThunks = {
 
       dispatch(authActions.setUser({ id, name, role }));
       dispatch(authActions.setIsAuth(true));
+      dispatch(authActions.setIsLoading(false));
 
       return null;
     } catch (error) {
+      dispatch(authActions.setIsLoading(false));
       return null;
     }
   },

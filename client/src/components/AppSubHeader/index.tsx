@@ -23,7 +23,7 @@ const AppSubHeader: FC = () => {
   return (
     <DivSubHeader>
       <Space size="middle">
-        <Button text="Home" icon={<Home />} onClick={() => handleClickButton(AppPath.ROOT)} />
+        <Button text="Home" icon={<Home />} onClick={() => handleClickButton(AppPath.HOME)} />
         <CreateCourse />
         <AddStudent />
         <Button text="Create card" onClick={() => handleClickButton(AppPath.LIBRARY_CARD)} />
