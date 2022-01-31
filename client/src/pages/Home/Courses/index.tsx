@@ -1,5 +1,5 @@
 // External
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Empty } from 'antd';
 // Internal
 import { groupsSelector, planSelector } from 'store/reducers/group/selectors';
@@ -23,24 +23,6 @@ const Courses: FC = () => {
 
   const { getCourseData, getCoursesByTutorId, getCoursesByStudentId } = useActionCreator();
   const hasAccess = useCheckAccess([Role.Admin, Role.Tutor]);
-  const hasAccessStudent = useCheckAccess([Role.Student]);
-
-  const fetchCourses = (value?: string) => {
-    if (!user) return;
-
-    if (hasAccess) {
-      getCoursesByTutorId(user.id, value);
-    }
-    if (hasAccessStudent) {
-      getCoursesByStudentId(user.id, value);
-    }
-  };
-
-  useEffect(() => {
-    if (!plan) {
-      fetchCourses();
-    }
-  }, [hasAccess, user, hasAccessStudent]);
 
   const handleChangeGroup = (groupId: string) => {
     if (plan?.groupId !== groupId) {
@@ -48,8 +30,13 @@ const Courses: FC = () => {
     }
   };
 
-  const searchGroups = (value: string) => {
-    fetchCourses(value);
+  const searchCourses = (value: string) => {
+    if (user?.role === Role.Tutor) {
+      getCoursesByTutorId(user.id, value);
+    }
+    if (user?.role === Role.Student) {
+      getCoursesByStudentId(user.id, value);
+    }
   };
 
   const handleClickShowModal = () => {
@@ -63,7 +50,7 @@ const Courses: FC = () => {
         buttonText="+ Create new course"
         cards={groups}
         textItem="courses"
-        searchDataByValue={searchGroups}
+        searchDataByValue={searchCourses}
         onClickAdd={hasAccess ? handleClickShowModal : undefined}
       >
         {groups.length ? (

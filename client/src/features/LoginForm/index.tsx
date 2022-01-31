@@ -14,7 +14,7 @@ const LoginForm: FC = () => {
   const { login } = useActionCreator();
 
   const handleSubmit = async (values: any) => {
-    login({ ...values, role: values.isTutor ? Role.Tutor : Role.Viewer });
+    login(values);
 
     form.resetFields();
   };
@@ -26,9 +26,6 @@ const LoginForm: FC = () => {
       </Form.Item>
       <Form.Item {...config[FormItem.PASSWORD]}>
         <Input.Password />
-      </Form.Item>
-      <Form.Item name="isTutor" label="Tutor" valuePropName="checked" initialValue>
-        <Switch defaultChecked />
       </Form.Item>
       <Link to={AppPath.FORGOT_PASSWORD}>Forgot password</Link>
       <Form.Item>

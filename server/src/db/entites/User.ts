@@ -30,12 +30,6 @@ export class User extends CreateUpdateDate {
   @Column({ default: false, name: 'is_active' })
   isActive: boolean;
 
-  @Column({ default: false, name: 'is_paid' })
-  isPaid: boolean;
-
-  @Column({ type: 'timestamptz', onUpdate: 'NOW()', nullable: true, name: 'allow_to' })
-  allowTo: Date;
-
   @OneToMany(() => Student, (student) => student.user)
   students: Student[];
 }

@@ -1,4 +1,5 @@
 import {
+  IChangeRoleRequest,
   IForgotPasswordRequest,
   IFormObjRequest,
   IResetPasswordRequest,
@@ -26,6 +27,10 @@ class AuthService {
 
   static resetPassword(body: IResetPasswordRequest): Promise<void> {
     return $api.post(ApiRoutes.ResetPassword, body);
+  }
+
+  static changeRole(body: IChangeRoleRequest): Promise<string> {
+    return $api.put(ApiRoutes.ChangeRole, body).then(({ data }) => data);
   }
 }
 

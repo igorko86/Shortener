@@ -8,7 +8,7 @@ class UserDto {
   private id: string;
   private role: Role;
 
-  constructor(userInfo: Tutor | User) {
+  constructor(userInfo: User) {
     this.name = userInfo.name;
     this.email = userInfo.email;
     this.id = userInfo.id;

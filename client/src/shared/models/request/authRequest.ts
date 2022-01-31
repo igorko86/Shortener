@@ -1,7 +1,6 @@
 export interface IUserRequest {
   password: string;
   email: string;
-  role: Role;
 }
 
 export enum Role {
@@ -15,16 +14,19 @@ export interface IFormObjRequest {
   email: string;
   password: string;
   name?: string;
-  role: Role;
 }
 
 export interface IForgotPasswordRequest {
   email: string;
-  role: Role;
 }
 
 export interface IResetPasswordRequest {
   password: string;
   role: Role;
   id: string;
+}
+
+export interface IChangeRoleRequest {
+  role: Role;
+  userId: string;
 }

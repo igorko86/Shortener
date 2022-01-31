@@ -5,7 +5,7 @@ import courseController from '../controller/course.controller';
 const courseRouter = Router();
 
 courseRouter.post('/course', courseController.createCourse);
-courseRouter.get('/student', courseController.getCoursesByStudentId);
-courseRouter.get('/tutor', courseController.getCoursesByTutorId);
+courseRouter.get('/student-courses', courseController.getCoursesByStudentId);
+courseRouter.get('/tutor-courses', courseController.getCoursesByTutorId);
 
 export { courseRouter as courseRoutes };

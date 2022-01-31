@@ -24,10 +24,6 @@ const Library: FC<IProps> = ({ setIsLibraryOpen }) => {
   const { getLibraryCards } = useActionCreator();
   const show = useCheckAccess([Role.Admin]);
 
-  useEffect(() => {
-    getLibraryCards();
-  }, []);
-
   const handleClickNewCard = () => {
     history.push(AppPath.NEW_CARD);
   };

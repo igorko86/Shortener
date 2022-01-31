@@ -20,8 +20,8 @@ const { TabPane } = Tabs;
 
 const LibraryCardPage: FC = () => {
   const [createCardForm] = Form.useForm();
-  const exerciseIds = useAppSelector(exerciseIdsSelector);
-  const { setExerciseIds, setExercise } = useActionCreator();
+  const newExerciseIds = useAppSelector(exerciseIdsSelector);
+  const { setNewExerciseIds, setNewExercise } = useActionCreator();
 
   const [creatingNewCard, setCreatingNewCard] = useState(false);
   const [activeTab, setActiveTab] = useState(TabName.Explanation);
@@ -30,8 +30,8 @@ const LibraryCardPage: FC = () => {
   useEffect(() => {
     const { setFieldsValue, getFieldsValue } = createCardForm;
 
-    setFieldsValue({ ...getFieldsValue(), exerciseIds });
-  }, [exerciseIds]);
+    setFieldsValue({ ...getFieldsValue(), newExerciseIds });
+  }, [newExerciseIds]);
 
   const handleSubmit = (values: any) => {
     if (showExerciseBlock) {
@@ -45,8 +45,8 @@ const LibraryCardPage: FC = () => {
     setActiveTab(TabName.Explanation);
     setShowExerciseBlock(false);
     setCreatingNewCard(false);
-    setExerciseIds(null);
-    setExercise(null);
+    setNewExerciseIds(null);
+    setNewExercise(null);
     createCardForm.resetFields();
   };
 
@@ -67,11 +67,11 @@ const LibraryCardPage: FC = () => {
   };
 
   const handleOk = () => {
-    if (exerciseIds) {
-      LibraryService.removeExercisesByIds(exerciseIds);
+    if (newExerciseIds) {
+      LibraryService.removeExercisesByIds(newExerciseIds);
     }
-    setExerciseIds(null);
-    setExercise(null);
+    setNewExerciseIds(null);
+    setNewExercise(null);
 
     return Promise.resolve(true);
   };

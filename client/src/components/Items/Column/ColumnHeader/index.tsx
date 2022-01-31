@@ -19,6 +19,7 @@ interface IProps {
 const ColumnHeader: FC<IProps> = ({ title, setCollapsedPanel, placeholder = 'Search', searchDataByValue }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [isFirst, setIsFirst] = useState(true);
 
   const debouncedValue = useDebounce(inputValue.trim(), 300);
 
@@ -32,9 +33,10 @@ const ColumnHeader: FC<IProps> = ({ title, setCollapsedPanel, placeholder = 'Sea
   };
 
   useEffect(() => {
-    if (searchDataByValue) {
+    if (searchDataByValue && !isFirst) {
       searchDataByValue(debouncedValue);
     }
+    setIsFirst(false);
   }, [debouncedValue]);
 
   return (

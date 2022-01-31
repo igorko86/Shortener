@@ -1,5 +1,5 @@
 // External
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Layout } from 'antd';
@@ -7,34 +7,59 @@ import { Layout } from 'antd';
 import Plan from 'pages/Home/Plan';
 import Library from 'pages/Home/Library';
 import CardContent from 'pages/Home/CardContent';
-import Groups from 'pages/Home/Courses';
+import Courses from 'pages/Home/Courses';
 import TutorLibrary from 'pages/Home/TutorLibrary';
 import Students from 'pages/Home/Students';
+import useCheckAccess from 'shared/hooks/useCheckAccess';
+import { Role } from 'shared/models/request/authRequest';
+import { useAppSelector } from 'shared/hooks/storeHooks';
+import { userSelector } from 'store/reducers/auth/selectors';
+import { useActionCreator } from 'shared/hooks/useActionCreator';
 // Styles
 import { DivPlan, DivWrapperLayout, GridBlock } from './styles';
-import useCheckAccess from '../../shared/hooks/useCheckAccess';
-import { Role } from '../../shared/models/request/authRequest';
 
 const Home: FC = () => {
   const [isTutorLibraryOpen, setIsTutorLibraryOpen] = useState(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState(false);
-  const showLibrary = useCheckAccess([Role.Admin, Role.Tutor]);
+
+  const user = useAppSelector(userSelector);
+
+  const { getLibraryCards, getCoursesByStudentId, getMyLibraryCards, getCoursesByTutorId, setActiveCardId } =
+    useActionCreator();
+
+  const showTutorLibrary = useCheckAccess([Role.Admin, Role.Tutor]);
   const showPlanCoursesStudents = useCheckAccess([Role.Admin, Role.Tutor, Role.Student]);
-  const show = useCheckAccess([Role.Admin, Role.Tutor]);
+
+  useEffect(() => {
+    switch (user?.role) {
+      case Role.Student:
+        getCoursesByStudentId(user.id);
+        break;
+      case Role.Tutor:
+        getMyLibraryCards();
+        getCoursesByTutorId(user.id);
+        break;
+    }
+
+    getLibraryCards();
+    setActiveCardId('');
+  }, [user?.role]);
 
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout.Content>
         <DivWrapperLayout>
           <GridBlock isTutorOpen={isTutorLibraryOpen} isLibraryOpen={isLibraryOpen}>
-            <DivPlan>{showPlanCoursesStudents && <Plan />}</DivPlan>
             {showPlanCoursesStudents && (
               <>
-                <Groups />
+                <DivPlan>
+                  <Plan />
+                </DivPlan>
+                <Courses />
                 <Students />
               </>
             )}
-            {showLibrary && <TutorLibrary setIsTutorLibraryOpen={setIsTutorLibraryOpen} />}
+            {showTutorLibrary && <TutorLibrary setIsTutorLibraryOpen={setIsTutorLibraryOpen} />}
             <Library setIsLibraryOpen={setIsLibraryOpen} />
             <CardContent />
           </GridBlock>

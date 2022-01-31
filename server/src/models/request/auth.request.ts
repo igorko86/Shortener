@@ -5,6 +5,7 @@ export interface IAuthRegistrationRequest {
   email: string;
   password: string;
   role: Role;
+  tutorId?: string;
 }
 
 export type ITutorRequest = IAuthRegistrationRequest;
@@ -17,6 +18,5 @@ export interface IForgotPasswordRequest {
 }
 export interface IResetPasswordRequest {
   password: string;
-  role: Role;
   id: string;
 }

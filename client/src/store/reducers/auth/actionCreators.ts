@@ -1,12 +1,13 @@
 import axios from 'axios';
 import jwt from 'jwt-decode';
 
-import { IFormObjRequest } from 'shared/models/request/authRequest';
+import { IFormObjRequest, Role } from 'shared/models/request/authRequest';
 import AuthService from 'shared/services/AuthService';
 import { ApiRoutes } from 'shared/services/apiRoutes.constants';
 import { ITokenResponse } from 'shared/models/response/authResponse';
 import { AuthActionEnum, ISetAuthAction, ISetIsLoading, ISetUser, IUser } from './types';
 import { AppDispatch, SetResetStore } from '../../interfaces';
+import { AppState } from '../../index';
 
 const authActions = {
   setIsAuth: (isAuth: boolean): ISetAuthAction => ({ type: AuthActionEnum.SET_IS_AUTH, payload: isAuth }),
@@ -64,6 +65,25 @@ export const authThunks = {
       return null;
     }
   },
+  changeRole:
+    (userRole: Role) =>
+    async (dispatch: AppDispatch, getState: () => AppState): Promise<void | null> => {
+      try {
+        const { id: userId } = getState().auth.user || {};
+
+        if (userId) {
+          const token = await AuthService.changeRole({ role: userRole, userId });
+
+          const { id, name, role }: ITokenResponse = jwt(token);
+
+          localStorage.setItem('token', token);
+
+          dispatch(authActions.setUser({ id, name, role }));
+        }
+      } catch {
+        return null;
+      }
+    },
 };
 
 export default { ...authActions, ...authThunks };

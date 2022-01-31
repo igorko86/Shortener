@@ -6,15 +6,6 @@ import { User } from '../db/entites/User';
 import { Student } from '../db/entites/Student';
 import { IAuthRole, Role } from '../services/interfaces';
 
-const deleteUnactivatedTutors = async () => {
-  await createQueryBuilder('tutor')
-    .delete()
-    .from(Tutor, 'tutor')
-    .where('isActive = false')
-    .andWhere("created_at <= now() - interval '20 hours'")
-    .execute();
-};
-
 const deleteUnactivatedUsers = async () => {
   await createQueryBuilder('user')
     .delete()
@@ -24,17 +15,9 @@ const deleteUnactivatedUsers = async () => {
     .execute();
 };
 
-const unactivatedAction = {
-  [Role.Tutor]: deleteUnactivatedTutors,
-  [Role.Viewer]: deleteUnactivatedUsers,
-  [Role.Student]: deleteUnactivatedUsers,
-};
-
 export const deleteUnactivatedAccount = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { role } = req.params;
-    // @ts-ignore
-    unactivatedAction[role as unknown as IAuthRole]();
+    deleteUnactivatedUsers();
 
     next();
   } catch (error) {

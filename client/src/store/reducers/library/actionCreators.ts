@@ -29,11 +29,11 @@ export const libraryActions = {
     type: LibraryActionEnum.SET_CARD_CONTENT,
     payload: content,
   }),
-  setExercise: (exercise: IExercise | null): ISetExercise => ({
+  setNewExercise: (exercise: IExercise | null): ISetExercise => ({
     type: LibraryActionEnum.SET_EXERCISE,
     payload: exercise,
   }),
-  setExerciseIds: (exercise: string | null): ISetExerciseIds => ({
+  setNewExerciseIds: (exercise: string | null): ISetExerciseIds => ({
     type: LibraryActionEnum.SET_EXERCISE_IDS,
     payload: exercise,
   }),
@@ -117,8 +117,8 @@ export const libraryThunks = {
     try {
       const exercise = await LibraryService.createExercise(data);
 
-      dispatch(libraryActions.setExercise(exercise));
-      dispatch(libraryActions.setExerciseIds(exercise.id));
+      dispatch(libraryActions.setNewExercise(exercise));
+      dispatch(libraryActions.setNewExerciseIds(exercise.id));
     } catch {
       return null;
     }

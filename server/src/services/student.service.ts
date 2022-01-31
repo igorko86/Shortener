@@ -16,49 +16,49 @@ import { ACTIVATION } from './common/links';
 
 class StudentService {
   async addNewStudent(data: IAddNewStudentRequest) {
-    const { email, name, groupId, tutorId } = data;
-
-    let userData = await User.findOne({ email });
-    const role = Role.Student;
-    let password = '';
-
-    if (!userData) {
-      password = generatePassword();
-
-      userData = await StudentAuthService.getInstance().register({
-        email,
-        password,
-        name,
-        role,
-      });
-    } else {
-      await User.update({ id: userData.id }, { role });
-      await Token.delete({ userTutorId: userData.id });
-    }
-    const tutor = await Tutor.findOne({ id: tutorId });
-    const currentStudent = await Student.findOne({ user: userData });
-
-    if (!tutor) {
-      throw ApiErrorService.badRequest(`Tutor with such ${tutorId} id doesn't exist`);
-    }
-    if (currentStudent) {
-      throw ApiErrorService.badRequest(`Student with such ${email} email exists in list of our students`);
-    }
-    const newStudent = Student.create({ name, user: userData, tutor });
-
-    const savedNewStudentData = await newStudent.save();
-    let group;
-
-    if (groupId) {
-      group = await Group.findOne({ id: groupId });
-      const newStudentGroup = StudentGroup.create({ group, student: savedNewStudentData });
-
-      await newStudentGroup.save();
-    }
-    const link = `${process.env.SERVER_URL}${ACTIVATION}${role}/${userData.id}`;
-    const html = registerStudentMailHtml({ link, password, groupName: group?.groupName, tutorName: tutor.name });
-
-    await mailService.sendActivationMail(email, html);
+    // const { email, name, groupId, tutorId } = data;
+    //
+    // let userData = await User.findOne({ email });
+    // const role = Role.Student;
+    // let password = '';
+    //
+    // if (!userData) {
+    //   password = generatePassword();
+    //
+    //   userData = await StudentAuthService.getInstance().register({
+    //     email,
+    //     password,
+    //     name,
+    //     role,
+    //   });
+    // } else {
+    //   await User.update({ id: userData.id }, { role });
+    //   await Token.delete({ userTutorId: userData.id });
+    // }
+    // const tutor = await Tutor.findOne({ id: tutorId });
+    // const currentStudent = await Student.findOne({ user: userData });
+    //
+    // if (!tutor) {
+    //   throw ApiErrorService.badRequest(`Tutor with such ${tutorId} id doesn't exist`);
+    // }
+    // if (currentStudent) {
+    //   throw ApiErrorService.badRequest(`Student with such ${email} email exists in list of our students`);
+    // }
+    // const newStudent = Student.create({ name, user: userData, tutor });
+    //
+    // const savedNewStudentData = await newStudent.save();
+    // let group;
+    //
+    // if (groupId) {
+    //   group = await Group.findOne({ id: groupId });
+    //   const newStudentGroup = StudentGroup.create({ group, student: savedNewStudentData });
+    //
+    //   await newStudentGroup.save();
+    // }
+    // const link = `${process.env.SERVER_URL}${ACTIVATION}${role}/${userData.id}`;
+    // const html = registerStudentMailHtml({ link, password, groupName: group?.groupName, tutorName: tutor.name });
+    //
+    // await mailService.sendActivationMail(email, html);
   }
 
   async addStudent(data: IAddStudentRequest): Promise<void> {

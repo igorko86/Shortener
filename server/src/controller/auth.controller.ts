@@ -4,12 +4,14 @@ import { validationResult } from 'express-validator';
 import authService from '../services/auth.service';
 import ApiErrorService from '../services/apiError.service';
 import { VALIDATION_ERROR } from '../services/constants';
+import { Role } from '../services/interfaces';
 
 class AuthController {
   constructor() {
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.changeRole = this.changeRole.bind(this);
   }
 
   async register(req: Request, res: Response, next: NextFunction) {
@@ -19,11 +21,9 @@ class AuthController {
       if (!errors.isEmpty()) {
         return next(ApiErrorService.badRequest(VALIDATION_ERROR, errors.array()));
       }
-      await authService.register(req.body);
+      await authService.register({ ...req.body, role: Role.Viewer });
 
-      return res.json({
-        message: `"${req.body.name}" has been registered successfully`,
-      });
+      res.sendStatus(200);
     } catch (error) {
       next(error);
     }
@@ -43,7 +43,7 @@ class AuthController {
 
   async forgotPassword(req: Request, res: Response, next: NextFunction) {
     try {
-      await authService.forgotPassword(req.body);
+      await authService.forgotPassword(req.body.email);
 
       return res.sendStatus(200);
     } catch (error) {
@@ -74,7 +74,7 @@ class AuthController {
 
   async activate(req: Request, res: Response, next: NextFunction) {
     try {
-      await authService.activate(req.params);
+      await authService.activate(req.params.link);
 
       res.redirect(process.env.CLIENT_URL as unknown as string);
     } catch (error) {
@@ -85,6 +85,20 @@ class AuthController {
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken, accessToken } = await authService.refresh(req.cookies.refreshToken);
+
+      this.#setCookie(refreshToken, res);
+
+      return res.status(200).json(accessToken);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async changeRole(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { role, userId } = req.body;
+
+      const { refreshToken, accessToken } = await authService.changeUserRole(role, userId);
 
       this.#setCookie(refreshToken, res);
 

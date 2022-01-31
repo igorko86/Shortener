@@ -1,5 +1,5 @@
 // External
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { List } from 'antd';
 // Internal
@@ -12,6 +12,7 @@ import Column from 'components/Items/Column';
 import { AppPath } from 'shared/common/enum';
 import useCheckAccess from 'shared/hooks/useCheckAccess';
 import { Role } from 'shared/models/request/authRequest';
+import { userSelector } from 'store/reducers/auth/selectors';
 
 // Styles
 
@@ -22,12 +23,15 @@ interface IProps {
 const TutorLibrary: FC<IProps> = ({ setIsTutorLibraryOpen }) => {
   const history = useHistory();
   const myLibraryCards = useAppSelector(myLibraryCardsSelector);
+  const user = useAppSelector(userSelector);
   const { getMyLibraryCards } = useActionCreator();
   const show = useCheckAccess([Role.Admin, Role.Tutor]);
 
-  useEffect(() => {
-    getMyLibraryCards();
-  }, []);
+  const searchTutorCards = (value: string) => {
+    if (user?.role === (Role.Tutor || Role.Admin)) {
+      getMyLibraryCards(value);
+    }
+  };
 
   const handleClickNewCard = () => {
     history.push(AppPath.NEW_CARD);
@@ -41,7 +45,7 @@ const TutorLibrary: FC<IProps> = ({ setIsTutorLibraryOpen }) => {
       onClickAdd={show ? handleClickNewCard : undefined}
       setIsOpenPanel={setIsTutorLibraryOpen}
       textItem="cards"
-      searchDataByValue={getMyLibraryCards}
+      searchDataByValue={searchTutorCards}
     >
       {myLibraryCards.map((card: LibraryCardType, index: number) => {
         return (

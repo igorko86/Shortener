@@ -1,5 +1,5 @@
 // External
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 // Internal
 import { useAppSelector } from './storeHooks';
 import { userSelector } from 'store/reducers/auth/selectors';

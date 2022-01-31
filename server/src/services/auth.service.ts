@@ -1,49 +1,98 @@
-import tokenService from './token.service';
-import { Role, IServicesByRole, IGenerateTokensResult } from './interfaces';
-import {
-  IAuthLoginRequest,
-  IAuthRegistrationRequest,
-  IForgotPasswordRequest,
-  IResetPasswordRequest,
-} from 'src/models/request/auth.request';
+import moment from 'moment-timezone';
+import jwt from 'jsonwebtoken';
 
-import UserAuthService from './userAuth.service';
-import TutorAuthService from './tutorAuth.service';
-import StudentAuthService from './studentAuth.service';
+import tokenService from './token.service';
+import { IGenerateTokensResult, Role } from './interfaces';
+import { IAuthLoginRequest, IResetPasswordRequest, IUserRequest } from 'src/models/request/auth.request';
 import ApiErrorService from './apiError.service';
+import apiErrorService from './apiError.service';
 import { Token } from '../db/entites/Token';
+import { User } from '../db/entites/User';
+import bcrypt from 'bcrypt';
+import { ACTIVATION, RESET_PASSWORD } from './common/links';
+import { forgotPasswordMailHtml, registerMailHtml } from './common/mailHtmls';
+import mailService from './mail.service';
+import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR, VALIDATION_ERROR } from './constants';
+import { Tutor } from '../db/entites/Tutor';
+import { Student } from '../db/entites/Student';
 
 class AuthService {
-  private services: IServicesByRole;
+  async register(data: IUserRequest): Promise<User> {
+    const { name: userName, email: userEmail, password, role, tutorId } = data;
 
-  constructor(services: IServicesByRole) {
-    this.services = services;
+    const user = await User.findOne({ email: userEmail });
+
+    if (user) {
+      throw apiErrorService.badRequest(`Sorry, User already exists with such email`);
+    }
+
+    const hashPassword = bcrypt.hashSync(String(password), 10);
+    const newUser = User.create({
+      email: userEmail,
+      password: hashPassword,
+      name: userName,
+      role: role,
+    });
+    const savedUser = await newUser.save();
+
+    const newTutor = Tutor.create({
+      name: userName,
+      user: savedUser,
+    });
+    await newTutor.save();
+
+    const newStudent = Student.create({
+      name: userName,
+      user: savedUser,
+    });
+
+    if (tutorId) {
+      const tutorData = await Tutor.findOne(tutorId);
+
+      if (!tutorData) {
+        throw apiErrorService.badRequest(`Tutor doesn't exist`);
+      }
+      newStudent.tutor = tutorData;
+    }
+    await newStudent.save();
+
+    const { id, email } = savedUser;
+
+    const link = `${process.env.SERVER_URL}${ACTIVATION}${role}/${id}`;
+    const html = registerMailHtml({ link });
+
+    await mailService.sendActivationMail(email, html);
+
+    return savedUser;
   }
 
-  async register(data: IAuthRegistrationRequest) {
-    // @ts-ignore
-    await this.services[data.role]?.register(data);
+  async activate(id: string) {
+    const user = await User.findOne(id);
+
+    if (!user || user.isActive) {
+      throw ApiErrorService.badRequest(ACTIVATION_LINK_ERROR);
+    }
+    user.isActive = true;
+
+    await user.save();
   }
 
-  async activate(params: any) {
-    const { link: id, role } = params;
-    // @ts-ignore
-    await this.services[role]?.activate(id);
-  }
+  async login({ email, password }: IAuthLoginRequest): Promise<IGenerateTokensResult> {
+    const user = await User.findOne({ email });
 
-  async login(body: IAuthLoginRequest): Promise<IGenerateTokensResult> {
-    // @ts-ignore
-    return this.services[body.role]?.login(body);
-  }
+    if (!user) {
+      throw ApiErrorService.badRequest(`Such email doesn't exist`);
+    } else if (!user.isActive) {
+      throw ApiErrorService.badRequest(ACTIVATE_ERROR);
+    }
 
-  async forgotPassword(body: IForgotPasswordRequest): Promise<IGenerateTokensResult> {
-    // @ts-ignore
-    return this.services[body.role]?.forgotPassword(body.email);
-  }
+    const isPassEquals = await bcrypt.compare(String(password), String(user.password));
 
-  async resetPassword(body: IResetPasswordRequest): Promise<IGenerateTokensResult> {
-    // @ts-ignore
-    return this.services[body.role]?.resetPassword(body);
+    if (!isPassEquals) {
+      throw ApiErrorService.badRequest(PASSWORD_ERROR);
+    }
+
+    return await tokenService.generateSaveTokens(user);
   }
 
   async logout(refreshToken: string) {
@@ -65,13 +114,61 @@ class AuthService {
       throw ApiErrorService.unauthorized();
     }
 
-    // @ts-ignore
-    return await this.services[userData.role]?.refresh(userData.id);
+    const user = await User.findOne(userData.id);
+
+    if (!user) {
+      throw ApiErrorService.unauthorized();
+    }
+
+    return await tokenService.generateSaveTokens(user);
+  }
+
+  async forgotPassword(email: string): Promise<void> {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      throw apiErrorService.badRequest(`Sorry, but User with such email doesn't exist`);
+    }
+    const data = {
+      id: user.id,
+      expLink: moment().add(20, 'hours'),
+    };
+
+    const hash = jwt.sign(data, 'reset-password');
+    const link = `${process.env.CLIENT_URL}/${RESET_PASSWORD}/${hash}`;
+    const html = forgotPasswordMailHtml({ link });
+
+    await mailService.sendActivationMail(email, html);
+  }
+
+  async resetPassword(data: IResetPasswordRequest): Promise<void> {
+    const { id, password } = data;
+    const user = await User.findOne(id);
+
+    if (!user) {
+      throw apiErrorService.badRequest(`Something went wrong!!!`);
+    }
+    const hashPassword = bcrypt.hashSync(String(password), 10);
+
+    await User.update(user.id, { password: hashPassword });
+  }
+
+  async changeUserRole(role: Role, userId: string): Promise<IGenerateTokensResult> {
+    const user = await User.findOne(userId);
+
+    if (!user) {
+      throw ApiErrorService.badRequest('User does not exist');
+    }
+    await User.update(userId, { role });
+
+    const userData = await User.findOne(userId);
+
+    if (!userData) {
+      throw ApiErrorService.badRequest('User does not exist');
+    }
+
+    return await tokenService.generateSaveTokens(userData);
   }
 }
 
-export default new AuthService({
-  [Role.Viewer]: new UserAuthService(),
-  [Role.Tutor]: new TutorAuthService(),
-  [Role.Student]: new StudentAuthService(),
-});
+export default new AuthService();

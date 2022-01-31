@@ -15,9 +15,9 @@ const RegistrationForm: FC = () => {
   const history = useHistory();
 
   const handleSubmit = async (values: any) => {
-    const { name, email, password, isTutor } = values;
+    const { name, email, password } = values;
 
-    await AuthService.register({ name, email, password, role: isTutor ? Role.Tutor : Role.Viewer });
+    await AuthService.register({ name, email, password });
 
     history.push(AppPath.SUCCESS);
   };
@@ -35,9 +35,6 @@ const RegistrationForm: FC = () => {
       </Form.Item>
       <Form.Item {...config[FormItem.CONFIRM]}>
         <Input.Password />
-      </Form.Item>
-      <Form.Item name="isTutor" label="Tutor" valuePropName="checked" initialValue>
-        <Switch defaultChecked />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">

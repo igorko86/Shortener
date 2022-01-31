@@ -14,10 +14,10 @@ const ForgotPassword: FC = () => {
   const history = useHistory();
 
   const handleSubmit = async (values: any) => {
-    const { email, isTutor } = values;
+    const { email } = values;
 
     try {
-      await AuthService.forgotPassword({ email, role: isTutor ? Role.Tutor : Role.Viewer });
+      await AuthService.forgotPassword({ email });
 
       history.push(AppPath.SUCCESS);
     } catch {
@@ -29,9 +29,6 @@ const ForgotPassword: FC = () => {
     <Form onFinish={handleSubmit} layout="vertical" form={form} name="Login" scrollToFirstError autoComplete="off">
       <Form.Item {...config[FormItem.EMAIL]}>
         <Input />
-      </Form.Item>
-      <Form.Item name="isTutor" label="Tutor" valuePropName="checked" initialValue>
-        <Switch defaultChecked />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">

@@ -1,9 +1,9 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { Group } from './Group';
-import { Role } from '../../services/interfaces';
 import { Student } from './Student';
+import { User } from './User';
 
 @Entity('tutor')
 export class Tutor extends CreateUpdateDate {
@@ -12,24 +12,6 @@ export class Tutor extends CreateUpdateDate {
 
   @Column()
   name: string;
-
-  @Column()
-  password: string;
-
-  @Column({
-    unique: true,
-  })
-  email: string;
-
-  @Column({
-    type: 'enum',
-    enum: Role,
-    default: Role.Tutor,
-  })
-  role: Role;
-
-  @Column({ default: false, name: 'is_active' })
-  isActive: boolean;
 
   @Column({ default: false, name: 'is_paid' })
   isPaid: boolean;
@@ -42,4 +24,8 @@ export class Tutor extends CreateUpdateDate {
 
   @OneToMany(() => Student, (student) => student.tutor)
   students: Student[];
+
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User;
 }

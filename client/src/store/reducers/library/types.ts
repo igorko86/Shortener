@@ -2,8 +2,8 @@ export interface ILibraryState {
   libraryCards: ILibraryCard[];
   myLibraryCards: ILibraryCard[];
   cardContent: ICardContent;
-  exercises: IExercise[];
-  exerciseIds: string[] | null;
+  newExercises: IExercise[];
+  newExerciseIds: string[] | null;
   activeCardId: string | null;
   cardContentLoading: boolean;
 }

@@ -46,7 +46,7 @@ class TokenService {
     }
   }
 
-  async generateSaveTokens(entity: Tutor | User): Promise<IGenerateTokensResult> {
+  async generateSaveTokens(entity: User): Promise<IGenerateTokensResult> {
     const userDto = new UserDto(entity);
     const tokens = this.#generateTokens({ ...userDto } as unknown as IUser);
 

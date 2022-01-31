@@ -6,13 +6,14 @@ export enum ApiRoutes {
   Refresh = '/auth/refresh',
   ForgotPassword = '/auth/forgot-password',
   ResetPassword = '/auth/reset-password',
+  ChangeRole = '/auth/change-role',
   // Library
   GetCards = '/library/cards',
   CreateCard = '/library/card',
   CardContent = '/library/card/content',
   // Croups
-  GetTutorCourses = '/courses/tutor',
-  GetStudentCourses = '/courses/student',
+  GetTutorCourses = '/courses/tutor-courses',
+  GetStudentCourses = '/courses/student-courses',
   CreateCourse = '/courses/course',
   // Plan
   GetPlan = '/plans/plan',

@@ -9,5 +9,5 @@ export enum AppPath {
   INFORMATION = '/information',
   STUDENTS = '/students',
   FORGOT_PASSWORD = '/forgot-password',
-  RESET_PASSWORD = '/reset-password/:role/:id',
+  RESET_PASSWORD = '/reset-password/:id',
 }

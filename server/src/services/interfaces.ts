@@ -1,4 +1,4 @@
-import UserAuthService from './userAuth.service';
+import UserAuthService from './user.service';
 import TutorAuthService from './tutorAuth.service';
 import StudentAuthService from './studentAuth.service';
 import { IGetStudentsInGroupResponse } from '../models/response/student.response.';
@@ -117,12 +117,6 @@ export interface ICardContentResponse {
   htmlContent: string;
   name: string;
   description: string;
-}
-
-export interface IServicesByRole {
-  [Role.Viewer]: UserAuthService;
-  [Role.Tutor]: TutorAuthService;
-  [Role.Student]: StudentAuthService;
 }
 
 export interface IAuthRole {

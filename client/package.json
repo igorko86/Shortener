@@ -35,12 +35,6 @@
     "eslint-fix": "eslint --ext '.js,.jsx,.ts,.tsx' src --fix",
     "prettify": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -80,6 +74,10 @@
     "prettier": "2.5.0",
     "stylelint": "13.13.1",
     "stylelint-config-standard": "22.0.0",
-    "stylelint-order": "4.1.0"
+    "stylelint-order": "4.1.0",
+    "react-error-overlay": "6.0.9"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   }
 }
