@@ -4,7 +4,7 @@ import studentService from '../services/student.service';
 class StudentController {
   async getStudentsById(req: Request, res: Response, next: NextFunction) {
     try {
-      const students = await studentService.getStudentsById(req.query.tutorId as string);
+      const students = await studentService.getStudentsById(req.query.userId as string);
 
       return res.status(200).json(students);
     } catch (error) {

@@ -16,8 +16,8 @@ class StudentService {
     return $api.get(ApiRoutes.GetStudentsInGroup, { params: { groupId } }).then(({ data }) => data);
   }
 
-  static getStudentsById(tutorId: string): Promise<IGetStudentsByIdResponse[]> {
-    return $api.get(ApiRoutes.GetStudents, { params: { tutorId } }).then(({ data }) => data);
+  static getStudentsById(userId: string): Promise<IGetStudentsByIdResponse[]> {
+    return $api.get(ApiRoutes.GetStudents, { params: { userId } }).then(({ data }) => data);
   }
 
   static deleteStudentsInGroupByIds(ids: string[]): Promise<any> {

@@ -2,7 +2,7 @@ export interface IAddNewStudentRequest {
   email: string;
   name: string;
   groupId: string | undefined;
-  tutorId: string;
+  userId: string;
 }
 
 export interface IAddStudentRequest {

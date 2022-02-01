@@ -14,7 +14,7 @@ interface IProps {
 }
 
 const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
-  const tutor = useAppSelector(userSelector);
+  const user = useAppSelector(userSelector);
   const plan = useAppSelector(planSelector);
   const studentsInGroup = useAppSelector(studentsSelector);
 
@@ -53,8 +53,8 @@ const AddStudentModal: FC<IProps> = ({ visible, onCancel }) => {
   };
 
   useEffect(() => {
-    if (tutor && visible && plan) {
-      StudentService.getStudentsById(tutor.id).then((studentsData) => {
+    if (user && visible && plan) {
+      StudentService.getStudentsById(user.id).then((studentsData) => {
         const students = studentsData.reduce((acc: { label: string; value: string }[], student) => {
           if (!studentsInGroup.some((stdInGroup) => stdInGroup.studentId === student.id)) {
             acc.push({ label: student.name, value: student.id });

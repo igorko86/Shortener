@@ -12,13 +12,12 @@ import bcrypt from 'bcrypt';
 import { ACTIVATION, RESET_PASSWORD } from './common/links';
 import { forgotPasswordMailHtml, registerMailHtml } from './common/mailHtmls';
 import mailService from './mail.service';
-import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR, VALIDATION_ERROR } from './constants';
+import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants';
 import { Tutor } from '../db/entites/Tutor';
-import { Student } from '../db/entites/Student';
 
 class AuthService {
   async register(data: IUserRequest): Promise<User> {
-    const { name: userName, email: userEmail, password, role, tutorId } = data;
+    const { name: userName, email: userEmail, password, role } = data;
 
     const user = await User.findOne({ email: userEmail });
 
@@ -41,27 +40,13 @@ class AuthService {
     });
     await newTutor.save();
 
-    const newStudent = Student.create({
-      name: userName,
-      user: savedUser,
-    });
+    if (role === Role.Viewer) {
+      const { id, email } = savedUser;
+      const link = `${process.env.SERVER_URL}${ACTIVATION}${role}/${id}`;
+      const html = registerMailHtml({ link });
 
-    if (tutorId) {
-      const tutorData = await Tutor.findOne(tutorId);
-
-      if (!tutorData) {
-        throw apiErrorService.badRequest(`Tutor doesn't exist`);
-      }
-      newStudent.tutor = tutorData;
+      await mailService.sendActivationMail(email, html);
     }
-    await newStudent.save();
-
-    const { id, email } = savedUser;
-
-    const link = `${process.env.SERVER_URL}${ACTIVATION}${role}/${id}`;
-    const html = registerMailHtml({ link });
-
-    await mailService.sendActivationMail(email, html);
 
     return savedUser;
   }

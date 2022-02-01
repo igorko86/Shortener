@@ -21,6 +21,7 @@ const handleRequest = (config: AxiosRequestConfig) => {
 const handleResponseSuccess = (config: AxiosResponse) => {
   switch (config.config.url) {
     case ApiRoutes.CreateCard:
+    case ApiRoutes.AddNewStudent:
       showNotificationWithIcon(NotificationStatus.Success, 'Success');
       break;
     default:
@@ -34,36 +35,39 @@ const handleResponseError = async (error: any) => {
   if (!error.response) {
     showNotificationWithIcon(NotificationStatus.Error, 'Server is unavailable');
   }
-  const { status, data: errorData } = error.response;
 
-  switch (status) {
-    case 401:
-      if (error.config && !error.config._isRetry) {
-        const originalRequest = error.config;
+  if (error?.response && error?.response.status) {
+    const { status, data: errorData } = error?.response || {};
 
-        originalRequest._isRetry = true;
+    switch (status) {
+      case 401:
+        if (error.config && !error.config._isRetry) {
+          const originalRequest = error.config;
 
-        try {
-          const { data: token } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api${ApiRoutes.Refresh}`, {
-            withCredentials: true,
-          });
+          originalRequest._isRetry = true;
 
-          localStorage.setItem('token', token);
+          try {
+            const { data: token } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api${ApiRoutes.Refresh}`, {
+              withCredentials: true,
+            });
 
-          $api.request(originalRequest); // repeat request
-        } catch {
-          showNotificationWithIcon(NotificationStatus.Error, errorData.message);
-          store.dispatch<any>(authThunks.logout());
+            localStorage.setItem('token', token);
 
-          history.replace(AppPath.LOGIN);
+            $api.request(originalRequest); // repeat request
+          } catch {
+            showNotificationWithIcon(NotificationStatus.Error, errorData.message);
+            store.dispatch<any>(authThunks.logout());
+
+            history.replace(AppPath.LOGIN);
+          }
         }
-      }
-      break;
-    case 400:
-      showNotificationWithIcon(NotificationStatus.Error, errorData.message);
-      break;
-    default:
-      break;
+        break;
+      case 400:
+        showNotificationWithIcon(NotificationStatus.Error, errorData.message);
+        break;
+      default:
+        break;
+    }
   }
 
   throw error;

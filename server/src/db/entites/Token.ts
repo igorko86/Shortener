@@ -11,8 +11,8 @@ export class Token extends BaseEntity {
   refreshToken: string;
 
   @Column({
-    name: 'user_tutor_id',
+    name: 'user_id',
     type: 'uuid',
   })
-  userTutorId: string;
+  userId: string;
 }

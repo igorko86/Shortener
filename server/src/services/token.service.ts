@@ -22,8 +22,8 @@ class TokenService {
     };
   }
 
-  async #saveRefreshToken(refreshToken: string, userTutorId: string) {
-    const tokenData = await Token.findOne({ userTutorId });
+  async #saveRefreshToken(refreshToken: string, userId: string) {
+    const tokenData = await Token.findOne({ userId });
 
     if (tokenData) {
       tokenData.refreshToken = refreshToken;
@@ -32,7 +32,7 @@ class TokenService {
     }
     const newToken = Token.create({
       refreshToken: refreshToken,
-      userTutorId,
+      userId,
     });
 
     return await newToken.save();

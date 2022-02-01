@@ -21,7 +21,7 @@ export interface ISetStudents {
 
 export interface ISetPlan {
   type: GroupActionEnum.SET_PLAN;
-  payload: IPlan;
+  payload: IPlan | null;
 }
 
 export type GroupActions = ISetGroups | ISetPlan | ISetStudents;

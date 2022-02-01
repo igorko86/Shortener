@@ -1,7 +1,7 @@
 export interface IAddNewStudentRequest {
   name: string;
   email: string;
-  tutorId: string;
+  userId: string;
   groupId?: string;
 }
 

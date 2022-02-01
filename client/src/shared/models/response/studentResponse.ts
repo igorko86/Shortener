@@ -7,4 +7,7 @@ export interface IStudentsInGroupResponse {
 export interface IGetStudentsByIdResponse {
   id: string;
   name: string;
+  user: {
+    email: string;
+  };
 }

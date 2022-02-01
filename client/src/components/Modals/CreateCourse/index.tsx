@@ -20,7 +20,7 @@ const CreateCourseModal: FC<IProps> = ({ visible, onCancel }) => {
   const [value, setValue] = useState<string[]>([]);
   const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
 
-  const tutor = useAppSelector(userSelector);
+  const user = useAppSelector(userSelector);
 
   const { createCourse } = useActionCreator();
 
@@ -34,9 +34,9 @@ const CreateCourseModal: FC<IProps> = ({ visible, onCancel }) => {
 
     try {
       const validFields = await form.validateFields();
-      console.log(validFields);
-      if (tutor) {
-        createCourse({ ...validFields, tutorId: tutor.id });
+
+      if (user) {
+        createCourse({ ...validFields, userId: user.id });
       }
 
       handleCancel();
@@ -48,8 +48,8 @@ const CreateCourseModal: FC<IProps> = ({ visible, onCancel }) => {
   };
 
   useEffect(() => {
-    if (tutor && visible) {
-      StudentService.getStudentsById(tutor.id).then((studentsData) => {
+    if (user && visible) {
+      StudentService.getStudentsById(user.id).then((studentsData) => {
         const students = studentsData.map(({ name, id }) => ({ value: id, label: name }));
 
         setOptions(students);

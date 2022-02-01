@@ -12,7 +12,7 @@ export const groupActions = {
     type: GroupActionEnum.SET_GROUPS,
     payload: groups,
   }),
-  setPlan: (plan: IPlan): ISetPlan => ({
+  setPlan: (plan: IPlan | null): ISetPlan => ({
     type: GroupActionEnum.SET_PLAN,
     payload: plan,
   }),

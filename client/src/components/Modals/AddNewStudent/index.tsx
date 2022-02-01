@@ -15,7 +15,7 @@ interface IProps {
 
 const AddNewStudentModal: FC<IProps> = ({ visible, onCancel }) => {
   const [form] = Form.useForm();
-  const tutor = useAppSelector(userSelector);
+  const user = useAppSelector(userSelector);
   const [creating, setCreating] = useState(false);
 
   const handleCancel = () => {
@@ -29,8 +29,8 @@ const AddNewStudentModal: FC<IProps> = ({ visible, onCancel }) => {
     try {
       const validFields = await form.validateFields();
 
-      if (tutor) {
-        StudentService.addNewStudent({ ...validFields, tutorId: tutor.id });
+      if (user) {
+        StudentService.addNewStudent({ ...validFields, userId: user.id });
       }
 
       handleCancel();

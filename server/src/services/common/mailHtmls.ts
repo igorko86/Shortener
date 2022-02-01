@@ -7,37 +7,67 @@ export const registerMailHtml = ({ link }: { link: string }) => {
       `;
 };
 
-export const registerStudentMailHtml = ({
+export const registerNewStudentMailHtml = ({
   link,
   password,
-  groupName = '',
   tutorName,
 }: {
   link: string;
   password: string;
-  groupName: string | undefined;
   tutorName: string;
 }) => {
-  const group = groupName ? `<p>Current group name ${groupName}</p>` : '';
-
-  const templateWithPassword = `
+  return `
         <div>
             <h1>To activate your account, please, follow the link</h1>
             <a href="${link}">${link}</a>
-            <p>Current password ${password}</p>
-            ${group}
-            <p>Tutor name ${tutorName}</p>
+            <p>Current password: ${password}</p>
+            <p>Tutor name: ${tutorName}</p>
         </div>
   `;
+};
 
-  const templateStandard = `
+export const registerStudentMailHtml = ({ tutorName }: { tutorName: string }) => {
+  return `
         <div>
-            <p>Tutor name ${tutorName}</p>
-            ${group}
+            <p>Tutor name: ${tutorName}</p>
         </div>
-      `;
+  `;
+};
+export const registerStudentWithGroupMailHtml = ({
+  link,
+  password,
+  groupName,
+  tutorName,
+}: {
+  link: string;
+  password: string;
+  groupName: string;
+  tutorName: string;
+}) => {
+  return `
+        <div>
+            <h1>To activate your account, please, follow the link</h1>
+            <a href="${link}">${link}</a>
+            <p>Password: ${password}</p>
+            <p>Tutor name: ${tutorName}</p>
+            <p>Group name: ${groupName}</p>
+        </div>
+  `;
+};
 
-  return password ? templateWithPassword : templateStandard;
+export const registerExistsStudentWithGroupMailHtml = ({
+  groupName,
+  tutorName,
+}: {
+  groupName: string;
+  tutorName: string;
+}) => {
+  return `
+        <div>
+            <p>Tutor name: ${tutorName}</p>
+            <p>Group name: ${groupName}</p>
+        </div>
+  `;
 };
 
 export const forgotPasswordMailHtml = ({ link }: { link: string }) => {

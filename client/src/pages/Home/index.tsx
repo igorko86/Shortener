@@ -24,11 +24,18 @@ const Home: FC = () => {
 
   const user = useAppSelector(userSelector);
 
-  const { getLibraryCards, getCoursesByStudentId, getMyLibraryCards, getCoursesByTutorId, setActiveCardId } =
-    useActionCreator();
+  const {
+    getLibraryCards,
+    getCoursesByStudentId,
+    getMyLibraryCards,
+    getCoursesByTutorId,
+    setActiveCardId,
+    setPlan,
+    setStudent,
+  } = useActionCreator();
 
-  const showTutorLibrary = useCheckAccess([Role.Admin, Role.Tutor]);
-  const showPlanCoursesStudents = useCheckAccess([Role.Admin, Role.Tutor, Role.Student]);
+  const showTutorLibrary = [Role.Admin, Role.Tutor].includes(user?.role as Role);
+  const showPlanCoursesStudents = [Role.Admin, Role.Tutor, Role.Student].includes(user?.role as Role);
 
   useEffect(() => {
     switch (user?.role) {
@@ -43,6 +50,8 @@ const Home: FC = () => {
 
     getLibraryCards();
     setActiveCardId('');
+    setPlan(null);
+    setStudent([]);
   }, [user?.role]);
 
   return (

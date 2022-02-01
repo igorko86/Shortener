@@ -1,6 +1,3 @@
-import UserAuthService from './user.service';
-import TutorAuthService from './tutorAuth.service';
-import StudentAuthService from './studentAuth.service';
 import { IGetStudentsInGroupResponse } from '../models/response/student.response.';
 
 export interface IGenerateTokensResult {
@@ -39,7 +36,7 @@ export interface ICardRequest {
 export interface IGroupAndPlanRequest {
   groupName: string;
   planName: string;
-  tutorId: string;
+  userId: string;
   studentIds?: string[];
 }
 
