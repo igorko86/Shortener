@@ -71,11 +71,9 @@ const Column: FC<IProps> = ({
 
       <Space size="middle" style={{ justifyContent: 'space-between' }}>
         {onClickAdd && <Button onClick={onClickAdd} text={buttonText} />}
-        {!!cards.length && (
-          <div>
-            {cards.length} {textItem}
-          </div>
-        )}
+        <div>
+          {cards.length} {textItem}
+        </div>
       </Space>
     </ColumnWrapper>
   );

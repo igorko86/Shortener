@@ -16,7 +16,7 @@ import { useAppSelector } from 'shared/hooks/storeHooks';
 import { userSelector } from 'store/reducers/auth/selectors';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 // Styles
-import { DivPlan, DivWrapperLayout, GridBlock } from './styles';
+import { DivContent, DivGroup, DivLib, DivPlan, DivStudents, DivWrapperLayout, GridBlock } from './styles';
 
 const Home: FC = () => {
   const [isTutorLibraryOpen, setIsTutorLibraryOpen] = useState(false);
@@ -54,23 +54,42 @@ const Home: FC = () => {
     setStudent([]);
   }, [user?.role]);
 
+  useEffect(() => {
+    if (!showTutorLibrary) {
+      setIsTutorLibraryOpen(false);
+    }
+  }, [showTutorLibrary]);
+
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout.Content>
         <DivWrapperLayout>
-          <GridBlock isTutorOpen={isTutorLibraryOpen} isLibraryOpen={isLibraryOpen}>
+          <GridBlock
+            isTutorOpen={isTutorLibraryOpen}
+            isLibraryOpen={isLibraryOpen}
+            showTutorLibrary={showTutorLibrary}
+            showPlanCoursesStudents={showPlanCoursesStudents}
+          >
             {showPlanCoursesStudents && (
               <>
                 <DivPlan>
                   <Plan />
                 </DivPlan>
-                <Courses />
-                <Students />
+                <DivGroup>
+                  <Courses />
+                </DivGroup>
+                <DivStudents>
+                  <Students />
+                </DivStudents>
               </>
             )}
             {showTutorLibrary && <TutorLibrary setIsTutorLibraryOpen={setIsTutorLibraryOpen} />}
-            <Library setIsLibraryOpen={setIsLibraryOpen} />
-            <CardContent />
+            <DivLib showPlanCoursesStudents={showPlanCoursesStudents}>
+              <Library setIsLibraryOpen={setIsLibraryOpen} />
+            </DivLib>
+            <DivContent>
+              <CardContent />
+            </DivContent>
           </GridBlock>
         </DivWrapperLayout>
       </Layout.Content>

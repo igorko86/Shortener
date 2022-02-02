@@ -13,6 +13,7 @@ export const ColumnWrapper = styled.div`
   padding: 5px 10px 10px;
   height: fit-content;
   z-index: 5;
+  position: relative;
 
   .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     display: block;
