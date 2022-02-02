@@ -13,7 +13,7 @@ export class Student extends CreateUpdateDate {
   @Column()
   name: string;
 
-  @ManyToOne(() => User, (user) => user.students)
+  @ManyToOne(() => User, (user) => user.students, { onDelete: 'CASCADE' })
   user: User;
 
   @ManyToOne(() => Tutor, (tutor) => tutor.students)

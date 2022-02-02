@@ -15,9 +15,9 @@ const deleteUnactivatedUsers = async () => {
     .execute();
 };
 
-export const deleteUnactivatedAccount = (req: Request, res: Response, next: NextFunction) => {
+export const deleteUnactivatedAccount = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    deleteUnactivatedUsers();
+    await deleteUnactivatedUsers();
 
     next();
   } catch (error) {

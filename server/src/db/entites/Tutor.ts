@@ -25,7 +25,7 @@ export class Tutor extends CreateUpdateDate {
   @OneToMany(() => Student, (student) => student.tutor)
   students: Student[];
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
 }

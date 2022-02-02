@@ -12,7 +12,7 @@ import bcrypt from 'bcrypt';
 import { ACTIVATION, RESET_PASSWORD } from './common/links';
 import { forgotPasswordMailHtml, registerMailHtml } from './common/mailHtmls';
 import mailService from './mail.service';
-import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, PASSWORD_ERROR } from './constants';
+import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, LOGIN_ERROR } from './constants';
 import { Tutor } from '../db/entites/Tutor';
 
 class AuthService {
@@ -42,7 +42,7 @@ class AuthService {
 
     if (role === Role.Viewer) {
       const { id, email } = savedUser;
-      const link = `${process.env.SERVER_URL}${ACTIVATION}${role}/${id}`;
+      const link = `${process.env.SERVER_URL}${ACTIVATION}/${role}/${id}`;
       const html = registerMailHtml({ link });
 
       await mailService.sendActivationMail(email, html);
@@ -66,7 +66,7 @@ class AuthService {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw ApiErrorService.badRequest(`Such email doesn't exist`);
+      throw ApiErrorService.badRequest('Email or password is incorrect!');
     } else if (!user.isActive) {
       throw ApiErrorService.badRequest(ACTIVATE_ERROR);
     }
@@ -74,7 +74,7 @@ class AuthService {
     const isPassEquals = await bcrypt.compare(String(password), String(user.password));
 
     if (!isPassEquals) {
-      throw ApiErrorService.badRequest(PASSWORD_ERROR);
+      throw ApiErrorService.badRequest(LOGIN_ERROR);
     }
 
     return await tokenService.generateSaveTokens(user);

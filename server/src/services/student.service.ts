@@ -19,7 +19,19 @@ import authService from './auth.service';
 import { Tutor } from '../db/entites/Tutor';
 
 class StudentService {
-  async addNewStudent(data: IAddNewStudentRequest) {
+  async #createStudent(data: { name: string; user: User; tutor: Tutor }): Promise<Student> {
+    const newStudent = Student.create(data);
+
+    return await newStudent.save();
+  }
+
+  async #createStudentInGroup(data: { group: Group; student: Student }) {
+    const newStudentInGroup = StudentGroup.create(data);
+
+    await newStudentInGroup.save();
+  }
+
+  async addNewStudent(data: IAddNewStudentRequest): Promise<void> {
     const { email, name, groupId, userId } = data;
 
     let userData = await User.findOne({ email });
@@ -28,86 +40,137 @@ class StudentService {
       throw apiErrorService.badRequest(`Sorry, you can not add a user with such email.`);
     }
     const role = Role.Student;
-    let password = '';
+    let html = '';
 
     if (!userData) {
-      password = generatePassword();
+      const password = generatePassword();
+      const userTutor = await User.findOne({ id: userId });
+      const tutor = await Tutor.findOne({ user: userTutor });
+
+      if (!userTutor || !tutor) {
+        throw apiErrorService.badRequest(`Something went wrong!`);
+      }
+
       userData = await authService.register({
         email,
         password,
         name,
         role,
       });
-    } else {
-      await User.update({ id: userId }, { role });
-    }
-    const isNewUser = !!password;
-    let html = '';
-    const link = `${process.env.SERVER_URL}${ACTIVATION}/${role}/${userData.id}`;
-    const user = await User.findOne({ id: userId });
-    const tutor = await Tutor.findOne({ user });
-    const student = await Student.findOne({ user: userData });
 
-    if (student) {
-      throw apiErrorService.badRequest('Student with such email already exists!');
-    }
-    const newStudent = Student.create({
-      name,
-      user: userData,
-      tutor,
-    });
+      const newStudent = await this.#createStudent({ name, user: userData, tutor });
+      const link = `${process.env.SERVER_URL}${ACTIVATION}/${role}/${userData.id}`;
 
-    await newStudent.save();
+      if (groupId) {
+        const group = await Group.findOne({ id: groupId });
 
-    if (!user) {
-      throw apiErrorService.badRequest(`Something went wrong!`);
-    }
+        if (!group) {
+          throw apiErrorService.badRequest(`Something went wrong!`);
+        }
 
-    if (groupId) {
-      const group = await Group.findOne({ id: groupId });
-      const student = await Student.findOne({ user: userData });
+        await this.#createStudentInGroup({ group, student: newStudent });
 
-      if (!group) {
-        throw apiErrorService.badRequest(`Something went wrong!`);
-      }
-      const studentInGroup = await StudentGroup.findOne({ student });
-
-      if (studentInGroup) {
-        throw apiErrorService.badRequest(`The Student with such email is already in such a group`);
-      }
-      const newStudentGroup = StudentGroup.create({ group, student });
-
-      await newStudentGroup.save();
-
-      if (isNewUser) {
-        html = registerStudentWithGroupMailHtml({ link, password, groupName: group.groupName, tutorName: user.name });
+        html = registerStudentWithGroupMailHtml({
+          link,
+          password,
+          groupName: group.groupName,
+          tutorName: userTutor.name,
+        });
       } else {
-        html = registerExistsStudentWithGroupMailHtml({ groupName: group.groupName, tutorName: user.name });
+        html = registerNewStudentMailHtml({ link, password, tutorName: userTutor.name });
       }
-    } else if (isNewUser) {
-      html = registerNewStudentMailHtml({ link, password, tutorName: user.name });
     } else {
-      html = registerStudentMailHtml({ tutorName: user.name });
+      await User.update({ id: userData.id }, { role });
+
+      if (groupId) {
+        const student = await Student.findOne({ user: userData });
+        const group = await Group.findOne({ id: groupId });
+        const userTutor = await User.findOne({ id: userId });
+
+        if (!group || !student || !userTutor) {
+          throw apiErrorService.badRequest(`Something went wrong!`);
+        }
+
+        if (student) {
+          const studentInGroup = await StudentGroup.findOne({ student, group });
+
+          if (studentInGroup) {
+            throw apiErrorService.badRequest(`The Student with such email already exists in such a group`);
+          }
+        } else {
+          const tutor = await Tutor.findOne({ user: userTutor });
+
+          if (!tutor) {
+            throw apiErrorService.badRequest(`Something went wrong!`);
+          }
+          await this.#createStudent({ name, user: userData, tutor });
+        }
+        const newStudentGroup = StudentGroup.create({ group, student });
+
+        await newStudentGroup.save();
+
+        html = registerExistsStudentWithGroupMailHtml({ groupName: group.groupName, tutorName: userTutor.name });
+      } else {
+        const student = await Student.findOne({ user: userData });
+
+        if (student) {
+          throw apiErrorService.badRequest('The Student with such email already exists!');
+        }
+        const userTutor = await User.findOne({ id: userId });
+        const tutor = await Tutor.findOne({ user: userTutor });
+
+        if (!tutor || !userTutor) {
+          throw apiErrorService.badRequest(`Something went wrong!`);
+        }
+
+        await this.#createStudent({ name, user: userData, tutor });
+
+        html = registerStudentMailHtml({ tutorName: userTutor.name });
+      }
     }
 
-    await mailService.sendActivationMail(email, html);
+    mailService.sendActivationMail(email, html);
   }
 
   async addStudent(data: IAddStudentRequest): Promise<void> {
     const { groupId, studentIds } = data;
 
-    const promisesStudentIds = studentIds.map((studentId) => Student.findOne({ id: studentId }));
-
-    const studentsData = await Promise.all(promisesStudentIds);
-    const group = await Group.findOne({ id: groupId });
-
-    const newStudentGroups = studentsData.map((student) => {
-      const newStudentGroup = StudentGroup.create({ group, student });
-
-      return newStudentGroup.save();
+    const promisesStudentIds = studentIds.map((studentId) => {
+      return Student.createQueryBuilder('student')
+        .select(['student', 'user.email'])
+        .leftJoin('student.user', 'user')
+        .where('student.id = :studentId', { studentId })
+        .getOne();
     });
 
-    await Promise.all(newStudentGroups);
+    const studentsData = await Promise.all(promisesStudentIds);
+    const group = await Group.createQueryBuilder('group')
+      .select(['group', 'tutor.name'])
+      .leftJoin('group.tutor', 'tutor')
+      .where('group.id = :groupId', { groupId })
+      .getOne();
+
+    if (!group) {
+      throw apiErrorService.badRequest(`Something went wrong!`);
+    }
+
+    const [newStudentGroups, emails] = studentsData.reduce(
+      (acc: [Promise<StudentGroup>[], Promise<any>[]], student) => {
+        const newStudentGroup = StudentGroup.create({ group, student });
+        const html = registerExistsStudentWithGroupMailHtml({
+          groupName: group.groupName,
+          tutorName: group.tutor.name,
+        });
+
+        acc[0].push(newStudentGroup.save());
+        acc[1].push(mailService.sendActivationMail(student?.user?.email || '', html));
+
+        return acc;
+      },
+      [[], []]
+    );
+
+    await Promise.all([...newStudentGroups, ...emails]);
   }
 
   async getStudentsById(userId: string) {
