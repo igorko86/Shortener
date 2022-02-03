@@ -1,7 +1,6 @@
 // External
 import { FC, useEffect } from 'react';
 // Internal
-import AppSubHeader from 'components/AppSubHeader';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { userSelector } from 'store/reducers/auth/selectors';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
@@ -29,7 +28,6 @@ const TutorContent: FC<IProps> = ({ setIsTutorLibraryOpen }) => {
 
   return (
     <>
-      <AppSubHeader />
       <DivPlan>
         <Plan />
       </DivPlan>

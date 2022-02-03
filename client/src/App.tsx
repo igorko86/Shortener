@@ -6,6 +6,7 @@ import { Footer } from 'antd/lib/layout/layout';
 // Internal
 import AppRouter from 'features/AppRouter';
 import AppHeader from 'components/AppHeader';
+import AppSubHeader from 'components/AppSubHeader';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { isAuthSelector, userSelector } from 'store/reducers/auth/selectors';
 import { theme } from 'theme';
@@ -19,6 +20,7 @@ import { DivMain } from 'styles';
 const App: FC = () => {
   const isAuth = useAppSelector(isAuthSelector);
   const user = useAppSelector(userSelector);
+  const show = [Role.Admin, Role.Tutor].includes(user?.role as Role);
 
   const { changeRole } = useActionCreator();
 
@@ -27,6 +29,7 @@ const App: FC = () => {
       changeRole(role);
     }
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Layout>
@@ -40,6 +43,7 @@ const App: FC = () => {
                 <Button text="Tutor" icon={<Home />} onClick={() => handleClickButton(Role.Tutor)} />
               </div>
             )}
+            {show && <AppSubHeader />}
             <AppRouter />
           </DivMain>
         </Layout>
