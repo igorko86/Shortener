@@ -7,8 +7,8 @@ import { useAppSelector } from 'shared/hooks/storeHooks';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { Role } from 'shared/models/request/authRequest';
 import { AppPath } from 'shared/common/enum';
-import useCheckAccess from 'shared/hooks/useCheckAccess';
 import { libraryCardsSelector } from 'store/reducers/library/selectors';
+import { userSelector } from 'store/reducers/auth/selectors';
 import LibraryCard from 'components/LibraryCard';
 import Column from 'components/Items/Column';
 import { LibraryCardType } from '../Plan/interfaces';
@@ -22,7 +22,8 @@ const Library: FC<IProps> = ({ setIsLibraryOpen }) => {
   const history = useHistory();
   const libraryCards = useAppSelector(libraryCardsSelector);
   const { getLibraryCards } = useActionCreator();
-  const show = useCheckAccess([Role.Admin]);
+  const user = useAppSelector(userSelector);
+  const show = [Role.Admin].includes(user?.role as Role);
 
   const handleClickNewCard = () => {
     history.push(AppPath.NEW_CARD);

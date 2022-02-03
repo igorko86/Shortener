@@ -6,11 +6,9 @@ import { Footer } from 'antd/lib/layout/layout';
 // Internal
 import AppRouter from 'features/AppRouter';
 import AppHeader from 'components/AppHeader';
-import AppSubHeader from 'components/AppSubHeader';
 import { useAppSelector } from 'shared/hooks/storeHooks';
 import { isAuthSelector, userSelector } from 'store/reducers/auth/selectors';
 import { theme } from 'theme';
-import useCheckAccess from 'shared/hooks/useCheckAccess';
 import { Role } from 'shared/models/request/authRequest';
 import Button from 'components/Items/Button';
 import Home from 'shared/assets/icons/home';
@@ -21,7 +19,6 @@ import { DivMain } from 'styles';
 const App: FC = () => {
   const isAuth = useAppSelector(isAuthSelector);
   const user = useAppSelector(userSelector);
-  const show = useCheckAccess([Role.Admin, Role.Tutor]);
 
   const { changeRole } = useActionCreator();
 
@@ -36,9 +33,8 @@ const App: FC = () => {
         <AppHeader />
         <Layout>
           <DivMain>
-            {show && <AppSubHeader />}
             {isAuth && (
-              <div>
+              <div style={{ position: 'absolute', zIndex: 7, right: 0 }}>
                 <Button text="Viewer" icon={<Home />} onClick={() => handleClickButton(Role.Viewer)} />
                 <Button text="Student" icon={<Home />} onClick={() => handleClickButton(Role.Student)} />
                 <Button text="Tutor" icon={<Home />} onClick={() => handleClickButton(Role.Tutor)} />
