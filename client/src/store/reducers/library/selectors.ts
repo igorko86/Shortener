@@ -8,7 +8,7 @@ export const cardContentSelector = ({ library }: AppState) => library.cardConten
 
 export const currentCardIdSelector = ({ library }: AppState) => library.activeCardId;
 
-export const exercisesSelector = ({ library }: AppState) => library.newExercises;
+export const exercisesSelector = ({ library }: AppState) => library.newExercise;
 
 export const exerciseIdsSelector = ({ library }: AppState) => library.newExerciseIds;
 

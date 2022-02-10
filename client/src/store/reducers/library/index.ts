@@ -4,7 +4,7 @@ const initialState: ILibraryState = {
   libraryCards: [],
   myLibraryCards: [],
   cardContent: { name: '', description: '', exercisesList: [], explanation: '' },
-  newExercises: [],
+  newExercise: null,
   newExerciseIds: null,
   activeCardId: null,
   cardContentLoading: false,
@@ -19,9 +19,9 @@ const libraryReducer = (state = initialState, action: LibraryActions): ILibraryS
     case LibraryActionEnum.SET_CARD_CONTENT:
       return { ...state, cardContent: action.payload, cardContentLoading: false };
     case LibraryActionEnum.SET_EXERCISE:
-      return { ...state, newExercises: action.payload ? [...state.newExercises, action.payload] : [] };
+      return { ...state, newExercise: action.payload };
     case LibraryActionEnum.SET_EXERCISE_IDS:
-      return { ...state, newExerciseIds: action.payload ? [...(state.newExerciseIds || []), action.payload] : null };
+      return { ...state, newExerciseIds: action.payload };
     case LibraryActionEnum.SET_CURRENT_CARD_ID:
       return { ...state, activeCardId: action.payload };
     case LibraryActionEnum.SET_CARD_CONTENT_LOADING:

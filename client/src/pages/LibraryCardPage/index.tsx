@@ -11,10 +11,10 @@ import ExplanationTab from './Explanation';
 import ExercisesTab from './Exercises';
 import { confirm, leaveCreateCardConfirm } from 'pages/LibraryCardPage/Confirm';
 import Button from 'components/Items/Button';
-import { useAppSelector } from 'shared/hooks/storeHooks';
-import { exerciseIdsSelector } from 'store/reducers/library/selectors';
 import { ILibraryCardRequest } from 'shared/models/request/libraryRequest';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
+import { useAppSelector } from 'shared/hooks/storeHooks';
+import { exerciseIdsSelector } from 'store/reducers/library/selectors';
 
 const { TabPane } = Tabs;
 
@@ -24,13 +24,15 @@ const LibraryCardPage: FC = () => {
   const { setNewExerciseIds, setNewExercise } = useActionCreator();
 
   const [creatingNewCard, setCreatingNewCard] = useState(false);
-  const [activeTab, setActiveTab] = useState(TabName.Explanation);
+  const [activeTab, setActiveTab] = useState<TabName>(TabName.Explanation);
   const [showExerciseBlock, setShowExerciseBlock] = useState(false);
 
   useEffect(() => {
     const { setFieldsValue, getFieldsValue } = createCardForm;
 
-    setFieldsValue({ ...getFieldsValue(), newExerciseIds });
+    if (newExerciseIds?.length) {
+      setFieldsValue({ ...getFieldsValue(), exerciseIds: newExerciseIds });
+    }
   }, [newExerciseIds]);
 
   const handleSubmit = (values: any) => {
@@ -42,20 +44,24 @@ const LibraryCardPage: FC = () => {
   };
 
   const resetState = () => {
+    setNewExercise(null);
+    setNewExerciseIds(null);
     setActiveTab(TabName.Explanation);
     setShowExerciseBlock(false);
     setCreatingNewCard(false);
-    setNewExerciseIds(null);
-    setNewExercise(null);
     createCardForm.resetFields();
   };
 
   const submit = async (values: ILibraryCardRequest) => {
-    setCreatingNewCard(true);
+    try {
+      setCreatingNewCard(true);
 
-    await LibraryService.createLibraryCard(values);
+      await LibraryService.createLibraryCard(values);
 
-    resetState();
+      resetState();
+    } catch {
+      setCreatingNewCard(false);
+    }
   };
 
   const toggleExerciseBlock = () => {
@@ -67,11 +73,8 @@ const LibraryCardPage: FC = () => {
   };
 
   const handleOk = () => {
-    if (newExerciseIds) {
-      LibraryService.removeExercisesByIds(newExerciseIds);
-    }
-    setNewExerciseIds(null);
     setNewExercise(null);
+    setNewExerciseIds(null);
 
     return Promise.resolve(true);
   };
@@ -91,7 +94,7 @@ const LibraryCardPage: FC = () => {
       <Form.Item {...config[FormItem.DESCRIPTION]}>
         <Input />
       </Form.Item>
-      <Tabs defaultActiveKey={TabName.Explanation} onChange={handleChangeTabs}>
+      <Tabs activeKey={activeTab} onChange={handleChangeTabs}>
         <TabPane
           tab={
             <span>
@@ -116,7 +119,12 @@ const LibraryCardPage: FC = () => {
           key={TabName.Exercises}
         >
           <Form.Item name="exerciseIds">
-            <ExercisesTab onClose={toggleExerciseBlock} showExerciseBlock={showExerciseBlock} />
+            <ExercisesTab
+              onClose={toggleExerciseBlock}
+              showExerciseBlock={showExerciseBlock}
+              creatingNewCard={creatingNewCard}
+              activeTab={activeTab}
+            />
           </Form.Item>
         </TabPane>
       </Tabs>

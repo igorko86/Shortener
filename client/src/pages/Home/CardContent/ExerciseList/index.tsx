@@ -2,14 +2,13 @@
 import { FC, memo } from 'react';
 import { Empty, List as ListAnt } from 'antd';
 // Internal
-import { IExercise } from 'store/reducers/library/types';
-
+import { IExerciseInCardContent } from 'store/reducers/library/types';
 // Styles
 
 const { Item } = ListAnt;
 
 interface IProps {
-  exercisesList: IExercise[];
+  exercisesList: IExerciseInCardContent[];
 }
 
 const ExerciseList: FC<IProps> = ({ exercisesList }) => {

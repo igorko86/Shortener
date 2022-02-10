@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 
 import libraryService from '../services/library.service';
-import { LibraryType } from '../services/interfaces';
+import { Type } from '../services/interfaces';
 
 class LibraryController {
   async getLibraryCards(req: Request, res: Response, next: NextFunction) {
     try {
       const { search, type } = req.query;
 
-      const cards = await libraryService.getLibraryCards(type as LibraryType, search as string);
+      const cards = await libraryService.getLibraryCards(type as Type, search as string);
 
       return res.status(200).json(cards);
     } catch (error) {

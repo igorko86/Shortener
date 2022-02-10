@@ -11,3 +11,8 @@ export enum AppPath {
   FORGOT_PASSWORD = '/forgot-password',
   RESET_PASSWORD = '/reset-password/:id',
 }
+
+export enum Type {
+  Private = 'private',
+  Public = 'public',
+}

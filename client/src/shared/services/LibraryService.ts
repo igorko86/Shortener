@@ -3,10 +3,10 @@ import { ILibraryCardRequest } from '../models/request/libraryRequest';
 import { ICardContentResponse, IExerciseResponse, ILibraryCardResponse } from '../models/response/libraryResponse';
 import { ApiRoutes } from './apiRoutes.constants';
 import { ICreateExerciseRequest } from '../models/request/studentRequest';
-import { LibraryType } from 'store/reducers/library/types';
+import { Type } from 'store/reducers/library/types';
 
 class LibraryService {
-  static async getLibraryCards(search: string, type: LibraryType): Promise<ILibraryCardResponse[]> {
+  static async getLibraryCards(search: string, type: Type): Promise<ILibraryCardResponse[]> {
     return $api.get<ILibraryCardResponse[]>(ApiRoutes.GetCards, { params: { search, type } }).then(({ data }) => data);
   }
 
@@ -24,6 +24,10 @@ class LibraryService {
 
   static getCardExercisesList(cardId: string): Promise<IExerciseResponse[]> {
     return $api.get(ApiRoutes.GetExerciseList, { params: { cardId } }).then(({ data }) => data);
+  }
+
+  static geExercisesByUserId(userId: string): Promise<IExerciseResponse[]> {
+    return $api.get(ApiRoutes.GetExercisesNewCard, { params: { id: userId } }).then(({ data }) => data);
   }
 
   static removeExercisesByIds(ids: string[]): Promise<void> {

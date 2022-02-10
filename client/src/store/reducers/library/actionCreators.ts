@@ -11,7 +11,7 @@ import {
   ISetLibraryCards,
   ISetMyLibraryCards,
   LibraryActionEnum,
-  LibraryType,
+  Type,
 } from './types';
 import { AppDispatch } from '../../interfaces';
 import { AppState } from '../../index';
@@ -33,7 +33,7 @@ export const libraryActions = {
     type: LibraryActionEnum.SET_EXERCISE,
     payload: exercise,
   }),
-  setNewExerciseIds: (exercise: string | null): ISetExerciseIds => ({
+  setNewExerciseIds: (exercise: string[] | null): ISetExerciseIds => ({
     type: LibraryActionEnum.SET_EXERCISE_IDS,
     payload: exercise,
   }),
@@ -52,7 +52,7 @@ export const libraryThunks = {
     (value = '') =>
     async (dispatch: AppDispatch) => {
       try {
-        const libraryCards = await LibraryService.getLibraryCards(value, LibraryType.Public);
+        const libraryCards = await LibraryService.getLibraryCards(value, Type.Public);
 
         dispatch(libraryActions.setLibraryCards(libraryCards));
       } catch {
@@ -63,7 +63,7 @@ export const libraryThunks = {
     (value = '') =>
     async (dispatch: AppDispatch) => {
       try {
-        const libraryCards = await LibraryService.getLibraryCards(value, LibraryType.Private);
+        const libraryCards = await LibraryService.getLibraryCards(value, Type.Private);
 
         dispatch(libraryActions.setMyLibraryCards(libraryCards));
       } catch {
@@ -113,16 +113,28 @@ export const libraryThunks = {
         return null;
       }
     },
-  createExercise: (data: { type: string; name: string; content: any[] }) => async (dispatch: AppDispatch) => {
-    try {
-      const exercise = await LibraryService.createExercise(data);
+  createExercise:
+    (data: { type: Type; name: string; content: any[]; exerciseType: string; userId?: string }) =>
+    async (dispatch: AppDispatch, getState: () => AppState) => {
+      try {
+        const ids = getState().library.newExerciseIds;
 
-      dispatch(libraryActions.setNewExercise(exercise));
-      dispatch(libraryActions.setNewExerciseIds(exercise.id));
-    } catch {
-      return null;
-    }
-  },
+        const { name, id, type, exerciseType } = await LibraryService.createExercise(data);
+
+        const newExercise = {
+          key: id,
+          title: name,
+          disabled: false,
+          exerciseType,
+          tag: type,
+        };
+
+        dispatch(libraryActions.setNewExercise(newExercise));
+        dispatch(libraryActions.setNewExerciseIds([...(ids || []), id]));
+      } catch {
+        return null;
+      }
+    },
 };
 
 export default {

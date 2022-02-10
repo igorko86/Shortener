@@ -1,3 +1,5 @@
+import { Type } from '../../common/enum';
+
 export interface IAddNewStudentRequest {
   name: string;
   email: string;
@@ -11,7 +13,9 @@ export interface IAddStudentRequest {
 }
 
 export interface ICreateExerciseRequest {
-  type: string;
+  type: Type;
   name: string;
   content: any[];
+  exerciseType: string;
+  userId?: string;
 }

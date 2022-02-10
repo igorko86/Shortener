@@ -2,7 +2,7 @@ export interface ILibraryState {
   libraryCards: ILibraryCard[];
   myLibraryCards: ILibraryCard[];
   cardContent: ICardContent;
-  newExercises: IExercise[];
+  newExercise: IExercise | null;
   newExerciseIds: string[] | null;
   activeCardId: string | null;
   cardContentLoading: boolean;
@@ -40,7 +40,7 @@ export interface ISetExercise {
 
 export interface ISetExerciseIds {
   type: LibraryActionEnum.SET_EXERCISE_IDS;
-  payload: string | null;
+  payload: string[] | null;
 }
 
 export interface ISetCurrentCardId {
@@ -68,19 +68,27 @@ export interface ILibraryCard {
   description: string;
 }
 
-export interface IExercise {
+export interface IExerciseInCardContent {
   id: string;
   name: string;
 }
 
+export interface IExercise {
+  key: string;
+  title: string;
+  disabled: boolean;
+  exerciseType: string;
+  tag: Type;
+}
+
 export interface ICardContent {
   explanation: string;
-  exercisesList: IExercise[];
+  exercisesList: IExerciseInCardContent[];
   name: string;
   description: string;
 }
 
-export enum LibraryType {
+export enum Type {
   Public = 'public',
   Private = 'private',
 }

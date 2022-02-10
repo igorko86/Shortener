@@ -2,6 +2,8 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { LibraryCard } from './LibraryCard';
+import { Type } from '../../services/interfaces';
+import { Tutor } from './Tutor';
 
 @Entity('exercise')
 export class Exercise extends CreateUpdateDate {
@@ -14,9 +16,9 @@ export class Exercise extends CreateUpdateDate {
   name: string;
 
   @Column({
-    name: 'type',
+    name: 'exercise_type',
   })
-  type: string;
+  exerciseType: string;
 
   @Column({
     name: 'content',
@@ -26,6 +28,16 @@ export class Exercise extends CreateUpdateDate {
   })
   content: any[];
 
+  @Column({
+    name: 'type',
+    enum: Type,
+    default: Type.Public,
+  })
+  type: Type;
+
   @ManyToOne(() => LibraryCard, (libraryCard) => libraryCard.exercises)
   libraryCard: LibraryCard;
+
+  @ManyToOne(() => Tutor, (tutor) => tutor.exercises)
+  tutor: Tutor;
 }

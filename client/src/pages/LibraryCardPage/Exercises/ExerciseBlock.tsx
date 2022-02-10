@@ -5,15 +5,21 @@ import { Input, Select } from 'antd';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import Button from 'components/Items/Button';
 import { changeExerciseTypeConfirm, confirm } from '../Confirm';
+import { useAppSelector } from 'shared/hooks/storeHooks';
+import { userSelector } from 'store/reducers/auth/selectors';
+import { Type } from 'shared/common/enum';
 
 const { Option } = Select;
 
 interface IProps {
   onClose: () => void;
+  visible: boolean;
 }
 
-const ExerciseBlock: FC<IProps> = ({ onClose }) => {
+const ExerciseBlock: FC<IProps> = ({ onClose, visible }) => {
   const { createExercise } = useActionCreator();
+
+  const user = useAppSelector(userSelector);
 
   const [selectedOption, setSelectedOption] = useState('');
   const [exerciseName, setExerciseName] = useState('');
@@ -22,15 +28,19 @@ const ExerciseBlock: FC<IProps> = ({ onClose }) => {
     try {
       if (selectedOption && exerciseName) {
         const data = {
-          type: selectedOption,
+          exerciseType: selectedOption,
           name: exerciseName,
           content: [],
+          userId: user?.id,
+          type: Type.Private,
         };
         createExercise(data);
         onClose();
+        setSelectedOption('');
       }
-      // eslint-disable-next-line no-empty
-    } catch {}
+    } catch {
+      return null;
+    }
   };
 
   const handleChangeExerciseType = (value: string) => {
@@ -45,7 +55,7 @@ const ExerciseBlock: FC<IProps> = ({ onClose }) => {
     setExerciseName(e.target.value.trim());
   };
 
-  return (
+  return visible ? (
     <>
       <span>Exercise Name</span>
       <Input onChange={handleChangeNameExercise} />
@@ -60,7 +70,7 @@ const ExerciseBlock: FC<IProps> = ({ onClose }) => {
       <Button text="Cancel" onClick={onClose} type="default" />
       <Button text="Save" onClick={handleSubmit} type="primary" htmlType="button" />
     </>
-  );
+  ) : null;
 };
 
 export default ExerciseBlock;

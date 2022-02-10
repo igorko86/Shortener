@@ -1,3 +1,5 @@
+import { Type } from '../../common/enum';
+
 export interface ILibraryCardResponse {
   id: string;
   name: string;
@@ -13,4 +15,6 @@ export interface ICardContentResponse {
 export interface IExerciseResponse {
   id: string;
   name: string;
+  type: Type;
+  exerciseType: string;
 }

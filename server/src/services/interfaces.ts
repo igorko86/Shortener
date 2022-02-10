@@ -135,7 +135,7 @@ export interface IAddNewStudent {
   tutorId: string;
 }
 
-export enum LibraryType {
+export enum Type {
   Public = 'public',
   Private = 'private',
 }

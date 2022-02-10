@@ -1,7 +1,11 @@
+import { Type } from '../../services/interfaces';
+
 export interface ICreateExerciseRequest {
   name: string;
-  type: string;
+  type: Type;
   content: any[];
+  exerciseType: string;
+  userId?: string;
 }
 
 export interface IUpdateExerciseRequest {

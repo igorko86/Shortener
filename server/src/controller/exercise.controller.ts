@@ -13,6 +13,16 @@ class ExerciseController {
     }
   }
 
+  async getExercisesByUserId(req: Request, res: Response, next: NextFunction) {
+    try {
+      const exercisesData = await exerciseService.getExercisesByUserId(req.query.id as string);
+
+      return res.status(200).json(exercisesData);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getExerciseById(req: Request, res: Response, next: NextFunction) {
     try {
       const exerciseData = await exerciseService.getExerciseById(req.query.exerciseId as string);

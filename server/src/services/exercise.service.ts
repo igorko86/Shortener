@@ -7,22 +7,32 @@ import {
   IGetExerciseListResponse,
 } from '../models/response/exercise.response.';
 import apiErrorService from './apiError.service';
+import { Tutor } from '../db/entites/Tutor';
+import { User } from '../db/entites/User';
+import { Type } from './interfaces';
 
 class ExerciseService {
   async createExercise(data: ICreateExerciseRequest): Promise<ICreateExerciseResponse> {
-    const { name: exerciseName, type, content } = data;
+    const { name: exerciseName, type, content, exerciseType, userId } = data;
+
+    const user = await User.findOne({ id: userId });
+    const tutor = await Tutor.findOne({ user });
 
     const exercise = Exercise.create({
       name: exerciseName,
       type,
+      exerciseType,
       content,
+      tutor,
     });
 
-    const { name, id } = await exercise.save();
+    const { name, id, type: savedType, exerciseType: savedExerciseType } = await exercise.save();
 
     return {
       name,
       id,
+      type: savedType,
+      exerciseType: savedExerciseType,
     };
   }
 
@@ -45,13 +55,14 @@ class ExerciseService {
       throw apiErrorService.badRequest(`Exercise with such ${exerciseId} doesn't exist`);
     }
 
-    const { name, type, content, id } = exerciseData;
+    const { name, type, content, id, exerciseType } = exerciseData;
 
     return {
       id,
       name,
       type,
       content,
+      exerciseType,
     };
   }
 
@@ -59,7 +70,22 @@ class ExerciseService {
     return await Exercise.createQueryBuilder('exercise')
       .select('exercise.id')
       .addSelect('exercise.name')
+      .addSelect('exercise.type')
       .where('exercise.libraryCardId = :cardId', { cardId })
+      .getMany();
+  }
+
+  async getExercisesByUserId(userId: string): Promise<IGetExerciseListResponse[]> {
+    const tutor = await Tutor.createQueryBuilder('tutor')
+      .select('tutor.id')
+      .leftJoin('tutor.user', 'user')
+      .where('user.id = :userId', { userId })
+      .getOne();
+
+    return await Exercise.createQueryBuilder('exercise')
+      .select(['exercise.id', 'exercise.name', 'exercise.type', 'exercise.exerciseType'])
+      .where('exercise.tutor = :tutorId', { tutorId: tutor?.id })
+      .orWhere('exercise.type = :type', { type: Type.Public })
       .getMany();
   }
 

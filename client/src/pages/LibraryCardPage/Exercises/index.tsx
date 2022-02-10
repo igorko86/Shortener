@@ -3,24 +3,25 @@ import { FC } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 // Internal
 import Button from 'components/Items/Button';
-import List from './List';
 import ExerciseBlock from './ExerciseBlock';
+import TableTransfer from './TableTransfer';
+import { TabName } from '../helper';
 
 interface IProps {
   onClose: () => void;
   showExerciseBlock: boolean;
+  creatingNewCard: boolean;
+  activeTab: TabName;
 }
-const Exercises: FC<IProps> = ({ onClose, showExerciseBlock }) => {
+
+const Exercises: FC<IProps> = ({ onClose, showExerciseBlock, creatingNewCard, activeTab }) => {
   return (
     <>
-      {showExerciseBlock ? (
-        <ExerciseBlock onClose={onClose} />
-      ) : (
-        <>
-          <Button onClick={onClose} icon={<PlusOutlined />} text="Add exercise" />
-          <List />
-        </>
-      )}
+      <ExerciseBlock onClose={onClose} visible={showExerciseBlock} />
+      <div>
+        <TableTransfer visible={!showExerciseBlock} creatingNewCard={creatingNewCard} activeTab={activeTab} />
+      </div>
+      {!showExerciseBlock && <Button onClick={onClose} icon={<PlusOutlined />} text="Add exercise" />}
     </>
   );
 };

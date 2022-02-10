@@ -4,6 +4,7 @@ import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { Group } from './Group';
 import { Student } from './Student';
 import { User } from './User';
+import { Exercise } from './Exercise';
 
 @Entity('tutor')
 export class Tutor extends CreateUpdateDate {
@@ -28,4 +29,7 @@ export class Tutor extends CreateUpdateDate {
   @OneToOne(() => User, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
+
+  @OneToMany(() => Exercise, (exercise) => exercise.tutor)
+  exercises: Exercise[];
 }

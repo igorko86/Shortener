@@ -19,7 +19,7 @@ export const leaveCreateCardConfirm = {
 export const changeExerciseTypeConfirm = {
   title: 'Change type',
   icon: React.createElement(ExclamationCircleOutlined),
-  content: 'Exercise will be lost. Are you sure want to continue?',
+  content: 'Please, save exercise ot it will be lost. Are you sure want to continue?',
   okText: 'Confirm',
   cancelText: 'Cancel',
   closable: true,

@@ -3,7 +3,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { SubCard } from './SubCard';
 import { Exercise } from './Exercise';
-import { LibraryType } from '../../services/interfaces';
+import { Type } from '../../services/interfaces';
 
 @Entity('library_card')
 export class LibraryCard extends CreateUpdateDate {
@@ -13,8 +13,8 @@ export class LibraryCard extends CreateUpdateDate {
   @Column()
   name: string;
 
-  @Column({ enum: LibraryType, default: LibraryType.Public })
-  type: LibraryType;
+  @Column({ enum: Type, default: Type.Public })
+  type: Type;
 
   @Column()
   description: string;
