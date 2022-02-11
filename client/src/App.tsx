@@ -1,14 +1,15 @@
 // External
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Layout } from 'antd';
 import { ThemeProvider } from 'styled-components';
 import { Footer } from 'antd/lib/layout/layout';
+import { useHistory } from 'react-router-dom';
 // Internal
 import AppRouter from 'features/AppRouter';
 import AppHeader from 'components/AppHeader';
 import AppSubHeader from 'components/AppSubHeader';
 import { useAppSelector } from 'shared/hooks/storeHooks';
-import { isAuthSelector, userSelector } from 'store/reducers/auth/selectors';
+import { isAuthSelector, loadingSelector, userSelector } from 'store/reducers/auth/selectors';
 import { theme } from 'theme';
 import { Role } from 'shared/models/request/authRequest';
 import Button from 'components/Items/Button';
@@ -16,17 +17,23 @@ import Home from 'shared/assets/icons/home';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 // Styles
 import { DivMain } from 'styles';
+import { AppPath } from './shared/common/enum';
+import Loader from './components/Loader';
 
 const App: FC = () => {
   const isAuth = useAppSelector(isAuthSelector);
   const user = useAppSelector(userSelector);
+  const isLoading = useAppSelector(loadingSelector);
+
   const show = [Role.Admin, Role.Tutor].includes(user?.role as Role);
+  const history = useHistory();
 
   const { changeRole } = useActionCreator();
 
-  const handleClickButton = (role: Role) => {
+  const handleClickButton = async (role: Role) => {
     if (user?.role !== role) {
-      changeRole(role);
+      await changeRole(role);
+      history.push(AppPath.HOME);
     }
   };
 
@@ -43,7 +50,7 @@ const App: FC = () => {
                 <Button text="Tutor" icon={<Home />} onClick={() => handleClickButton(Role.Tutor)} />
               </div>
             )}
-            {show && <AppSubHeader />}
+            {!isLoading && show && <AppSubHeader />}
             <AppRouter />
           </DivMain>
         </Layout>

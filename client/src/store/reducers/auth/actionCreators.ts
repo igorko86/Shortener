@@ -71,6 +71,8 @@ export const authThunks = {
       try {
         const { id: userId } = getState().auth.user || {};
 
+        dispatch(authActions.setIsLoading(true));
+
         if (userId) {
           const token = await AuthService.changeRole({ role: userRole, userId });
 
@@ -79,6 +81,7 @@ export const authThunks = {
           localStorage.setItem('token', token);
 
           dispatch(authActions.setUser({ id, name, role }));
+          dispatch(authActions.setIsLoading(false));
         }
       } catch {
         return null;
