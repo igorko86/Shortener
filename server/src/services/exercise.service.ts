@@ -75,18 +75,33 @@ class ExerciseService {
       .getMany();
   }
 
-  async getExercisesByUserId(userId: string): Promise<IGetExerciseListResponse[]> {
+  async getExercisesByUserId(userId: string, search: string): Promise<IGetExerciseListResponse[]> {
     const tutor = await Tutor.createQueryBuilder('tutor')
       .select('tutor.id')
       .leftJoin('tutor.user', 'user')
       .where('user.id = :userId', { userId })
       .getOne();
 
-    return await Exercise.createQueryBuilder('exercise')
-      .select(['exercise.id', 'exercise.name', 'exercise.type', 'exercise.exerciseType'])
-      .where('exercise.tutor = :tutorId', { tutorId: tutor?.id })
-      .orWhere('exercise.type = :type', { type: Type.Public })
-      .getMany();
+    const query = Exercise.createQueryBuilder('exercise').select([
+      'exercise.id',
+      'exercise.name',
+      'exercise.type',
+      'exercise.exerciseType',
+    ]);
+
+    if (String(search)) {
+      query
+        .where('exercise.tutor = :tutorId', { tutorId: tutor?.id })
+        .andWhere('exercise.type = :type', { type: Type.Public })
+        .where('exercise.type ILIKE :type', { type: `%${search}%` })
+        .orWhere('exercise.name ILIKE :value', { value: `%${search}%` });
+    } else {
+      query
+        .where('exercise.tutor = :tutorId', { tutorId: tutor?.id })
+        .orWhere('exercise.type = :type', { type: Type.Public });
+    }
+
+    return await query.getMany();
   }
 
   async deleteExercisesById(ids: string[]) {

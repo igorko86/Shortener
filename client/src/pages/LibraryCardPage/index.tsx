@@ -30,7 +30,7 @@ const LibraryCardPage: FC = () => {
   useEffect(() => {
     const { setFieldsValue, getFieldsValue } = createCardForm;
 
-    if (newExerciseIds?.length) {
+    if (newExerciseIds) {
       setFieldsValue({ ...getFieldsValue(), exerciseIds: newExerciseIds });
     }
   }, [newExerciseIds]);

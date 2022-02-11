@@ -9,6 +9,7 @@ import { userSelector } from 'store/reducers/auth/selectors';
 import { exercisesSelector } from 'store/reducers/library/selectors';
 import { IExercise } from 'store/reducers/library/types';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
+import useDebounce from 'shared/hooks/useDebaunce';
 import { TabName } from '../../helper';
 // Styles
 import { DivWrapperLayout } from '../styles';
@@ -21,7 +22,6 @@ const leftTableColumns = [
   {
     dataIndex: 'tag',
     title: 'Tag',
-    render: (tag: string) => <Tag>{tag}</Tag>,
   },
   {
     dataIndex: 'description',
@@ -38,7 +38,6 @@ const getRightTableColumns = (onItemRemove: ((keys: string[]) => void) | undefin
     {
       dataIndex: 'tag',
       title: 'Tag',
-      render: (tag: string) => <Tag>{tag}</Tag>,
     },
     {
       dataIndex: 'description',
@@ -77,8 +76,10 @@ interface IProps {
 const TableTransfer: FC<IProps> = ({ visible, creatingNewCard, activeTab }) => {
   const user = useAppSelector(userSelector);
   const newExercise = useAppSelector(exercisesSelector);
+  const [searchValue, setSearchValue] = useState('');
 
   const { setNewExerciseIds } = useActionCreator();
+  const debouncedValue = useDebounce(searchValue.trim(), 300);
 
   const [targetKeys, setTargetKeys] = useState<string[]>([]);
   const [exercises, setExercises] = useState<IExercise[]>([]);
@@ -108,7 +109,7 @@ const TableTransfer: FC<IProps> = ({ visible, creatingNewCard, activeTab }) => {
 
   useEffect(() => {
     if (user && activeTab === TabName.Exercises) {
-      LibraryService.geExercisesByUserId(user.id)
+      LibraryService.geExercisesByUserId(user.id, debouncedValue)
         .then((data) => {
           const exercises = data.map((item) => {
             const { id, name, type, exerciseType } = item;
@@ -128,7 +129,7 @@ const TableTransfer: FC<IProps> = ({ visible, creatingNewCard, activeTab }) => {
           console.log(err.message);
         });
     }
-  }, [activeTab]);
+  }, [activeTab, debouncedValue]);
 
   useEffect(() => {
     if (newExercise) {
@@ -136,6 +137,12 @@ const TableTransfer: FC<IProps> = ({ visible, creatingNewCard, activeTab }) => {
       setTargetKeys([...targetKeys, newExercise.key]);
     }
   }, [newExercise]);
+
+  const handleSearch = (direction: string, value: string) => {
+    if (direction === 'left') {
+      setSearchValue(value);
+    }
+  };
 
   return visible ? (
     <DivWrapperLayout>
@@ -145,12 +152,15 @@ const TableTransfer: FC<IProps> = ({ visible, creatingNewCard, activeTab }) => {
         disabled={false}
         showSearch
         filterOption={(inputValue, item) =>
-          item.title.indexOf(inputValue) !== -1 || item.tag.indexOf(inputValue) !== -1
+          item.title.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1 ||
+          item.tag.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
         }
         oneWay
         targetKeys={targetKeys}
         selectedKeys={selectedKeys}
         onChange={onChange}
+        locale={{ searchPlaceholder: 'Search by name or tag' }}
+        onSearch={handleSearch}
       >
         {({
           direction,
@@ -160,7 +170,7 @@ const TableTransfer: FC<IProps> = ({ visible, creatingNewCard, activeTab }) => {
           disabled: listDisabled,
           onItemRemove,
         }) => {
-          const columns = direction === 'left' ? leftTableColumns : getRightTableColumns(onItemRemove, setTargetKeys);
+          const columns = direction === 'left' ? leftTableColumns : getRightTableColumns(onItemRemove, onChange);
 
           const rowSelection = {
             getCheckboxProps: (item: { key: string; title: string; disabled: boolean; tag: string }) => ({

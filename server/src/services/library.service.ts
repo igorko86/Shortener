@@ -22,7 +22,7 @@ class LibraryService {
       .select(['libraryCard.id', 'libraryCard.name', 'libraryCard.description'])
       .where('libraryCard.type = :type', { type: libraryType });
 
-    if (value) {
+    if (String(value)) {
       query
         .andWhere('libraryCard.name ILIKE :value', { value: `%${value}%` })
         .orWhere('libraryCard.description ILIKE :value', { value: `%${value}%` })

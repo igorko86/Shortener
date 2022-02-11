@@ -26,8 +26,8 @@ class LibraryService {
     return $api.get(ApiRoutes.GetExerciseList, { params: { cardId } }).then(({ data }) => data);
   }
 
-  static geExercisesByUserId(userId: string): Promise<IExerciseResponse[]> {
-    return $api.get(ApiRoutes.GetExercisesNewCard, { params: { id: userId } }).then(({ data }) => data);
+  static geExercisesByUserId(userId: string, search: string): Promise<IExerciseResponse[]> {
+    return $api.get(ApiRoutes.GetExercisesNewCard, { params: { id: userId, search } }).then(({ data }) => data);
   }
 
   static removeExercisesByIds(ids: string[]): Promise<void> {
