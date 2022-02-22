@@ -10,7 +10,6 @@ export interface ICreateExerciseResponse {
 export interface IGetExerciseByIdResponse {
   id: string;
   name: string;
-  type: Type;
   content: any[];
   exerciseType: string;
 }

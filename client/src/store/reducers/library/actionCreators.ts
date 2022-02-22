@@ -2,11 +2,13 @@ import LibraryService from 'shared/services/LibraryService';
 import {
   ICardContent,
   IExercise,
+  IExerciseContent,
   ILibraryCard,
   ISetCardContent,
   ISetCardContentLoading,
   ISetCurrentCardId,
   ISetExercise,
+  ISetExerciseContent,
   ISetExerciseIds,
   ISetLibraryCards,
   ISetMyLibraryCards,
@@ -44,6 +46,10 @@ export const libraryActions = {
   setCardContentLoading: (loading: boolean): ISetCardContentLoading => ({
     type: LibraryActionEnum.SET_CARD_CONTENT_LOADING,
     payload: loading,
+  }),
+  setExerciseContent: (exerciseContent: IExerciseContent | null): ISetExerciseContent => ({
+    type: LibraryActionEnum.SET_EXERCISE_CONTENT,
+    payload: exerciseContent,
   }),
 };
 
@@ -135,6 +141,15 @@ export const libraryThunks = {
         return null;
       }
     },
+  getExerciseContent: (id: string) => async (dispatch: AppDispatch) => {
+    try {
+      const content = await LibraryService.getExerciseContent(id);
+
+      dispatch(libraryActions.setExerciseContent(content));
+    } catch {
+      return null;
+    }
+  },
 };
 
 export default {

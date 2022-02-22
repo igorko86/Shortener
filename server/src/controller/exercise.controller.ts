@@ -26,7 +26,7 @@ class ExerciseController {
 
   async getExerciseById(req: Request, res: Response, next: NextFunction) {
     try {
-      const exerciseData = await exerciseService.getExerciseById(req.query.exerciseId as string);
+      const exerciseData = await exerciseService.getExerciseById(req.query.id as string);
 
       return res.status(200).json(exerciseData);
     } catch (error) {

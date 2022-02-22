@@ -55,12 +55,11 @@ class ExerciseService {
       throw apiErrorService.badRequest(`Exercise with such ${exerciseId} doesn't exist`);
     }
 
-    const { name, type, content, id, exerciseType } = exerciseData;
+    const { name, content, id, exerciseType } = exerciseData;
 
     return {
       id,
       name,
-      type,
       content,
       exerciseType,
     };

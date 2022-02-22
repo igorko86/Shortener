@@ -10,10 +10,10 @@ import {
   cardContentSelector,
   currentCardIdSelector,
 } from 'store/reducers/library/selectors';
-import ExerciseList from './ExerciseList';
 import Loader from 'components/Loader';
 import { useActionCreator } from 'shared/hooks/useActionCreator';
 import { DivCardContent } from './styles';
+import ExercisesContent from './ExercisesContent';
 // Styles
 
 const { TabPane } = Tabs;
@@ -51,8 +51,6 @@ const CardContent: FC = () => {
 
     if (key === TabName.Exercises && !exercisesList.length) {
       await getCardExercisesList();
-    } else if (key === TabName.Explanation && !explanation) {
-      await getCardExplanation();
     }
     setActiveTab(key as TabName);
   };
@@ -82,7 +80,7 @@ const CardContent: FC = () => {
           </div>
         </TabPane>
         <TabPane tab={TabName.Exercises} key={TabName.Exercises}>
-          <ExerciseList exercisesList={exercisesList} />
+          <ExercisesContent />
           {loadingContent && <Loader position={'relative'} />}
         </TabPane>
       </Tabs>

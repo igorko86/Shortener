@@ -1,6 +1,11 @@
 import $api from '../../http';
 import { ILibraryCardRequest } from '../models/request/libraryRequest';
-import { ICardContentResponse, IExerciseResponse, ILibraryCardResponse } from '../models/response/libraryResponse';
+import {
+  ICardContentResponse,
+  IExerciseContentResponse,
+  IExerciseResponse,
+  ILibraryCardResponse,
+} from '../models/response/libraryResponse';
 import { ApiRoutes } from './apiRoutes.constants';
 import { ICreateExerciseRequest } from '../models/request/studentRequest';
 import { Type } from 'store/reducers/library/types';
@@ -16,6 +21,10 @@ class LibraryService {
 
   static createExercise(body: ICreateExerciseRequest): Promise<IExerciseResponse> {
     return $api.post(ApiRoutes.CreateExercise, body).then(({ data }) => data);
+  }
+
+  static getExerciseContent(id: string): Promise<IExerciseContentResponse> {
+    return $api.get(ApiRoutes.GetExerciseContent, { params: { id } }).then(({ data }) => data);
   }
 
   static getCardExplanation(cardId: string): Promise<ICardContentResponse> {

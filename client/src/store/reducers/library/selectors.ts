@@ -13,3 +13,5 @@ export const exercisesSelector = ({ library }: AppState) => library.newExercise;
 export const exerciseIdsSelector = ({ library }: AppState) => library.newExerciseIds;
 
 export const cardContentLoadingSelector = ({ library }: AppState) => library.cardContentLoading;
+
+export const exerciseContentSelector = ({ library }: AppState) => library.exerciseContent;

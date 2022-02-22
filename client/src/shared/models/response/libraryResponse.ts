@@ -18,3 +18,10 @@ export interface IExerciseResponse {
   type: Type;
   exerciseType: string;
 }
+
+export interface IExerciseContentResponse {
+  id: string;
+  name: string;
+  exerciseType: string;
+  content: any[];
+}

@@ -37,4 +37,5 @@ export enum ApiRoutes {
   RemoveExercisesByIds = '/exercises/exercise',
   GetExerciseList = '/exercises',
   GetExercisesNewCard = '/exercises/new-card',
+  GetExerciseContent = '/exercises/exercise',
 }
