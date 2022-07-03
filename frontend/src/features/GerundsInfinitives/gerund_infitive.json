@@ -1,0 +1,1378 @@
+[
+  {
+    "id": 1,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "afford",
+    "example": "We cannot afford to hesitate."
+  },
+  {
+    "id": 2,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "agree",
+    "example": "Why did you agree to meet her in the first place?"
+  },
+  {
+    "id": 3,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "appear",
+    "example": "The results appear to support your theory."
+  },
+  {
+    "id": 4,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "arrange",
+    "example": "They had arranged to meet at noon."
+  },
+  {
+    "id": 5,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "ask",
+    "example": "They asked to join us for dinner / I must ask you to reconsider your statement."
+  },
+  {
+    "id": 6,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "attempt",
+    "example": "Doug attempted to say something."
+  },
+  {
+    "id": 7,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "beg",
+    "example": "I beg to differ with you / They begged her to stay for another term."
+  },
+  {
+    "id": 9,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "can/can’t wait",
+    "example": "Susan can’t wait to see Tom next week."
+  },
+  {
+    "id": 10,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "care",
+    "example": "Would you care to respond?"
+  },
+  {
+    "id": 11,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "claim",
+    "example": "She claims to have new data."
+  },
+  {
+    "id": 12,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "chance",
+    "example": "I chanced to give it a taste and it was good."
+  },
+  {
+    "id": 13,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "choose",
+    "example": "Chris chose to not visit his friends last weekend."
+  },
+  {
+    "id": 14,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "consent",
+    "example": "Will you consent to run for office?"
+  },
+  {
+    "id": 15,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "decide",
+    "example": "When did he decide to withdraw?"
+  },
+  {
+    "id": 16,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "demand",
+    "example": "I demand to see the results of the survey."
+  },
+  {
+    "id": 17,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "dare",
+    "example": "We dared to take some time off work."
+  },
+  {
+    "id": 18,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "deserve",
+    "example": "She deserves to have a fair hearing."
+  },
+  {
+    "id": 19,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "expect",
+    "example": "The committee expects to decide by tomorrow / They did not expect us to win an award."
+  },
+  {
+    "id": 20,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "cause",
+    "example": "His findings caused him to investigate further."
+  },
+  {
+    "id": 21,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "challenge",
+    "example": "Wilkins challenged Watson to continue the research."
+  },
+  {
+    "id": 22,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "convince",
+    "example": "Can we convince them to fund our study?"
+  },
+  {
+    "id": 23,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "encourage",
+    "example": "She encouraged him to look beyond the obvious."
+  },
+  {
+    "id": 24,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "come",
+    "example": "They came to purchase a new car."
+  },
+  {
+    "id": 25,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "determine",
+    "example": "We determined to finish the project by the end of next year."
+  },
+  {
+    "id": 26,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "elect",
+    "example": "Alice elected to not come with us to the presentation."
+  },
+  {
+    "id": 27,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "endeavor",
+    "example": "The company endeavors to provide the best possible service."
+  },
+  {
+    "id": 28,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "fail",
+    "example": "The trial failed to confirm his hypothesis."
+  },
+  {
+    "id": 29,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "hesitate",
+    "example": "I hesitate to try the experiment again."
+  },
+  {
+    "id": 30,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "guarantee",
+    "example": "They guarantee to finish the work before 5 o’clock."
+  },
+  {
+    "id": 31,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "hope",
+    "example": "What do you hope to accomplish?"
+  },
+  {
+    "id": 32,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "get",
+    "example": "We got to see our friends last week."
+  },
+  {
+    "id": 33,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "learn",
+    "example": "We have learned to proceed with caution."
+  },
+  {
+    "id": 34,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "hurry",
+    "example": "Mack is hurrying to finish the report by 3 this afternoon."
+  },
+  {
+    "id": 35,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "incline",
+    "example": "He is inclined to not come to parties."
+  },
+  {
+    "id": 36,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "manage",
+    "example": "How did she manage to find the solution?"
+  },
+  {
+    "id": 37,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "neglect",
+    "example": "The author neglected to provide an index."
+  },
+  {
+    "id": 38,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "need",
+    "example": "Do we need to find new subjects? They need her to show the slides."
+  },
+  {
+    "id": 39,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "invite",
+    "example": "We invite you to attend the ceremony."
+  },
+  {
+    "id": 40,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "offer",
+    "example": "We could offer to change the time of the meeting."
+  },
+  {
+    "id": 41,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "mean",
+    "example": "Dan means to speak with you this evening."
+  },
+  {
+    "id": 42,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "grow",
+    "example": "I've grown to like her over the months."
+  },
+  {
+    "id": 43,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "plan",
+    "example": "They had planned to attend the conference."
+  },
+  {
+    "id": 44,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "prepare",
+    "example": "He was not prepared to give a lecture."
+  },
+  {
+    "id": 45,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "pretend",
+    "example": "I do not pretend to know the answer."
+  },
+  {
+    "id": 46,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "pay",
+    "example": "We paid to become informed about the matter."
+  },
+  {
+    "id": 47,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "promise",
+    "example": "They promise to demonstrate the new equipment."
+  },
+  {
+    "id": 48,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "refuse",
+    "example": "She refused to cooperate any longer."
+  },
+  {
+    "id": 49,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "seem",
+    "example": "Something seems to be wrong with your design."
+  },
+  {
+    "id": 50,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "struggle",
+    "example": "We struggled to understand her point of view."
+  },
+  {
+    "id": 51,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "swear",
+    "example": "He swears to tell the truth."
+  },
+  {
+    "id": 52,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "threaten",
+    "example": "The team threatened to stop their research."
+  },
+  {
+    "id": 53,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "volunteer",
+    "example": "Will you volunteer to lead the group?"
+  },
+  {
+    "id": 54,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "wait",
+    "example": "We could not wait to hear the outcome."
+  },
+  {
+    "id": 55,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "want",
+    "example": "She did not want to go first / I do not want you to have an accident."
+  },
+  {
+    "id": 56,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "wish",
+    "example": "Do you wish to participate?"
+  },
+  {
+    "id": 57,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "would like",
+    "example": "I would like to have a steak, please."
+  },
+  {
+    "id": 58,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "yearn",
+    "example": "I yearn to finish work today!"
+  },
+  {
+    "id": 59,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "venture",
+    "example": "She is spatially bound in her leisure activities and seldom ventures to unfamiliar places by herself."
+  },
+  {
+    "id": 60,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "help",
+    "example": "He helped to clean the kitchen / he helped his flatmate to clean the kitchen."
+  },
+  {
+    "id": 61,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "turn out",
+    "example": "Thousands of people turned out to welcome the team home."
+  },
+  {
+    "id": 62,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "tend",
+    "example": "Dianne tends to waste time on the telephone."
+  },
+  {
+    "id": 63,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "strive",
+    "example": "Frank strove to meet all the demands of his boss."
+  },
+  {
+    "id": 64,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "shudder",
+    "example": "I shudder to think about all the problems in the world."
+  },
+  {
+    "id": 65,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "seek",
+    "example": "They are seeking to receive $1,000,000 in damages."
+  },
+  {
+    "id": 66,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "say",
+    "example": "He said to tell you hi!"
+  },
+  {
+    "id": 67,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "resolve",
+    "example": "We resolved to clean up the house this summer."
+  },
+  {
+    "id": 68,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "request",
+    "example": "The man requested to speak to a lawyer."
+  },
+  {
+    "id": 69,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "remain",
+    "example": "I remained to finish the work until 8 o’clock."
+  },
+  {
+    "id": 70,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "profess",
+    "example": "Lori professes to believe in UFOs."
+  },
+  {
+    "id": 71,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "urge",
+    "example": "I urge you to read the instructions before you begin."
+  },
+  {
+    "id": 72,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "instruct",
+    "example": "I will instruct her to prepare a handout."
+  },
+  {
+    "id": 73,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "forbid",
+    "example": "The author forbade me to change his wording."
+  },
+  {
+    "id": 74,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "hire",
+    "example": "Did the department hire him to teach the new course?"
+  },
+  {
+    "id": 75,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "force",
+    "example": "They cannot force her to reveal her sources."
+  },
+  {
+    "id": 76,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "tell",
+    "example": "I tell to do something / Did she tell him to make three copies?"
+  },
+  {
+    "id": 77,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "teach",
+    "example": "We should teach them to follow standard procedures."
+  },
+  {
+    "id": 78,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "require",
+    "example": "They will require you to submit an outline."
+  },
+  {
+    "id": 79,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "remind",
+    "example": "Please remind him to check the references."
+  },
+  {
+    "id": 80,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "persuade",
+    "example": "Can we persuade you to contribute again?"
+  },
+  {
+    "id": 81,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "order",
+    "example": "He ordered the group to leave the building."
+  },
+  {
+    "id": 82,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "warn",
+    "example": "Why didn’t they warn me to turn down the heat?"
+  },
+  {
+    "id": 83,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "would prefer",
+    "example": "I’d prefer to do it / I’d prefer him to do it."
+  },
+  {
+    "id": 84,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "would love",
+    "example": "I’d love to come / I’d love him to come. "
+  },
+  {
+    "id": 85,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "would hate",
+    "example": "I’d hate to be late / I’d hate you to be late. "
+  },
+  {
+    "id": 87,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "propose (INTEND)",
+    "example": "How do you propose to complete the project in such a short time?"
+  },
+  {
+    "id": 88,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "would hate",
+    "example": "I’d hate to be late / I’d hate you to be late. "
+  },
+  {
+    "id": 90,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "happen",
+    "example": "I happen to think he's right"
+  },
+  {
+    "id": 91,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "vow",
+    "example": "I vowed to do more of the cooking myself."
+  },
+  {
+    "id": 92,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "try",
+    "example": "I tried to open the window."
+  },
+  {
+    "id": 93,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "forget",
+    "example": "Don't forget to lock the door."
+  },
+  {
+    "id": 94,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "start",
+    "example": "I'd just started to write a letter when the phone rang."
+  },
+  {
+    "id": 95,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "remember",
+    "example": "Did you remember to do the shopping?"
+  },
+  {
+    "id": 96,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "regret (formal)",
+    "example": "British Airways regret to announce the cancellation of flight BA205 to Madrid.\n"
+  },
+  {
+    "id": 97,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "continue\n",
+    "example": "It's said that as the boat went down the band continued to play."
+  },
+  {
+    "id": 98,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "cease",
+    "example": "Workplace nurseries will cease to be liable for tax."
+  },
+  {
+    "id": 99,
+    "verbForm": 2,
+    "isAnswer": false,
+    "selected": null,
+    "word": "begin",
+    "example": "After waiting for half an hour she was beginning to get angry"
+  },
+  {
+    "id": 100,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "propose (SUGGEST)",
+    "example": "He proposed dealing directly with the suppliers."
+  },
+  {
+    "id": 101,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "acknowledge",
+    "example": "She acknowledged receiving assistance."
+  },
+  {
+    "id": 102,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "accuse of",
+    "example": "He was accused of smuggling contraband goods."
+  },
+  {
+    "id": 103,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "admit",
+    "example": "They admitted falsifying the data."
+  },
+  {
+    "id": 104,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "advise",
+    "example": "The author advises undertaking further study."
+  },
+  {
+    "id": 105,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "anticipate",
+    "example": "He anticipates having trouble with his supervisor."
+  },
+  {
+    "id": 106,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "appreciate",
+    "example": "I appreciated having a chance to read your draft."
+  },
+  {
+    "id": 107,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "avoid",
+    "example": "He avoided answering my question."
+  },
+  {
+    "id": 108,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "complete",
+    "example": "I finally completed writing my thesis."
+  },
+  {
+    "id": 109,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "consider",
+    "example": "They will consider granting you money."
+  },
+  {
+    "id": 110,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "defer",
+    "example": "She deferred writing her report."
+  },
+  {
+    "id": 111,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "delay",
+    "example": "We delayed reporting the results until we were sure."
+  },
+  {
+    "id": 112,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "deny",
+    "example": "They denied copying the information."
+  },
+  {
+    "id": 113,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "discuss",
+    "example": "They discussed running the experiments again."
+  },
+  {
+    "id": 114,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "entail",
+    "example": "This review procedure entails repeating the test."
+  },
+  {
+    "id": 115,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "look after",
+    "example": "He will look after mailing the tickets."
+  },
+  {
+    "id": 116,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": " insist on",
+    "example": "He insisted on proofreading the article again."
+  },
+  {
+    "id": 117,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "involve",
+    "example": "This procedure involves testing each sample twice."
+  },
+  {
+    "id": 118,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "justify",
+    "example": "My results justify taking drastic action."
+  },
+  {
+    "id": 119,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "mention",
+    "example": "The author mentions seeing this event."
+  },
+  {
+    "id": 120,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "plan on",
+    "example": "They had planned on attending the conference."
+  },
+  {
+    "id": 121,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "postpone",
+    "example": "The committee has postponed writing the report."
+  },
+  {
+    "id": 122,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "recall",
+    "example": "I cannot recall getting those results before."
+  },
+  {
+    "id": 123,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "resent",
+    "example": "He resented spending so much time on the project."
+  },
+  {
+    "id": 124,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "recommend",
+    "example": "She recommends reading Marx."
+  },
+  {
+    "id": 125,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "resist",
+    "example": "The writer resists giving any easy answers."
+  },
+  {
+    "id": 126,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "risk",
+    "example": "She risks losing her viewing time."
+  },
+  {
+    "id": 127,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "sanction",
+    "example": "They will not sanction copying without permission."
+  },
+  {
+    "id": 128,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "suggest",
+    "example": "I suggest repeating the experiment."
+  },
+  {
+    "id": 129,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "take care of",
+    "example": "He will take care of sending it to you."
+  },
+  {
+    "id": 130,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "tolerate",
+    "example": "She can’t tolerate waiting for results."
+  },
+  {
+    "id": 131,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "abhor",
+    "example": "John abhors working outdoors."
+  },
+  {
+    "id": 132,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "allow",
+    "example": "She allows using smartphones in class."
+  },
+  {
+    "id": 133,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "be worth",
+    "example": "It’s worth spending some time on the grammar."
+  },
+  {
+    "id": 134,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "can’t help",
+    "example": "Tom can’t help complaining about the heat."
+  },
+  {
+    "id": 135,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "celebrate",
+    "example": "We’ll celebrate working together for over 50 years."
+  },
+  {
+    "id": 136,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "confess",
+    "example": "Alice confessed stealing the money from her sister."
+  },
+  {
+    "id": 137,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "defend",
+    "example": "They defend purchasing the new car because they have two jobs."
+  },
+  {
+    "id": 138,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "detest",
+    "example": "Jack detests learning new vocabulary."
+  },
+  {
+    "id": 139,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "discontinue",
+    "example": "The store discontinued providing customer service on demand."
+  },
+  {
+    "id": 140,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "dislike",
+    "example": "Bob dislikes having to work so hard."
+  },
+  {
+    "id": 141,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "dispute",
+    "example": "They dispute stealing the merchandise."
+  },
+  {
+    "id": 142,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "dread",
+    "example": "I dread taking tests."
+  },
+  {
+    "id": 143,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "endure",
+    "example": "We endured listening to him for three hours."
+  },
+  {
+    "id": 144,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "enjoy",
+    "example": "Sarah enjoys cooking fine dinners."
+  },
+  {
+    "id": 145,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "escape",
+    "example": "The students escaped taking the test because the fire alarm rang."
+  },
+  {
+    "id": 146,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "evade",
+    "example": "He evades doing yard work on Saturdays."
+  },
+  {
+    "id": 147,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "explain",
+    "example": "He’ll explain purchasing online next week."
+  },
+  {
+    "id": 148,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "fancy",
+    "example": "They fancy eating donuts."
+  },
+  {
+    "id": 149,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "fear",
+    "example": "I fear flying in airplanes."
+  },
+  {
+    "id": 150,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "feign",
+    "example": "Mary feigns not knowing anything."
+  },
+  {
+    "id": 151,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "finish",
+    "example": "We finished shopping and went home."
+  },
+  {
+    "id": 152,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "forgive",
+    "example": "They forgave stealing the candy as the children didn’t know it was wrong."
+  },
+  {
+    "id": 153,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "keep",
+    "example": "We keep studying the same grammar every week."
+  },
+  {
+    "id": 154,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "mind (object to)",
+    "example": "I don’t mind smoking."
+  },
+  {
+    "id": 155,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "miss",
+    "example": "I miss having more free time."
+  },
+  {
+    "id": 156,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "necessitate",
+    "example": "The job necessitates lifting heavy objects."
+  },
+  {
+    "id": 157,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "omit",
+    "example": "We omitted discussing the new Smith account during the meeting."
+  },
+  {
+    "id": 158,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "permit",
+    "example": "We’ll permit fishing on Saturdays."
+  },
+  {
+    "id": 159,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "picture",
+    "example": "Doug pictures retiring to Brazil."
+  },
+  {
+    "id": 160,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "practice",
+    "example": "Practice playing scales for 30 minutes every day."
+  },
+  {
+    "id": 161,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "recollect",
+    "example": "Tom recollects playing baseball as a child."
+  },
+  {
+    "id": 162,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "report",
+    "example": "Tim reported spending twelve hours on the job."
+  },
+  {
+    "id": 163,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "resume",
+    "example": "We resumed speaking about the problem at the meeting."
+  },
+  {
+    "id": 164,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "shirk",
+    "example": "Dan shirked paying for the children’s meal."
+  },
+  {
+    "id": 165,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "shun",
+    "example": "Don’t shun spending time with those you don’t know very well."
+  },
+  {
+    "id": 166,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "support",
+    "example": "They supported our going to the doctor for help."
+  },
+  {
+    "id": 167,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "understand",
+    "example": "He understands investing in the stock market."
+  },
+  {
+    "id": 168,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "warrant",
+    "example": "The situation warrants investigating Mr. Todd."
+  },
+  {
+    "id": 169,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "feel like",
+    "example": "He was so rude, I felt like leaving immediately."
+  },
+  {
+    "id": 170,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "give up",
+    "example": "He gave up jogging after his heart attack."
+  },
+  {
+    "id": 171,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "keep on",
+    "example": "They kept on getting lost."
+  },
+  {
+    "id": 172,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "prevent",
+    "example": "His disability prevents him (from) driving."
+  },
+  {
+    "id": 173,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "put off",
+    "example": "I've put off talking to him about this for far too long."
+  },
+  {
+    "id": 174,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "imagine",
+    "example": "Can you imagine living on the moon?"
+  },
+  {
+    "id": 175,
+    "verbForm": 0,
+    "isAnswer": false,
+    "selected": null,
+    "word": "can't stand",
+    "example": "He can't stand her smoking in the office"
+  }
+]
