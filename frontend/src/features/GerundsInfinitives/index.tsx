@@ -8,13 +8,15 @@ import { IData, VerbForm } from './interfaces';
 import { shuffle } from '../../shared/utils/shuffle';
 import NavPanel from './NavPanel';
 
-import { MainDiv } from './styles';
+import { MainDiv, VerbFormSpan } from './styles';
 
 const GerundsInfinitives = () => {
   const [count, setCount] = useState(0);
   const [answer, setAnswer] = useState<VerbForm | null>(null);
   const [isShuffle, setIsShuffle] = useState<null | boolean>(false);
   const [content, setContent] = useState<IData[]>([]);
+  const [isPlayed, setIsPlayed] = useState(false);
+
   const { isAnswer, selected, verbForm, word, example } = useMemo(() => content[count] || {}, [count, content]);
 
   useEffect(() => {
@@ -44,14 +46,18 @@ const GerundsInfinitives = () => {
 
   return (
     <MainDiv>
-      <NavPanel onConfirm={setIsShuffle} />
-      <Item word={word} example={example} isAnswer={isAnswer} />
-      <Answer
-        disabled={!content.length || isAnswer}
-        selected={selected}
-        wordVerbForm={verbForm}
-        setAnswer={setAnswer}
-      />
+      <NavPanel onConfirm={setIsShuffle} setIsPlayed={setIsPlayed} isPlayed={isPlayed} />
+      <Item word={word} example={example} isAnswer={isAnswer} isPlayed={isPlayed} />
+      {isPlayed ? (
+        <Answer
+          disabled={!content.length || isAnswer}
+          selected={selected}
+          wordVerbForm={verbForm}
+          setAnswer={setAnswer}
+        />
+      ) : (
+        <VerbFormSpan>{VerbForm[verbForm]}</VerbFormSpan>
+      )}
       <Switcher setCount={setCount} count={count} maxLength={content.length} />
     </MainDiv>
   );

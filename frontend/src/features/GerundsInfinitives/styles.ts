@@ -7,3 +7,8 @@ export const MainDiv = styled.div`
   margin: 0 auto;
   padding: 20px;
 `;
+
+export const VerbFormSpan = styled.span`
+  display: table;
+  margin: 0 auto;
+`;

@@ -11,10 +11,11 @@ import CustomModal from '../../../components/Modals/CustomModal';
 
 interface IProps {
   onConfirm: (arg: boolean) => void;
+  setIsPlayed: (arg: boolean) => void;
+  isPlayed: boolean;
 }
 
-const NavPanel: FC<IProps> = ({ onConfirm }) => {
-  const [isPlayed, setIsPlayed] = useState(false);
+const NavPanel: FC<IProps> = ({ onConfirm, setIsPlayed, isPlayed }) => {
   const [isPause, setIsPause] = useState(false);
 
   const handleClickPlay = () => {
