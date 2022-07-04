@@ -5,7 +5,7 @@ export const AnswerHokDiv = styled.div`
   flex-direction: column;
 `;
 
-export const AnswerIcon = styled.span<{ isCorrect: boolean }>`
+export const AnswerIcon = styled.span<{ color: string }>`
   position: relative;
   span {
     position: absolute;
@@ -15,7 +15,7 @@ export const AnswerIcon = styled.span<{ isCorrect: boolean }>`
     right: 0;
 
     svg {
-      fill: ${({ isCorrect, theme }) => (isCorrect ? theme.colors.green : theme.colors.red)};
+      fill: ${({ color }) => color};
       width: 30px;
       height: 20px;
     }

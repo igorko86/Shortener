@@ -12,22 +12,20 @@ interface IProps {
   wordVerbForm: VerbForm;
 }
 
-const Answer: FC<IProps> = ({ setAnswer, disabled, selected, wordVerbForm }) => {
-  const getSelectedVerbForm = (answerButton: VerbForm) => (selected === answerButton ? selected : null);
-
+const Answer: FC<IProps> = ({ setAnswer, disabled, ...props }) => {
   return (
     <AnswerDiv size="large">
-      <AnswerHok selected={getSelectedVerbForm(VerbForm.Infinitive)} wordVerbForm={wordVerbForm}>
+      <AnswerHok {...props} answerButton={VerbForm.Infinitive}>
         <AnswerButton disabled={disabled} onClick={() => setAnswer(VerbForm.Infinitive)}>
           infinitive
         </AnswerButton>
       </AnswerHok>
-      <AnswerHok selected={getSelectedVerbForm(VerbForm.BareInfinitive)} wordVerbForm={wordVerbForm}>
+      <AnswerHok {...props} answerButton={VerbForm.BareInfinitive}>
         <AnswerButton disabled={disabled} onClick={() => setAnswer(VerbForm.BareInfinitive)}>
           bare infinitive
         </AnswerButton>
       </AnswerHok>
-      <AnswerHok selected={getSelectedVerbForm(VerbForm.Gerund)} wordVerbForm={wordVerbForm}>
+      <AnswerHok {...props} answerButton={VerbForm.Gerund}>
         <AnswerButton disabled={disabled} onClick={() => setAnswer(VerbForm.Gerund)}>
           gerund
         </AnswerButton>
