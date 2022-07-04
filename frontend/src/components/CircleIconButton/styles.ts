@@ -15,7 +15,7 @@ export const CircleButton = styled(ButtonAnt)<IButtonStyle>`
     min-width: 20px;
     padding: 0;
     color: ${({ theme }) => theme.colors.white};
-    background: ${({ theme }) => theme.colors.theme};
+    background: transparent;
     border: none;
     svg {
       height: 30px;
@@ -31,7 +31,7 @@ export const CircleButton = styled(ButtonAnt)<IButtonStyle>`
   &.ant-btn[disabled]:hover,
   &.ant-btn[disabled]:focus,
   &.ant-btn[disabled]:active {
-    background: ${({ theme }) => theme.colors.theme};
+    background: transparent;
     color: ${({ theme }) => theme.colors.white};
     border: none;
     svg {
