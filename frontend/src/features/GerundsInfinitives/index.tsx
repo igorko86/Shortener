@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { PlayCircleOutlined } from '@ant-design/icons';
 
 import Switcher from './Switcher';
 import Answer from './Answer';
@@ -7,8 +8,10 @@ import Item from './Item';
 import { IData, VerbForm } from './interfaces';
 import { shuffle } from '../../shared/utils/shuffle';
 import NavPanel from './NavPanel';
+import CircleIconButton from '../../components/CircleIconButton';
+import { theme } from '../../theme';
 
-import { MainDiv, VerbFormSpan } from './styles';
+import { MainDiv, VerbFormSpan, WrapperDiv, PauseDiv } from './styles';
 
 const GerundsInfinitives = () => {
   const [count, setCount] = useState(0);
@@ -16,6 +19,7 @@ const GerundsInfinitives = () => {
   const [isShuffle, setIsShuffle] = useState<null | boolean>(false);
   const [content, setContent] = useState<IData[]>([]);
   const [isPlayed, setIsPlayed] = useState(false);
+  const [isPause, setIsPause] = useState(false);
 
   const { isAnswer, selected, verbForm, word, example } = useMemo(() => content[count] || {}, [count, content]);
 
@@ -46,19 +50,34 @@ const GerundsInfinitives = () => {
 
   return (
     <MainDiv>
-      <NavPanel onConfirm={setIsShuffle} setIsPlayed={setIsPlayed} isPlayed={isPlayed} />
-      <Item word={word} example={example} isAnswer={isAnswer} isPlayed={isPlayed} />
-      {isPlayed ? (
-        <Answer
-          disabled={!content.length || isAnswer}
-          selected={selected}
-          wordVerbForm={verbForm}
-          setAnswer={setAnswer}
-        />
-      ) : (
-        <VerbFormSpan>{VerbForm[verbForm]}</VerbFormSpan>
-      )}
-      <Switcher setCount={setCount} count={count} maxLength={content.length} />
+      <NavPanel
+        onConfirm={setIsShuffle}
+        setIsPlayed={setIsPlayed}
+        isPlayed={isPlayed}
+        isPause={isPause}
+        setIsPause={setIsPause}
+      />
+      <WrapperDiv>
+        <Item word={word} example={example} isAnswer={isAnswer} isPlayed={isPlayed} />
+        {isPlayed ? (
+          <Answer
+            disabled={!content.length || isAnswer}
+            selected={selected}
+            wordVerbForm={verbForm}
+            setAnswer={setAnswer}
+          />
+        ) : (
+          <VerbFormSpan>{VerbForm[verbForm]}</VerbFormSpan>
+        )}
+        <Switcher setCount={setCount} count={count} maxLength={content.length} />
+        {isPause && (
+          <PauseDiv>
+            <CircleIconButton backgroundHover={theme.colors.dark4} onClick={() => setIsPause(false)}>
+              <PlayCircleOutlined />
+            </CircleIconButton>
+          </PauseDiv>
+        )}
+      </WrapperDiv>
     </MainDiv>
   );
 };

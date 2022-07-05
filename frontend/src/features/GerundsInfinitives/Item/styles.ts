@@ -15,8 +15,6 @@ export const ExampleP = styled.p`
   min-height: 80px;
   font-size: 22px;
   color: ${({ theme }) => theme.colors.black};
-  text-align: left;
-  text-indent: 1.5rem;
   background: ${({ theme }) => theme.colors.light5};
   display: flex;
   justify-content: center;
