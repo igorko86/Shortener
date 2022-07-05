@@ -5,7 +5,7 @@ import Switcher from './Switcher';
 import Answer from './Answer';
 import data from './gerund_infitive.json';
 import Item from './Item';
-import { IData, VerbForm } from './interfaces';
+import { IData, IShowWords, VerbForm } from './interfaces';
 import { shuffle } from '../../shared/utils/shuffle';
 import NavPanel from './NavPanel';
 import CircleIconButton from '../../components/CircleIconButton';
@@ -16,6 +16,7 @@ import { MainDiv, VerbFormSpan, WrapperDiv, PauseDiv } from './styles';
 const GerundsInfinitives = () => {
   const [count, setCount] = useState(0);
   const [answer, setAnswer] = useState<VerbForm | null>(null);
+  const [showWords, setShowWords] = useState<IShowWords>({ all: 'all', 0: '0', 1: '1', 2: '2' });
   const [isShuffle, setIsShuffle] = useState<null | boolean>(false);
   const [content, setContent] = useState<IData[]>([]);
   const [isPlayed, setIsPlayed] = useState(false);
@@ -56,6 +57,8 @@ const GerundsInfinitives = () => {
         isPlayed={isPlayed}
         isPause={isPause}
         setIsPause={setIsPause}
+        setShowWords={setShowWords}
+        showWords={showWords}
       />
       <WrapperDiv>
         <Item word={word} example={example} isAnswer={isAnswer} isPlayed={isPlayed} />

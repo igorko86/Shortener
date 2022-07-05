@@ -12,3 +12,10 @@ export interface IData {
   isAnswer: boolean;
   selected: null | VerbForm;
 }
+
+export interface IShowWords {
+  0?: string;
+  1?: string;
+  2?: string;
+  all?: string;
+}
