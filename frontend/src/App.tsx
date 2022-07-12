@@ -3,11 +3,11 @@ import { Routes, Route } from 'react-router-dom';
 
 import GerundsInfinitives from './features/GerundsInfinitives';
 import { theme } from './theme';
-
-import './App.css';
+import Signup from './pages/Auth/Signup';
 import { AppPagePath } from './pages/AppPagePath';
 import Layout from './pages/Layout';
-import Signup from './pages/Auth/Signup';
+
+import './App.css';
 
 function App() {
   return (

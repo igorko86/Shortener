@@ -8,7 +8,7 @@
     "build": "tsc",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "prepublish": "npm run build",
-    "dev": "nodemon --require dotenv/config --config nodemon.json src/app.ts",
+    "dev": "nodemon --require dotenv/config --config nodemon.json src/app.ts"
   },
   "author": "",
   "license": "ISC",
@@ -63,7 +63,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "nodemon": "^2.0.12",
     "prettier": "2.3.2",
-    "ts-node": "^10.2.1",
+    "ts-node": "^10.2.1"
   },
   "eslintConfig": {
     "extends": [

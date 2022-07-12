@@ -1,4 +1,6 @@
-import { Button, Form, Input } from 'antd';
+import { Form, Input } from 'antd';
+
+import Button from '../../../components/Button';
 
 import { config, FormItem } from './formConfig';
 
