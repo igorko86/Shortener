@@ -4,20 +4,20 @@ import { setContext } from '@apollo/client/link/context';
 const AUTH_TOKEN_KEY = 'token';
 
 const httpLink = createHttpLink({
-    uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,
+  uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem(AUTH_TOKEN_KEY);
-    return {
-        headers: {
-            ...headers,
-            authorization: token ? `Bearer ${token}` : ''
-        }
-    };
+  const token = localStorage.getItem(AUTH_TOKEN_KEY);
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
 });
 
 export const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
 });

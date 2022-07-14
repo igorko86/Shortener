@@ -11,13 +11,11 @@ export enum FormItem {
 export const config: Record<FormItem, any> = {
   [FormItem.NAME]: {
     name: FormItem.NAME,
-    label: 'Name',
     required: true,
     rules: [{ required: true, message: 'Please input field!', whitespace: true }],
   },
   [FormItem.EMAIL]: {
     name: FormItem.EMAIL,
-    label: 'E-mail',
     rules: [
       {
         type: FormItem.EMAIL,
@@ -31,7 +29,6 @@ export const config: Record<FormItem, any> = {
   },
   [FormItem.PASSWORD]: {
     name: FormItem.PASSWORD,
-    label: 'Password',
     hasFeedback: true,
     rules: [
       {
@@ -43,7 +40,6 @@ export const config: Record<FormItem, any> = {
   },
   [FormItem.CONFIRM]: {
     name: FormItem.CONFIRM,
-    label: 'Confirm Password',
     dependencies: ['password'],
     hasFeedback: true,
     rules: [
