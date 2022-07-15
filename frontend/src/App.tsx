@@ -15,6 +15,8 @@ function App() {
       <Routes>
         <Route path={AppPagePath.ROOT} element={<Layout />}>
           <Route path={AppPagePath.HOME} element={<GerundsInfinitives />} />
+          <Route path={AppPagePath.CONTACT} element={<div>CONTACT</div>} />
+          <Route path={AppPagePath.ABOUT} element={<div>ABOUT US</div>} />
           <Route path={AppPagePath.SIGNIN} element={<div>Sign IN</div>} />
           <Route path={AppPagePath.SIGNUP} element={<Signup />} />
         </Route>

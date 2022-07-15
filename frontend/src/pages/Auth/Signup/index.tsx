@@ -1,10 +1,10 @@
 import { Form, Input } from 'antd';
+import { LockFilled, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 
 import Button from '../../../components/Button';
-
 import { config, FormItem } from './formConfig';
+
 import { ContainerDiv, ContentDiv, FormDiv, ImageDiv, RegisterForm, TitleH2 } from './styles';
-import { LockFilled, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 
 const Signup = () => {
   const [form] = Form.useForm();
@@ -33,11 +33,10 @@ const Signup = () => {
             <Form.Item label={<LockOutlined />} {...config[FormItem.CONFIRM]}>
               <Input.Password placeholder="Repeat Password" />
             </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
+
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
           </RegisterForm>
         </FormDiv>
         <ImageDiv>Image</ImageDiv>

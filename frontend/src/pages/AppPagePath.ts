@@ -1,6 +1,8 @@
 export enum AppPagePath {
   ROOT = '/',
   HOME = 'home',
+  CONTACT = 'contact',
+  ABOUT = 'about',
   SIGNIN = 'signin',
   SIGNUP = 'signup',
   SUCCESS = '/success',

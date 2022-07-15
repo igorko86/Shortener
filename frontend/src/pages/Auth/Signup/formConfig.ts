@@ -1,5 +1,6 @@
 import { StoreValue } from 'antd/lib/form/interface';
 import { InternalFormInstance, RuleObject } from 'rc-field-form/lib/interface';
+import { formFormat } from '../../../shared/regexes';
 
 export enum FormItem {
   EMAIL = 'email',
@@ -8,22 +9,24 @@ export enum FormItem {
   CONFIRM = 'confirm',
 }
 
+const INPUT_FIELD_REQUIRED = 'Input field required';
+
 export const config: Record<FormItem, any> = {
   [FormItem.NAME]: {
     name: FormItem.NAME,
     required: true,
-    rules: [{ required: true, message: 'Please input field!', whitespace: true }],
+    rules: [{ required: true, message: INPUT_FIELD_REQUIRED, whitespace: true }],
   },
   [FormItem.EMAIL]: {
     name: FormItem.EMAIL,
     rules: [
       {
         type: FormItem.EMAIL,
-        message: 'The email is not valid!',
+        message: 'Email address is invalid',
       },
       {
         required: true,
-        message: 'Please input your E-mail!',
+        message: INPUT_FIELD_REQUIRED,
       },
     ],
   },
@@ -32,10 +35,18 @@ export const config: Record<FormItem, any> = {
     hasFeedback: true,
     rules: [
       {
-        whitespace: true,
         required: true,
-        message: 'Please input your password!',
+        message: INPUT_FIELD_REQUIRED,
       },
+      () => ({
+        validator(_: RuleObject, value: StoreValue) {
+          if (!value || formFormat.test(value)) {
+            return Promise.resolve();
+          }
+
+          return Promise.reject(new Error('At least 8 characters, 1 - uppercase, 1 - lowercase letter, 1 - number.'));
+        },
+      }),
     ],
   },
   [FormItem.CONFIRM]: {
@@ -45,7 +56,7 @@ export const config: Record<FormItem, any> = {
     rules: [
       {
         required: true,
-        message: 'Please confirm your password!',
+        message: INPUT_FIELD_REQUIRED,
       },
       ({ getFieldValue }: InternalFormInstance) => ({
         validator(_: RuleObject, value: StoreValue) {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { AppPagePath } from '../AppPagePath';
+import { AuthNavDiv, SinkInLink, SinkUpLink } from './styles';
 
 const Auth = () => {
   const isAuth = false;
@@ -9,10 +9,11 @@ const Auth = () => {
       {isAuth ? (
         <div>User</div>
       ) : (
-        <>
-          <Link to={AppPagePath.SIGNIN}>Sign in</Link>
-          <Link to={AppPagePath.SIGNUP}>Sign up</Link>
-        </>
+        <AuthNavDiv>
+          <SinkInLink to={AppPagePath.SIGNIN}>Sign in</SinkInLink>
+
+          <SinkUpLink to={AppPagePath.SIGNUP}>Sign up</SinkUpLink>
+        </AuthNavDiv>
       )}
     </div>
   );
