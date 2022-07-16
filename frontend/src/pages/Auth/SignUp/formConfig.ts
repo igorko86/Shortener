@@ -15,7 +15,7 @@ export enum FormItem {
   TYPE = 'type',
 }
 
-const INPUT_FIELD_REQUIRED = 'Input field required';
+export const INPUT_FIELD_REQUIRED = 'Input field required';
 
 export const config: Record<FormItem, any> = {
   [FormItem.NAME]: {

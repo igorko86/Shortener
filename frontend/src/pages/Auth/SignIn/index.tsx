@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input } from 'antd';
 import { LockFilled, MailOutlined } from '@ant-design/icons';
@@ -10,7 +11,6 @@ import { useSignIpMutation } from '../../../shared/graphql/auth/useAuthMutations
 import { ContainerDiv, ContentDiv, RegBlkDiv, FormImage, ImgBlkDiv, TitleH2 } from '../styles';
 import { SIgnInForm, ActionDiv, ErrorDiv, ItemWrapperDiv } from './styles';
 import { INPUT_FIELD_REQUIRED } from '../SignUp/formConfig';
-import { useEffect, useState } from 'react';
 
 const SignIn = () => {
   const [form] = Form.useForm();
