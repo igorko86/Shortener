@@ -4,14 +4,14 @@ import { LockFilled, LockOutlined, MailOutlined, UserOutlined, UserSwitchOutline
 
 import Button from '../../../components/Button';
 import RadioButton from '../../../components/RadioButton';
-import FormImg from '../../../assets/img/form.png';
+import signUpImg from '../../../assets/img/signUp.png';
 import { config, FormItem, UserType } from './formConfig';
 import { AppPagePath } from '../../AppPagePath';
 import { useSignUpMutation } from '../../../shared/graphql/auth/useAuthMutations';
 
-import { ContainerDiv, ContentDiv, RegBlkDiv, FormImage, RegisterForm, ImgBlkDiv, TitleDiv } from './styles';
+import { ContainerDiv, ContentDiv, RegBlkDiv, FormImage, AuthForm, ImgBlkDiv, TitleH2 } from '../styles';
 
-const Signup = () => {
+const SignUp = () => {
   const [form] = Form.useForm();
   const [signUp, { loading }] = useSignUpMutation();
 
@@ -25,18 +25,13 @@ const Signup = () => {
     <ContainerDiv>
       <ContentDiv>
         <RegBlkDiv>
-          <TitleDiv>
-            <h2>Sign Up</h2>
-            <span>
-              Already have an account? <Link to={`/${AppPagePath.SIGNIN}`}>Sign in</Link>
-            </span>
-          </TitleDiv>
-          <RegisterForm onFinish={submit} form={form} name="register" scrollToFirstError autoComplete="off">
+          <TitleH2>Sign Up</TitleH2>
+          <AuthForm onFinish={submit} form={form} name="register" scrollToFirstError autoComplete="off">
             <Form.Item label={<UserOutlined />} {...config[FormItem.NAME]}>
               <Input placeholder="Your Name" />
             </Form.Item>
             <Form.Item label={<MailOutlined />} {...config[FormItem.EMAIL]}>
-              <Input placeholder="Yor Email" />
+              <Input placeholder="Your Email" />
             </Form.Item>
             <Form.Item label={<LockFilled />} {...config[FormItem.PASSWORD]}>
               <Input.Password placeholder="Password" />
@@ -53,14 +48,17 @@ const Signup = () => {
             <Button type="primary" htmlType="submit" loading={loading}>
               Submit
             </Button>
-          </RegisterForm>
+          </AuthForm>
         </RegBlkDiv>
         <ImgBlkDiv>
-          <FormImage src={FormImg} alt="Study" />
+          <FormImage src={signUpImg} alt="Study" />
+          <span>
+            Already have an account? <Link to={`/${AppPagePath.SIGNIN}`}>Sign in</Link>
+          </span>
         </ImgBlkDiv>
       </ContentDiv>
     </ContainerDiv>
   );
 };
 
-export default Signup;
+export default SignUp;
