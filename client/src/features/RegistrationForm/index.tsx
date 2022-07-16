@@ -38,7 +38,7 @@ const RegistrationForm: FC = () => {
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Register
+          Submit
         </Button>
       </Form.Item>
     </Form>

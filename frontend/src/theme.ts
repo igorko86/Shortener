@@ -29,13 +29,13 @@ const theme: DefaultTheme = {
     light2: '#6993b8',
     light1: '#456f93',
     dark1: '#294257',
-    dark2: '#253a4e',
+    dark2: '#253a4e', // background: header, footer
     dark3: '#203344',
     dark4: '#1b2c3a',
     dark5: '#172531',
     white: '#fff',
     black: '#000',
-    theme: '#2e4a62',
+    theme: '#2e4a62', // background: button
     grey: '#808080',
     green: '#008000',
     red: '#ff0000',

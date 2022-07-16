@@ -11,12 +11,8 @@ interface IProps {
   backgroundHover?: string;
 }
 
-const Button: FC<IProps & ButtonProps> = ({ text, children, backgroundHover, ...props }) => {
-  return (
-    <ButtonStyle {...props} $backgroundHover={backgroundHover}>
-      {text || children}
-    </ButtonStyle>
-  );
+const Button: FC<IProps & ButtonProps> = ({ text, children, ...props }) => {
+  return <ButtonStyle {...props}>{text || children}</ButtonStyle>;
 };
 
 export default Button;

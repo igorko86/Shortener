@@ -1,0 +1,9 @@
+overwrite: true
+watch: true
+schema: "http://localhost:3001/graphql"
+generates:
+  src/generated/graphql-backend.ts:
+    schema: ./src/graphql/**/schema
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"

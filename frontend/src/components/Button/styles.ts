@@ -1,36 +1,40 @@
+import styled from 'styled-components';
 import { Button as ButtonAnt } from 'antd';
 
-import styled from 'styled-components';
-
-export interface IButtonStyle {
-  $backgroundHover?: string;
-}
-export const ButtonStyle = styled(ButtonAnt)<IButtonStyle>`
+export const ButtonStyle = styled(ButtonAnt)`
   min-width: 80px;
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.black};
-  background: 0;
+  color: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.theme};
   line-height: 1;
   border: 0;
   border-radius: 5px;
+  box-shadow: none;
+  text-shadow: none;
 
   &.ant-btn[disabled],
   &.ant-btn[disabled]:hover,
   &.ant-btn[disabled]:focus,
   &.ant-btn[disabled]:active {
-    background: ${({ $backgroundHover, theme }) => $backgroundHover || theme.colors.light2};
+    background: ${({ theme }) => theme.colors.theme};
     color: ${({ theme }) => theme.colors.white};
-
+    opacity: 0.3;
     border: none;
   }
 
-  &:hover {
-    background: ${({ $backgroundHover, theme }) => $backgroundHover || theme.colors.light1};
-    color: ${({ theme }) => theme.colors.white};
+  &.ant-btn-primary:focus {
+    background: ${({ theme }) => theme.colors.theme};
+    border: 0;
   }
 
-  &:active {
-    background: ${({ $backgroundHover, theme }) => $backgroundHover || theme.colors.light2};
-    color: ${({ theme }) => theme.colors.white};
+  &.ant-btn-primary:hover,
+  &.ant-btn:hover {
+    background: ${({ theme }) => theme.colors.light1};
+    border: 0;
+  }
+
+  &.ant-btn-primary:active {
+    background: ${({ theme }) => theme.colors.theme};
+    border: 0;
   }
 `;
