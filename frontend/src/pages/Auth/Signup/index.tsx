@@ -1,10 +1,14 @@
-import { Form, Input } from 'antd';
-import { LockFilled, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import { Form, Input, Radio } from 'antd';
+import { LockFilled, LockOutlined, MailOutlined, UserOutlined, UserSwitchOutlined } from '@ant-design/icons';
 
 import Button from '../../../components/Button';
+import RadioButton from '../../../components/RadioButton';
+import FormImg from '../../../assets/img/form.png';
 import { config, FormItem } from './formConfig';
+import { AppPagePath } from '../../AppPagePath';
 
-import { ContainerDiv, ContentDiv, FormDiv, ImageDiv, RegisterForm, TitleH2 } from './styles';
+import { ContainerDiv, ContentDiv, RegBlkDiv, FormImage, RegisterForm, ImgBlkDiv, TitleDiv } from './styles';
 
 const Signup = () => {
   const [form] = Form.useForm();
@@ -12,8 +16,13 @@ const Signup = () => {
   return (
     <ContainerDiv>
       <ContentDiv>
-        <FormDiv>
-          <TitleH2>Sign Up</TitleH2>
+        <RegBlkDiv>
+          <TitleDiv>
+            <h2>Sign Up</h2>
+            <span>
+              Already have an account? <Link to={`/${AppPagePath.SIGNIN}`}>Sign in</Link>
+            </span>
+          </TitleDiv>
           <RegisterForm
             onFinish={() => console.log('SUBMIT')}
             form={form}
@@ -33,13 +42,20 @@ const Signup = () => {
             <Form.Item label={<LockOutlined />} {...config[FormItem.CONFIRM]}>
               <Input.Password placeholder="Repeat Password" />
             </Form.Item>
-
+            <Form.Item label={<UserSwitchOutlined />} {...config[FormItem.TYPE]}>
+              <Radio.Group>
+                <RadioButton value="tutor">Tutor</RadioButton>
+                <RadioButton value="user">User</RadioButton>
+              </Radio.Group>
+            </Form.Item>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </RegisterForm>
-        </FormDiv>
-        <ImageDiv>Image</ImageDiv>
+        </RegBlkDiv>
+        <ImgBlkDiv>
+          <FormImage src={FormImg} alt="Study" />
+        </ImgBlkDiv>
       </ContentDiv>
     </ContainerDiv>
   );

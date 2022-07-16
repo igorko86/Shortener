@@ -11,23 +11,31 @@ export const ContainerDiv = styled.div`
 
 export const ContentDiv = styled.div`
   display: flex;
+  gap: 20px;
   padding: 75px 40px;
 `;
 
-export const FormDiv = styled.div`
-  width: 60%;
-  margin-right: 20px;
-`;
-
-export const ImageDiv = styled.div`
+export const RegBlkDiv = styled.div`
   width: 50%;
-  border: 1px solid red;
 `;
 
-// Form styles
+export const ImgBlkDiv = styled(RegBlkDiv)`
+  display: flex;
+`;
 
-export const TitleH2 = styled.h2`
+// Register Form styles
+
+export const TitleDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 33px;
+  h2 {
+    font-size: 30px;
+  }
+  span {
+    display: inline-block;
+  }
 `;
 
 export const RegisterForm = styled(Form)`
@@ -39,14 +47,15 @@ export const RegisterForm = styled(Form)`
     content: none;
   }
 
+  .ant-form-item-with-help,
   .ant-form-item {
     max-width: 100%;
     border-bottom: 1px solid black;
-    margin-bottom: 30px;
+    margin-bottom: 45px;
   }
 
-  .ant-form-item-with-help {
-    margin-bottom: 30px;
+  .ant-form-item:last-of-type {
+    border-bottom: 0;
   }
 
   .ant-form-item-explain.ant-form-item-explain-connected {
@@ -79,7 +88,24 @@ export const RegisterForm = styled(Form)`
     font-size: 20px;
   }
 
-  button {
-    margin-top: 20px;
+  .ant-radio-wrapper,
+  .ant-form-item-control-input-content input {
+    font-size: 16px;
   }
+
+  .ant-radio-group.ant-radio-group-outline {
+    margin-left: 10px;
+  }
+
+  button {
+    min-width: 120px;
+    min-height: 42px;
+  }
+`;
+
+// Image styles
+
+export const FormImage = styled.img`
+  width: 100%;
+  margin: auto;
 `;

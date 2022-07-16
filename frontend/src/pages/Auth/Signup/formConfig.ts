@@ -7,6 +7,7 @@ export enum FormItem {
   NAME = 'name',
   PASSWORD = 'password',
   CONFIRM = 'confirm',
+  TYPE = 'type',
 }
 
 const INPUT_FIELD_REQUIRED = 'Input field required';
@@ -67,5 +68,10 @@ export const config: Record<FormItem, any> = {
         },
       }),
     ],
+  },
+  [FormItem.TYPE]: {
+    name: FormItem.TYPE,
+    required: true,
+    rules: [{ required: true, message: 'Account type required', whitespace: true }],
   },
 };

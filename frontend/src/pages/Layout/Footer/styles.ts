@@ -6,5 +6,5 @@ export const AppWrapperDiv = styled.div`
 
 export const AppFooter = styled.footer`
   min-height: 80px;
-  background: ${({ theme }) => theme.colors.dark3};
+  background: ${({ theme }) => theme.colors.dark2};
 `;
