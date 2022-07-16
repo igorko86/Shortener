@@ -5,13 +5,21 @@ import { LockFilled, LockOutlined, MailOutlined, UserOutlined, UserSwitchOutline
 import Button from '../../../components/Button';
 import RadioButton from '../../../components/RadioButton';
 import FormImg from '../../../assets/img/form.png';
-import { config, FormItem } from './formConfig';
+import { config, FormItem, UserType } from './formConfig';
 import { AppPagePath } from '../../AppPagePath';
+import { useSignUpMutation } from '../../../shared/graphql/auth/useAuthMutations';
 
 import { ContainerDiv, ContentDiv, RegBlkDiv, FormImage, RegisterForm, ImgBlkDiv, TitleDiv } from './styles';
 
 const Signup = () => {
   const [form] = Form.useForm();
+  const [signUp, { loading }] = useSignUpMutation();
+
+  const submit = (values: any) => {
+    const { name, type, password, email } = values;
+
+    signUp({ variables: { name, type, password, email } });
+  };
 
   return (
     <ContainerDiv>
@@ -23,13 +31,7 @@ const Signup = () => {
               Already have an account? <Link to={`/${AppPagePath.SIGNIN}`}>Sign in</Link>
             </span>
           </TitleDiv>
-          <RegisterForm
-            onFinish={() => console.log('SUBMIT')}
-            form={form}
-            name="register"
-            scrollToFirstError
-            autoComplete="off"
-          >
+          <RegisterForm onFinish={submit} form={form} name="register" scrollToFirstError autoComplete="off">
             <Form.Item label={<UserOutlined />} {...config[FormItem.NAME]}>
               <Input placeholder="Your Name" />
             </Form.Item>
@@ -44,11 +46,11 @@ const Signup = () => {
             </Form.Item>
             <Form.Item label={<UserSwitchOutlined />} {...config[FormItem.TYPE]}>
               <Radio.Group>
-                <RadioButton value="tutor">Tutor</RadioButton>
-                <RadioButton value="user">User</RadioButton>
+                <RadioButton value={UserType.Tutor}>Tutor</RadioButton>
+                <RadioButton value={UserType.User}>User</RadioButton>
               </Radio.Group>
             </Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={loading}>
               Submit
             </Button>
           </RegisterForm>
