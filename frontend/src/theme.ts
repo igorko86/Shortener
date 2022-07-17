@@ -33,9 +33,9 @@ const theme: DefaultTheme = {
     dark3: '#203344',
     dark4: '#1b2c3a',
     dark5: '#172531',
+    theme: '#2e4a62', // background: button
     white: '#fff',
     black: '#000',
-    theme: '#2e4a62', // background: button
     grey: '#808080',
     green: '#008000',
     red: '#ff0000',

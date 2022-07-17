@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { Link as RoutLink } from 'react-router-dom';
 import { Form } from 'antd';
 
+import { theme } from '../../theme';
+import { DEVICE } from '../../shared/constants';
+
 export const AuthNavDiv = styled.div`
   display: flex;
   align-items: center;
@@ -9,19 +12,19 @@ export const AuthNavDiv = styled.div`
 `;
 
 export const SinkInLink = styled(RoutLink)`
-  color: ${({ theme }) => theme.colors.white};
+  color: ${theme.colors.white};
   &:hover {
-    color: ${({ theme }) => theme.colors.light4};
+    color: ${theme.colors.light4};
   }
 `;
 
 export const SinkUpLink = styled(SinkInLink)`
   padding: 5px 8px;
   border-radius: 6px;
-  border: 1px solid ${({ theme }) => theme.colors.white};
+  border: 1px solid ${theme.colors.white};
   &:hover {
-    color: ${({ theme }) => theme.colors.light4};
-    border-color: ${({ theme }) => theme.colors.light4};
+    color: ${theme.colors.light4};
+    border-color: ${theme.colors.light4};
   }
 `;
 
@@ -30,31 +33,37 @@ export const ContainerDiv = styled.div`
   background: #fff;
   margin: 0 auto;
   box-shadow: 0px 15px 16.83px 0.17px rgb(0 0 0 / 5%);
-  background: ${({ theme }) => theme.colors.light5};
+  background: ${theme.colors.light5};
+
+  @media ${DEVICE.laptop} {
+    width: calc(100% - 30px);
+  } ;
 `;
 
 export const ContentDiv = styled.div`
   display: flex;
   gap: 20px;
   padding: 75px 40px;
+
+  @media ${DEVICE.tablet} {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const RegBlkDiv = styled.div`
   width: 50%;
-`;
 
-export const ImgBlkDiv = styled(RegBlkDiv)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-
-  span {
-    margin-top: 30px;
+  @media ${DEVICE.tablet} {
+    width: 70%;
+  }
+  @media (max-width: 575px) {
+    width: 85%;
+  }
+  @media ${DEVICE.mobileL} {
+    width: 100%;
   }
 `;
-
-// Register Form styles
 
 export const TitleH2 = styled.h2`
   font-size: 30px;
@@ -73,7 +82,7 @@ export const AuthForm = styled(Form)`
   .ant-form-item-with-help,
   .ant-form-item {
     max-width: 100%;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.black};
+    border-bottom: 1px solid ${theme.colors.black};
     margin-bottom: 45px;
   }
 
@@ -104,7 +113,7 @@ export const AuthForm = styled(Form)`
     border: none;
     box-shadow: none;
     border-right-width: 0;
-    background: ${({ theme }) => theme.colors.light5};
+    background: ${theme.colors.light5};
   }
 
   .ant-form-item-label > label > .anticon {
@@ -121,8 +130,19 @@ export const AuthForm = styled(Form)`
   }
 
   .ant-radio-inner {
-    background: ${({ theme }) => theme.colors.light5};
-    border-color: ${({ theme }) => theme.colors.light2};
+    background: ${theme.colors.light5};
+    border-color: ${theme.colors.light2};
+  }
+
+  @media ${DEVICE.tablet} {
+    &.ant-form .ant-form-item .ant-form-item-label,
+    &.ant-form .ant-form-item .ant-form-item-control {
+      flex: none;
+    }
+
+    & .ant-col.ant-form-item-control {
+      width: calc(100% - 20px);
+    }
   }
 
   button {
@@ -133,6 +153,19 @@ export const AuthForm = styled(Form)`
 
 // Image styles
 
-export const FormImage = styled.img`
+export const ImgBlkDiv = styled(RegBlkDiv)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span {
+    margin: 10px 0;
+  }
+`;
+
+export const AuthImage = styled.img`
   width: 100%;
+  @media ${DEVICE.tablet} {
+    display: none;
+  }
 `;

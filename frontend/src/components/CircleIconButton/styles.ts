@@ -1,7 +1,7 @@
+import styled from 'styled-components';
 import { Button as ButtonAnt } from 'antd';
 
-import styled from 'styled-components';
-import Button from '../Button';
+import { theme } from '../../theme';
 
 export interface IButtonStyle {
   $backgroundHover?: string;
@@ -14,11 +14,11 @@ export const CircleButton = styled(ButtonAnt)<IButtonStyle>`
   &.ant-btn:active {
     min-width: 20px;
     padding: 0;
-    color: ${({ theme }) => theme.colors.white};
+    color: ${theme.colors.white};
     background: transparent;
+    height: 30px;
     border: none;
     svg {
-      height: 30px;
       width: 30px;
     }
   }
@@ -32,10 +32,10 @@ export const CircleButton = styled(ButtonAnt)<IButtonStyle>`
   &.ant-btn[disabled]:focus,
   &.ant-btn[disabled]:active {
     background: transparent;
-    color: ${({ theme }) => theme.colors.white};
+    color: ${theme.colors.white};
     border: none;
     svg {
-      fill: ${({ theme }) => theme.colors.grey};
+      fill: ${theme.colors.grey};
     }
   }
 `;

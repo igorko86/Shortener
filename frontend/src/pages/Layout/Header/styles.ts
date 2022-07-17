@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
+import { theme } from '../../../theme';
+
 export const AppHeader = styled.header`
-  background: ${({ theme }) => theme.colors.dark2};
+  background: ${theme.colors.dark2};
 `;
 
 export const HeaderContentDiv = styled.div`
@@ -22,13 +24,13 @@ export const NavListUl = styled.ul`
 `;
 
 export const ItemNavLink = styled(NavLink)`
-  color: ${({ theme }) => theme.colors.white};
+  color: ${theme.colors.white};
   font-size: 16px;
   &:hover {
-    color: ${({ theme }) => theme.colors.light4};
+    color: ${theme.colors.light4};
   }
   &.active {
     font-weight: 600;
-    border-bottom: 2px solid ${({ theme }) => theme.colors.light5};
+    border-bottom: 2px solid ${theme.colors.light5};
   }
 `;

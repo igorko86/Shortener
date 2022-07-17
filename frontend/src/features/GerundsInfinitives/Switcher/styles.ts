@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-import Button from '../../../components/Button';
+import { theme } from '../../../theme';
 
 export const SwitcherDiv = styled.div`
   height: 50px;
-  background: ${({ theme }) => theme.colors.theme};
+  background: ${theme.colors.theme};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,5 +20,5 @@ export const Div = styled.div`
 
 export const TextDiv = styled.div`
   font-size: 20px;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${theme.colors.white};
 `;

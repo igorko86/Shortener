@@ -7,10 +7,10 @@ import Button from '../../../components/Button';
 import signInImg from '../../../assets/img/signIn.png';
 import { AppPagePath } from '../../AppPagePath';
 import { useSignIpMutation } from '../../../shared/graphql/auth/useAuthMutations';
-
-import { ContainerDiv, ContentDiv, RegBlkDiv, FormImage, ImgBlkDiv, TitleH2 } from '../styles';
-import { SIgnInForm, ActionDiv, ErrorDiv, ItemWrapperDiv } from './styles';
 import { INPUT_FIELD_REQUIRED } from '../SignUp/formConfig';
+
+import { ContainerDiv, RegBlkDiv, AuthImage, ImgBlkDiv, TitleH2 } from '../styles';
+import { SIgnInForm, ActionDiv, ErrorDiv, ItemWrapperDiv, SignInContentDiv } from './styles';
 
 const SignIn = () => {
   const [form] = Form.useForm();
@@ -39,9 +39,9 @@ const SignIn = () => {
 
   return (
     <ContainerDiv>
-      <ContentDiv>
+      <SignInContentDiv>
         <ImgBlkDiv>
-          <FormImage src={signInImg} alt="Study" />
+          <AuthImage src={signInImg} alt="Study" />
           <span>
             Create account? <Link to={`/${AppPagePath.SIGNUP}`}>Sign up</Link>
           </span>
@@ -83,7 +83,7 @@ const SignIn = () => {
             </ActionDiv>
           </SIgnInForm>
         </RegBlkDiv>
-      </ContentDiv>
+      </SignInContentDiv>
     </ContainerDiv>
   );
 };

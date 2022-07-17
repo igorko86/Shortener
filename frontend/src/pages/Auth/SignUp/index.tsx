@@ -9,7 +9,8 @@ import { config, FormItem, UserType } from './formConfig';
 import { AppPagePath } from '../../AppPagePath';
 import { useSignUpMutation } from '../../../shared/graphql/auth/useAuthMutations';
 
-import { ContainerDiv, ContentDiv, RegBlkDiv, FormImage, AuthForm, ImgBlkDiv, TitleH2 } from '../styles';
+import { ContainerDiv, ContentDiv, RegBlkDiv, AuthImage, AuthForm, ImgBlkDiv, TitleH2 } from '../styles';
+import { ImageWrapperDiv } from './styles';
 
 const SignUp = () => {
   const [form] = Form.useForm();
@@ -51,7 +52,9 @@ const SignUp = () => {
           </AuthForm>
         </RegBlkDiv>
         <ImgBlkDiv>
-          <FormImage src={signUpImg} alt="Study" />
+          <ImageWrapperDiv>
+            <AuthImage src={signUpImg} alt="Study" />
+          </ImageWrapperDiv>
           <span>
             Already have an account? <Link to={`/${AppPagePath.SIGNIN}`}>Sign in</Link>
           </span>
