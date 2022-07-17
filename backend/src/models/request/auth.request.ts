@@ -1,11 +1,9 @@
-import { Role } from '../../services/interfaces';
+import { UserType } from '../../services/interfaces';
 
 export interface IAuthRegistrationRequest {
   name: string;
   email: string;
   password: string;
-  role: Role;
-  tutorId?: string;
 }
 
 export type ITutorRequest = IAuthRegistrationRequest;
@@ -19,4 +17,11 @@ export interface IForgotPasswordRequest {
 export interface IResetPasswordRequest {
   password: string;
   id: string;
+}
+
+export interface ISignUpRequest {
+  name: string;
+  email: string;
+  password: string;
+  type: UserType;
 }

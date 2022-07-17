@@ -43,7 +43,7 @@ const SignUp = () => {
             <Form.Item label={<UserSwitchOutlined />} {...config[FormItem.TYPE]}>
               <Radio.Group>
                 <RadioButton value={UserType.Tutor}>Tutor</RadioButton>
-                <RadioButton value={UserType.User}>User</RadioButton>
+                <RadioButton value={UserType.Learner}>Learner</RadioButton>
               </Radio.Group>
             </Form.Item>
             <Button type="primary" htmlType="submit" loading={loading}>

@@ -13,7 +13,7 @@ export interface RegistrationData {
 }
 
 const SIGNUP_MUTATION = gql`
-  mutation SignUpMutation($email: String!, $password: String!, $name: String!, $type: String!) {
+  mutation signUp($email: String!, $password: String!, $name: String!, $type: String!) {
     signup(email: $email, password: $password, name: $name, type: $type) {
       token
     }

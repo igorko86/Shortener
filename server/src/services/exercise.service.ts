@@ -77,8 +77,8 @@ class ExerciseService {
   async getExercisesByUserId(userId: string, search: string): Promise<IGetExerciseListResponse[]> {
     const tutor = await Tutor.createQueryBuilder('tutor')
       .select('tutor.id')
-      .leftJoin('tutor.user', 'user')
-      .where('user.id = :userId', { userId })
+      .leftJoin('tutor.auth', 'user')
+      .where('auth.id = :userId', { userId })
       .getOne();
 
     const query = Exercise.createQueryBuilder('exercise').select([

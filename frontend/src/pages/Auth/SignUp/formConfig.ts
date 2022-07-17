@@ -3,7 +3,7 @@ import { InternalFormInstance, RuleObject } from 'rc-field-form/lib/interface';
 import { formFormat } from '../../../shared/regexes';
 
 export enum UserType {
-  User = 'user',
+  Learner = 'learner',
   Tutor = 'tutor',
 }
 

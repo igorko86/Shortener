@@ -139,3 +139,8 @@ export enum Type {
   Public = 'public',
   Private = 'private',
 }
+
+export enum UserType {
+  Tutor = 'tutor',
+  Learner = 'learner',
+}

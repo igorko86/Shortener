@@ -34,7 +34,7 @@ class StudentService {
   async addNewStudent(data: IAddNewStudentRequest): Promise<void> {
     const { email, name, groupId, userId } = data;
 
-    let userData = await User.findOne({ email });
+    const userData = await User.findOne({ email });
 
     if (userData && userData.id === userId) {
       throw apiErrorService.badRequest(`Sorry, you can not add a user with such email.`);
@@ -50,13 +50,6 @@ class StudentService {
       if (!userTutor || !tutor) {
         throw apiErrorService.badRequest(`Something went wrong!`);
       }
-
-      userData = await authService.register({
-        email,
-        password,
-        name,
-        role,
-      });
 
       const newStudent = await this.#createStudent({ name, user: userData, tutor });
       const link = `${process.env.SERVER_URL}${ACTIVATION}/${role}/${userData.id}`;

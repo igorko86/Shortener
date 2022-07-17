@@ -1,8 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
-import { Role } from '../../services/interfaces';
-import { Student } from './Student';
+import { UserType } from '../../services/interfaces';
 
 @Entity('user')
 export class User extends CreateUpdateDate {
@@ -22,14 +21,10 @@ export class User extends CreateUpdateDate {
 
   @Column({
     type: 'enum',
-    enum: Role,
-    default: Role.Viewer,
+    enum: UserType,
   })
-  role: Role;
+  type: UserType;
 
   @Column({ default: false, name: 'is_active' })
   isActive: boolean;
-
-  @OneToMany(() => Student, (student) => student.user)
-  students: Student[];
 }

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import tokenService from './token.service';
 import { IGenerateTokensResult, Role } from './interfaces';
-import { IAuthLoginRequest, IResetPasswordRequest, IUserRequest } from 'src/models/request/auth.request';
+import { IAuthLoginRequest, IResetPasswordRequest, ISignUpRequest } from 'src/models/request/auth.request';
 import ApiErrorService from './apiError.service';
 import apiErrorService from './apiError.service';
 import { Token } from '../db/entites/Token';
@@ -13,12 +13,10 @@ import { ACTIVATION, RESET_PASSWORD } from './common/links';
 import { forgotPasswordMailHtml, registerMailHtml } from './common/mailHtmls';
 import mailService from './mail.service';
 import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, LOGIN_ERROR } from './constants';
-import { Tutor } from '../db/entites/Tutor';
 
 class AuthService {
-  async register(data: IUserRequest): Promise<User> {
-    const { name: userName, email: userEmail, password, role } = data;
-
+  async register(data: ISignUpRequest): Promise<User> {
+    const { name: userName, email: userEmail, password, type } = data;
     const user = await User.findOne({ email: userEmail });
 
     if (user) {
@@ -30,23 +28,14 @@ class AuthService {
       email: userEmail,
       password: hashPassword,
       name: userName,
-      role: role,
+      type,
     });
     const savedUser = await newUser.save();
+    const { id, email } = savedUser;
+    const link = `${process.env.SERVER_URL}${ACTIVATION}/${id}`;
+    const html = registerMailHtml({ link });
 
-    const newTutor = Tutor.create({
-      name: userName,
-      user: savedUser,
-    });
-    await newTutor.save();
-
-    if (role === Role.Viewer) {
-      const { id, email } = savedUser;
-      const link = `${process.env.SERVER_URL}${ACTIVATION}/${role}/${id}`;
-      const html = registerMailHtml({ link });
-
-      await mailService.sendActivationMail(email, html);
-    }
+    await mailService.sendActivationMail(email, html);
 
     return savedUser;
   }
@@ -77,7 +66,7 @@ class AuthService {
       throw ApiErrorService.badRequest(LOGIN_ERROR);
     }
 
-    return await tokenService.generateSaveTokens(user);
+    return tokenService.generateSaveTokens(user);
   }
 
   async logout(refreshToken: string) {
@@ -105,7 +94,7 @@ class AuthService {
       throw ApiErrorService.unauthorized();
     }
 
-    return await tokenService.generateSaveTokens(user);
+    return tokenService.generateSaveTokens(user);
   }
 
   async forgotPassword(email: string): Promise<void> {
@@ -144,7 +133,7 @@ class AuthService {
     if (!user) {
       throw ApiErrorService.badRequest('User does not exist');
     }
-    await User.update(userId, { role });
+    // await User.update(userId);
 
     const userData = await User.findOne(userId);
 
@@ -152,7 +141,7 @@ class AuthService {
       throw ApiErrorService.badRequest('User does not exist');
     }
 
-    return await tokenService.generateSaveTokens(userData);
+    return tokenService.generateSaveTokens(userData);
   }
 }
 

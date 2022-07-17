@@ -2,7 +2,7 @@ export const registerMailHtml = ({ link }: { link: string }) => {
   return `
         <div>
             <h1>To activate, follow the link</h1>
-            <a href="${link}">${link}</a>
+            <a href="${link}">here</a>
         </div>
       `;
 };
