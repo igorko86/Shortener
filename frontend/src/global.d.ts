@@ -9,3 +9,5 @@ declare module '*.png' {
 declare module '*.svg' {
   export default '' as string;
 }
+
+declare module '@ant-design/icons';

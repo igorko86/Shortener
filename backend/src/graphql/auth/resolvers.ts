@@ -5,8 +5,8 @@ export const authResolvers = {
     verify: (parent: any, args: any, ctx: any) => {
       console.log(args);
       // Your verification logic
-      ctx.res.redirect('https://www.google.com')
-    }
+      ctx.res.redirect('https://www.google.com');
+    },
   },
   Mutation: {
     signUp: async (parent: any, args: any) => {
@@ -25,7 +25,7 @@ export const authResolvers = {
     verify: (parent: any, args: any, ctx: any) => {
       console.log(args);
       // Your verification logic
-      ctx.res.redirect('https://www.google.com')
-    }
+      ctx.res.redirect('https://www.google.com');
+    },
   },
 };
