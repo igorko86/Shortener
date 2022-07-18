@@ -1,4 +1,4 @@
-export const userTypeDefs = `
+export const authTypeDefs = `
     type User {
         id: String
         name: String
@@ -8,8 +8,9 @@ export const userTypeDefs = `
     }
 
     type Query {
-        getAllUsers: [User],
-        getUser(id: Int!): User
+       getUser(id: Int!): User
+       verify: Boolean
+
     }
 
     input SignUpInput {
@@ -27,6 +28,7 @@ export const userTypeDefs = `
     type Mutation {
         signUp(input: SignUpInput!): User!
         signIn(input: SignUpInput!): User!
-        activate: User!
+               verify: Boolean
+
     }
 `;

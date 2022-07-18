@@ -15,7 +15,7 @@ import mailService from './mail.service';
 import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, LOGIN_ERROR } from './constants';
 
 class AuthService {
-  async register(data: ISignUpRequest): Promise<User> {
+  async register(data: ISignUpRequest): Promise<void> {
     const { name: userName, email: userEmail, password, type } = data;
     const user = await User.findOne({ email: userEmail });
 
@@ -32,12 +32,13 @@ class AuthService {
     });
     const savedUser = await newUser.save();
     const { id, email } = savedUser;
-    const link = `${process.env.SERVER_URL}${ACTIVATION}/${id}`;
+    // const link = `${process.env.SERVER_URL}/graphql#mutation={verify}`;
+    const link = `http://localhost:3000`;
     const html = registerMailHtml({ link });
 
     await mailService.sendActivationMail(email, html);
 
-    return savedUser;
+    // return savedUser;
   }
 
   async activate(id: string) {

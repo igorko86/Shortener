@@ -8,15 +8,19 @@ import cors from 'cors';
 import { connectDB } from './db/connection';
 import { routes } from './routes/routes';
 import { apiErrorHandler } from './middlewares/errorHandler';
-import { userResolvers } from './graphql/auth/resolvers';
-import { userTypeDefs } from './graphql/auth/typeDefs';
+import { authResolvers } from './graphql/auth/resolvers';
+import { authTypeDefs } from './graphql/auth/typeDefs';
 
 const startApolloServer = async () => {
   const server = new ApolloServer({
-    resolvers: [userResolvers],
-    typeDefs: [userTypeDefs],
+    resolvers: [authResolvers],
+    typeDefs: [authTypeDefs],
     csrfPrevention: true,
     cache: 'bounded',
+    context: ({ req }) => {
+      // console.log(req.cookies);
+      return req;
+    },
   });
   await server.start();
   const app = express();

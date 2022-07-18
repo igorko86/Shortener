@@ -9,6 +9,7 @@ import Layout from './pages/Layout';
 
 import './App.css';
 import SignIn from './pages/Auth/SignIn';
+import Success from './pages/Success';
 <div>Sign IN</div>;
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path={AppPagePath.HOME} element={<GerundsInfinitives />} />
           <Route path={AppPagePath.CONTACT} element={<div>CONTACT</div>} />
           <Route path={AppPagePath.ABOUT} element={<div>ABOUT US</div>} />
+          <Route path={AppPagePath.SUCCESS} element={<Success />} />
           <Route path={AppPagePath.SIGNIN} element={<SignIn />} />
           <Route path={AppPagePath.SIGNUP} element={<Signup />} />
         </Route>
