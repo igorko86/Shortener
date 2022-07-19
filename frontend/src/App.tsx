@@ -6,11 +6,11 @@ import { theme } from './theme';
 import Signup from './pages/Auth/SignUp';
 import { AppPagePath } from './pages/AppPagePath';
 import Layout from './pages/Layout';
+import SignIn from './pages/Auth/SignIn';
+import Success from './pages/Auth/Success';
+import Activate from './pages/Auth/Activate';
 
 import './App.css';
-import SignIn from './pages/Auth/SignIn';
-import Success from './pages/Success';
-<div>Sign IN</div>;
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
           <Route path={AppPagePath.HOME} element={<GerundsInfinitives />} />
           <Route path={AppPagePath.CONTACT} element={<div>CONTACT</div>} />
           <Route path={AppPagePath.ABOUT} element={<div>ABOUT US</div>} />
+          <Route path={AppPagePath.ACTIVATE_SUCCESS} element={<Activate />} />
           <Route path={AppPagePath.SUCCESS} element={<Success />} />
           <Route path={AppPagePath.SIGNIN} element={<SignIn />} />
           <Route path={AppPagePath.SIGNUP} element={<Signup />} />

@@ -6,11 +6,15 @@ export const authTypeDefs = `
         type: String
         token: String
     }
+    
+    type Status {
+        status: Int
+        message: String
+    }
 
     type Query {
-       getUser(id: Int!): User
-       verify: Boolean
-
+       sayHello: String
+       activate(id: String!): Status
     }
 
     input SignUpInput {
@@ -19,16 +23,14 @@ export const authTypeDefs = `
         password: String
         type: String
     }
-    
+
     input SignInInput {
         email: String
         password: String
     }
-
+    
     type Mutation {
-        signUp(input: SignUpInput!): User!
-        signIn(input: SignUpInput!): User!
-               verify: Boolean
-
+        signUp(input: SignUpInput!): Status
+        signIn(input: SignInInput!): User!
     }
 `;

@@ -1,19 +1,30 @@
 import authService from '../../services/auth.service';
+import { ISignUpRequest } from '../../models/request/auth.request';
 
 export const authResolvers = {
   Query: {
-    verify: (parent: any, args: any, ctx: any) => {
-      console.log(args);
-      // Your verification logic
-      ctx.res.redirect('https://www.google.com');
+    sayHello: () => 'Hello App!)',
+    activate: async (_: any, args: { id: string }) => {
+      await authService.activate(args.id);
+
+      return {
+        status: 200,
+        message: 'Success',
+      };
     },
   },
   Mutation: {
-    signUp: async (parent: any, args: any) => {
+    signUp: async (_: any, args: { input: ISignUpRequest }) => {
       console.log(args);
       await authService.register(args.input);
+
+      return {
+        status: 200,
+        message: 'Success',
+      };
     },
-    signIn: (parent: any, args: any) => {
+    signIn: (_: any, args: any) => {
+      console.log(args);
       return {
         id: 123,
         name: 'String',
@@ -21,11 +32,6 @@ export const authResolvers = {
         type: 'String',
         token: 'String',
       };
-    },
-    verify: (parent: any, args: any, ctx: any) => {
-      console.log(args);
-      // Your verification logic
-      ctx.res.redirect('https://www.google.com');
     },
   },
 };

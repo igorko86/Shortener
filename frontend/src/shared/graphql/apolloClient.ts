@@ -16,7 +16,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const httpLink = createHttpLink({
   uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,
-  credentials: 'include',
+  // credentials: 'include',
 });
 
 const authLink = setContext((_, { headers }) => {

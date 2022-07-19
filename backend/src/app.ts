@@ -10,6 +10,12 @@ import { routes } from './routes/routes';
 import { apiErrorHandler } from './middlewares/errorHandler';
 import { authResolvers } from './graphql/auth/resolvers';
 import { authTypeDefs } from './graphql/auth/typeDefs';
+import { ErrorMessage, getErrorCode } from './shared/errorHandler';
+
+const corsOptions = {
+  origin: ['http://localhost:3000'],
+  credentials: true,
+};
 
 const startApolloServer = async () => {
   const server = new ApolloServer({
@@ -21,10 +27,14 @@ const startApolloServer = async () => {
       // console.log(req.cookies);
       return req;
     },
+    formatError: (err) => {
+      return getErrorCode(err.message as ErrorMessage) || err;
+    },
   });
   await server.start();
   const app = express();
 
+  // server.applyMiddleware({ app, cors: corsOptions, path: '/graphql' });
   server.applyMiddleware({ app });
   const port = (process.env.SERVER_PORT as unknown as number) || 3333;
   const client = process.env.CLIENT_URL;

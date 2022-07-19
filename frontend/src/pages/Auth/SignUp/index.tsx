@@ -19,7 +19,8 @@ const SignUp = () => {
   const submit = (values: any) => {
     const { name, type, password, email } = values;
 
-    signUp({ variables: { name, type, password, email } });
+    signUp({ variables: { input: { name, type, password, email } } });
+    // form.resetFields();
   };
 
   return (

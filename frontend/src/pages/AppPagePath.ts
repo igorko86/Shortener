@@ -6,6 +6,7 @@ export enum AppPagePath {
   SIGNIN = 'signin',
   SIGNUP = 'signup',
   SUCCESS = 'success',
+  ACTIVATE_SUCCESS = 'signup/activate',
   NEW_CARD = '/new-card',
   INFORMATION = '/information',
   STUDENTS = '/students',

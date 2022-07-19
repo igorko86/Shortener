@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import tokenService from './token.service';
 import { IGenerateTokensResult, Role } from './interfaces';
-import { IAuthLoginRequest, IResetPasswordRequest, ISignUpRequest } from 'src/models/request/auth.request';
+import { IAuthLoginRequest, IResetPasswordRequest, ISignUpRequest } from '../models/request/auth.request';
 import ApiErrorService from './apiError.service';
 import apiErrorService from './apiError.service';
 import { Token } from '../db/entites/Token';
@@ -13,6 +13,7 @@ import { ACTIVATION, RESET_PASSWORD } from './common/links';
 import { forgotPasswordMailHtml, registerMailHtml } from './common/mailHtmls';
 import mailService from './mail.service';
 import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, LOGIN_ERROR } from './constants';
+import { EXIST_EMAIL } from '../shared/errorHandler';
 
 class AuthService {
   async register(data: ISignUpRequest): Promise<void> {
@@ -20,7 +21,7 @@ class AuthService {
     const user = await User.findOne({ email: userEmail });
 
     if (user) {
-      throw apiErrorService.badRequest(`Sorry, User already exists with such email`);
+      throw new Error(EXIST_EMAIL);
     }
 
     const hashPassword = bcrypt.hashSync(String(password), 10);
@@ -32,20 +33,17 @@ class AuthService {
     });
     const savedUser = await newUser.save();
     const { id, email } = savedUser;
-    // const link = `${process.env.SERVER_URL}/graphql#mutation={verify}`;
-    const link = `http://localhost:3000`;
+    const link = `${process.env.CLIENT_URL}/signup/activate?id=${id}`;
+
     const html = registerMailHtml({ link });
-
     await mailService.sendActivationMail(email, html);
-
-    // return savedUser;
   }
 
   async activate(id: string) {
     const user = await User.findOne(id);
 
     if (!user || user.isActive) {
-      throw ApiErrorService.badRequest(ACTIVATION_LINK_ERROR);
+      throw new Error(ACTIVATION_LINK_ERROR);
     }
     user.isActive = true;
 
