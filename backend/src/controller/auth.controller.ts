@@ -11,7 +11,6 @@ class AuthController {
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.refresh = this.refresh.bind(this);
-    this.changeRole = this.changeRole.bind(this);
   }
 
   async register(req: Request, res: Response, next: NextFunction) {
@@ -85,20 +84,6 @@ class AuthController {
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken, accessToken } = await authService.refresh(req.cookies.refreshToken);
-
-      this.#setCookie(refreshToken, res);
-
-      return res.status(200).json(accessToken);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async changeRole(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { role, userId } = req.body;
-
-      const { refreshToken, accessToken } = await authService.changeUserRole(role, userId);
 
       this.#setCookie(refreshToken, res);
 

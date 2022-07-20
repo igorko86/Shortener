@@ -41,9 +41,9 @@ export const useSignUpMutation = () => {
 };
 
 const SIGNIN_MUTATION = gql`
-  mutation SignIn($email: String!, $password: String!) {
-    signIn(email: $email, password: $password) {
-      id
+  mutation SignIn($input: SignInInput!) {
+    signIn(input: $input) {
+      token
     }
   }
 `;

@@ -11,6 +11,10 @@ export const authTypeDefs = `
         status: Int
         message: String
     }
+    
+    type SignIn {
+        token: String
+    }
 
     type Query {
        sayHello: String
@@ -30,7 +34,7 @@ export const authTypeDefs = `
     }
     
     type Mutation {
-        signUp(input: SignUpInput!): Status
-        signIn(input: SignInInput!): User!
+        signUp(input: SignUpInput!): Status!
+        signIn(input: SignInInput!): SignIn!
     }
 `;

@@ -9,10 +9,4 @@ export class Token extends BaseEntity {
     name: 'refresh_token',
   })
   refreshToken: string;
-
-  @Column({
-    name: 'user_id',
-    type: 'uuid',
-  })
-  userId: string;
 }

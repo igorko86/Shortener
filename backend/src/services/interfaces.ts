@@ -15,7 +15,7 @@ export interface IUser {
   id: string;
   name: string;
   email: string;
-  role: Role;
+  type: UserType;
 }
 
 export interface ITutorData extends IGenerateTokensResult {

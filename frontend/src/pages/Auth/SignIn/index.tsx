@@ -24,11 +24,8 @@ const SignIn = () => {
   }, [error?.message]);
 
   const submit = (values: any) => {
-    const { email, password } = values;
-
-    form.resetFields();
-
-    signIn({ variables: { password, email } });
+    signIn({ variables: { input: values } });
+    // form.resetFields();
   };
 
   const handleFieldsChange = () => {

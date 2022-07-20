@@ -2,8 +2,8 @@ import moment from 'moment-timezone';
 import jwt from 'jsonwebtoken';
 
 import tokenService from './token.service';
-import { IGenerateTokensResult, Role } from './interfaces';
-import { IAuthLoginRequest, IResetPasswordRequest, ISignUpRequest } from '../models/request/auth.request';
+import { IGenerateTokensResult, IUser, Role } from './interfaces';
+import { IResetPasswordRequest, ISignInRequest, ISignUpRequest } from '../models/request/auth.request';
 import ApiErrorService from './apiError.service';
 import apiErrorService from './apiError.service';
 import { Token } from '../db/entites/Token';
@@ -12,8 +12,9 @@ import bcrypt from 'bcrypt';
 import { ACTIVATION, RESET_PASSWORD } from './common/links';
 import { forgotPasswordMailHtml, registerMailHtml } from './common/mailHtmls';
 import mailService from './mail.service';
-import { ACTIVATE_ERROR, ACTIVATION_LINK_ERROR, LOGIN_ERROR } from './constants';
-import { EXIST_EMAIL } from '../shared/errorHandler';
+import { ACTIVATION_LINK_ERROR } from './constants';
+import { EXIST_EMAIL, ACTIVATE_ERROR, LOGIN_ERROR } from '../shared/errorHandler';
+import UserDto from '../dtos/user.dto';
 
 class AuthService {
   async register(data: ISignUpRequest): Promise<void> {
@@ -31,11 +32,10 @@ class AuthService {
       name: userName,
       type,
     });
-    const savedUser = await newUser.save();
-    const { id, email } = savedUser;
+    const { id, email } = await newUser.save();
     const link = `${process.env.CLIENT_URL}/signup/activate?id=${id}`;
-
     const html = registerMailHtml({ link });
+
     await mailService.sendActivationMail(email, html);
   }
 
@@ -50,22 +50,27 @@ class AuthService {
     await user.save();
   }
 
-  async login({ email, password }: IAuthLoginRequest): Promise<IGenerateTokensResult> {
+  async login({ email, password }: ISignInRequest): Promise<IGenerateTokensResult> {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw ApiErrorService.badRequest('Email or password is incorrect!');
+      throw new Error(LOGIN_ERROR);
     } else if (!user.isActive) {
-      throw ApiErrorService.badRequest(ACTIVATE_ERROR);
+      throw new Error(ACTIVATE_ERROR);
     }
 
     const isPassEquals = await bcrypt.compare(String(password), String(user.password));
 
     if (!isPassEquals) {
-      throw ApiErrorService.badRequest(LOGIN_ERROR);
+      throw new Error(LOGIN_ERROR);
     }
 
-    return tokenService.generateSaveTokens(user);
+    const userDto = new UserDto(user);
+    const tokens = tokenService.generateTokens({ ...userDto } as unknown as IUser);
+
+    await tokenService.saveRefreshToken(tokens.refreshToken);
+
+    return tokens;
   }
 
   async logout(refreshToken: string) {

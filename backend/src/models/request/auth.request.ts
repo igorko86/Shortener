@@ -25,3 +25,8 @@ export interface ISignUpRequest {
   password: string;
   type: UserType;
 }
+
+export interface ISignInRequest {
+  email: string;
+  password: string;
+}

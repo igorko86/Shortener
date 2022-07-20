@@ -15,6 +15,5 @@ authRouter.get('/activation/:role/:link', deleteUnactivatedAccount, authControll
 authRouter.get('/refresh', authController.refresh);
 authRouter.post('/forgot-password', authController.forgotPassword);
 authRouter.post('/reset-password', authController.resetPassword);
-authRouter.put('/change-role', checkAccess, authController.changeRole);
 
 export { authRouter as authRoutes };

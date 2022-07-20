@@ -12,51 +12,43 @@ import { authResolvers } from './graphql/auth/resolvers';
 import { authTypeDefs } from './graphql/auth/typeDefs';
 import { ErrorMessage, getErrorCode } from './shared/errorHandler';
 
-const corsOptions = {
-  origin: ['http://localhost:3000'],
-  credentials: true,
-};
-
 const startApolloServer = async () => {
   const server = new ApolloServer({
     resolvers: [authResolvers],
     typeDefs: [authTypeDefs],
     csrfPrevention: true,
     cache: 'bounded',
-    context: ({ req }) => {
-      // console.log(req.cookies);
-      return req;
-    },
+    context: (ctx) => ({ ...ctx }),
     formatError: (err) => {
       return getErrorCode(err.message as ErrorMessage) || err;
     },
   });
-  await server.start();
   const app = express();
-
-  // server.applyMiddleware({ app, cors: corsOptions, path: '/graphql' });
-  server.applyMiddleware({ app });
   const port = (process.env.SERVER_PORT as unknown as number) || 3333;
-  const client = process.env.CLIENT_URL;
+  const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
+  const corsOptions = {
+    origin: [clientUrl, 'https://studio.apollographql.com'],
+    credentials: true,
+  };
 
-  app.use(bodyParser.json({ limit: '50mb' }));
-  app.use(
-    bodyParser.urlencoded({
-      limit: '50mb',
-      extended: false,
-    })
-  );
-  app.use(
-    cors({
-      credentials: true,
-      origin: client,
-    })
-  );
-  app.use(express.json());
   app.use(cookieParser());
+
+  await server.start();
+  server.applyMiddleware({ app, cors: corsOptions });
+  // server.applyMiddleware({ app });
+
+  // app.use(bodyParser.json({ limit: '50mb' }));
+  // app.use(
+  //   bodyParser.urlencoded({
+  //     limit: '50mb',
+  //     extended: false,
+  //   })
+  // );
+
+  // app.use(express.json());
   // routes(app);
-  app.use(express.urlencoded({ extended: false }));
-  app.use(apiErrorHandler);
+  // app.use(express.urlencoded({ extended: false }));
+  // app.use(apiErrorHandler);
 
   const start = async () => {
     try {

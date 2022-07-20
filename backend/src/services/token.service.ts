@@ -6,7 +6,7 @@ import { User } from '../db/entites/User';
 import UserDto from '../dtos/user.dto';
 
 class TokenService {
-  #generateTokens(payload: IUser): IGenerateTokensResult {
+  generateTokens(payload: IUser): IGenerateTokensResult {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET as string, {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRES,
     });
@@ -21,25 +21,24 @@ class TokenService {
     };
   }
 
-  async #saveRefreshToken(refreshToken: string, userId: string) {
-    const tokenData = await Token.findOne({ userId });
+  async saveRefreshToken(refreshToken: string) {
+    const tokenData = await Token.findOne({ refreshToken });
 
     if (tokenData) {
       tokenData.refreshToken = refreshToken;
 
-      return await Token.save(tokenData);
+      return Token.save(tokenData);
     }
     const newToken = Token.create({
-      refreshToken: refreshToken,
-      userId,
+      refreshToken,
     });
 
-    return await newToken.save();
+    return newToken.save();
   }
 
   validateToken(token: string, secretKey: string): IUser | null {
     try {
-      return <IUser>jwt.verify(token, secretKey);
+      return jwt.verify(token, secretKey) as IUser;
     } catch {
       return null;
     }
@@ -47,9 +46,9 @@ class TokenService {
 
   async generateSaveTokens(entity: User): Promise<IGenerateTokensResult> {
     const userDto = new UserDto(entity);
-    const tokens = this.#generateTokens({ ...userDto } as unknown as IUser);
+    const tokens = this.generateTokens({ ...userDto } as unknown as IUser);
 
-    await this.#saveRefreshToken(tokens.refreshToken, entity.id);
+    await this.saveRefreshToken(tokens.refreshToken);
 
     return tokens;
   }

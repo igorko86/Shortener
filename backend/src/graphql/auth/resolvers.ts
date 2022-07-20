@@ -1,5 +1,6 @@
 import authService from '../../services/auth.service';
 import { ISignUpRequest } from '../../models/request/auth.request';
+import cookieService from '../../services/cookie.service';
 
 export const authResolvers = {
   Query: {
@@ -15,7 +16,6 @@ export const authResolvers = {
   },
   Mutation: {
     signUp: async (_: any, args: { input: ISignUpRequest }) => {
-      console.log(args);
       await authService.register(args.input);
 
       return {
@@ -23,14 +23,13 @@ export const authResolvers = {
         message: 'Success',
       };
     },
-    signIn: (_: any, args: any) => {
-      console.log(args);
+    signIn: async (_: any, args: any, { res }: any) => {
+      const { refreshToken, accessToken } = await authService.login(args.input);
+
+      cookieService.setCookie(res, refreshToken);
+
       return {
-        id: 123,
-        name: 'String',
-        email: 'asd',
-        type: 'String',
-        token: 'String',
+        token: accessToken,
       };
     },
   },
