@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { client } from './shared/graphql/apolloClient';
 import { ApolloProvider } from '@apollo/client';
+import { AuthProvider } from './shared/context/authContext';
 import App from './App';
 
 import './index.css';
@@ -14,7 +15,9 @@ root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>

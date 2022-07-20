@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, createHttpLink, from } from '@apollo/clien
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 
-export const AUTH_TOKEN_KEY = 'token';
+import { AUTH_TOKEN_KEY } from '../constants';
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   console.log(graphQLErrors);

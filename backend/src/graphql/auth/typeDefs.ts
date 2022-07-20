@@ -36,5 +36,6 @@ export const authTypeDefs = `
     type Mutation {
         signUp(input: SignUpInput!): Status!
         signIn(input: SignInInput!): SignIn!
+        signOut: Status
     }
 `;

@@ -15,6 +15,10 @@ class CookieService {
   setCookie(response: Response, value: string) {
     response.cookie('refreshToken', value, this.cookieOptions);
   }
+
+  clearCookies(response: Response) {
+    response.clearCookie('refreshToken');
+  }
 }
 
 export default new CookieService();

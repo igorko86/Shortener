@@ -32,5 +32,15 @@ export const authResolvers = {
         token: accessToken,
       };
     },
+    signOut: async (_: any, args: any, { req, res }: any) => {
+      await authService.logout(req.cookies.refreshToken);
+
+      cookieService.clearCookies(res);
+
+      return {
+        status: 200,
+        message: 'Success',
+      };
+    },
   },
 };

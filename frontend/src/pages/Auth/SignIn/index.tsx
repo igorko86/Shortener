@@ -25,7 +25,7 @@ const SignIn = () => {
 
   const submit = (values: any) => {
     signIn({ variables: { input: values } });
-    // form.resetFields();
+    form.resetFields();
   };
 
   const handleFieldsChange = () => {

@@ -19,6 +19,7 @@ export const CircleButton = styled(ButtonAnt)<IButtonStyle>`
     height: 30px;
     border: none;
     svg {
+      height: 30px;
       width: 30px;
     }
   }

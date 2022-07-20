@@ -34,6 +34,8 @@
         "spaced-comment": "error",
         "quotes": ["error", "single"],
         "no-duplicate-imports": "error",
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": ["off"],
         "prettier/prettier": [
             "ERROR",
             {

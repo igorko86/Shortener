@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { VerbForm } from '../interfaces';
 
 import { AnswerDiv, AnswerButton } from './styles';
-import AnswerHok from '../../../shared/hoks/AnswerHok';
+import AnswerHok from '../../../shared/hocs/AnswerHok';
 
 interface IProps {
   setAnswer: (answer: VerbForm) => void;

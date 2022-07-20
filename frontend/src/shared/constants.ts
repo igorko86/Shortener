@@ -19,3 +19,5 @@ export const DEVICE: Record<Keys, string> = {
   laptopL: `(max-width: ${SIZE.laptopL})`,
   desktop: `(max-width: ${SIZE.desktop})`,
 };
+
+export const AUTH_TOKEN_KEY = 'token';

@@ -1,27 +1,10 @@
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, gql, useQuery } from '@apollo/client';
+import { useMutation, gql, useQuery, useLazyQuery } from '@apollo/client';
 
-import { AUTH_TOKEN_KEY } from '../apolloClient';
-import { UserType } from '../../../pages/Auth/SignUp/formConfig';
 import { AppPagePath } from '../../../pages/AppPagePath';
-
-export interface SignUpInput {
-  name: string;
-  password: string;
-  email: string;
-  type: UserType;
-}
-
-const onAuthCompleted = (to: string) => {
-  const navigate = useNavigate();
-
-  return (data: any) => {
-    console.log(data);
-    console.log(to);
-    localStorage.setItem(AUTH_TOKEN_KEY, data.token);
-    navigate(to);
-  };
-};
+import { AuthContext } from '../../context/authContext';
+import { ISignInInput, SignUpResponse } from './interfaces';
 
 const SIGNUP_MUTATION = gql`
   mutation SignUp($input: SignUpInput!) {
@@ -33,8 +16,9 @@ const SIGNUP_MUTATION = gql`
 `;
 
 export const useSignUpMutation = () => {
-  const signUp = useMutation(SIGNUP_MUTATION, {
-    onCompleted: onAuthCompleted(`/${AppPagePath.SUCCESS}`),
+  const navigate = useNavigate();
+  const signUp = useMutation<SignUpResponse>(SIGNUP_MUTATION, {
+    onCompleted: () => navigate(`/${AppPagePath.SUCCESS}`),
   });
 
   return signUp;
@@ -49,14 +33,19 @@ const SIGNIN_MUTATION = gql`
 `;
 
 export const useSignIpMutation = () => {
-  const signIn = useMutation(SIGNIN_MUTATION, {
-    onCompleted: onAuthCompleted(`/${AppPagePath.STUDENTS}`),
+  const navigate = useNavigate();
+  const { signIn: ctxSignIn } = useContext(AuthContext);
+  const signIn = useMutation<ISignInInput>(SIGNIN_MUTATION, {
+    onCompleted: ({ signIn }) => {
+      ctxSignIn(signIn.token);
+      navigate(`/${AppPagePath.HOME}`);
+    },
   });
 
   return signIn;
 };
 
-const ACTIVATE_MUTATION = gql`
+const ACTIVATE_QUERY = gql`
   query Activate($activateId: String!) {
     activate(id: $activateId) {
       status
@@ -66,9 +55,22 @@ const ACTIVATE_MUTATION = gql`
 `;
 
 export const useActivateQuery = (activateId: string) => {
-  return useQuery(ACTIVATE_MUTATION, {
+  return useQuery(ACTIVATE_QUERY, {
     variables: {
       activateId,
     },
   });
+};
+
+const SIGN_OUT_MUTATION = gql`
+  mutation SignOut {
+    signOut {
+      status
+      message
+    }
+  }
+`;
+
+export const useSignOutMutation = () => {
+  return useMutation(SIGN_OUT_MUTATION);
 };
