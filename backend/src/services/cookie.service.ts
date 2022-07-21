@@ -14,6 +14,7 @@ class CookieService {
 
   setCookie(response: Response, value: string) {
     response.cookie('refreshToken', value, this.cookieOptions);
+    console.log('HERE');
   }
 
   clearCookies(response: Response) {

@@ -1,10 +1,14 @@
 import authService from '../../services/auth.service';
 import { ISignUpRequest } from '../../models/request/auth.request';
 import cookieService from '../../services/cookie.service';
+import { checkAccess } from '../../shared/checkAccess';
 
 export const authResolvers = {
   Query: {
-    sayHello: () => 'Hello App!)',
+    sayHello: async (_: any, args: any, { req }: any) => {
+      const userData = await checkAccess(req);
+      console.log(userData);
+    },
     activate: async (_: any, args: { id: string }) => {
       await authService.activate(args.id);
 
