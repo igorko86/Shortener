@@ -34,7 +34,8 @@ const SIGNIN_MUTATION = gql`
 
 export const useSignIpMutation = () => {
   const navigate = useNavigate();
-  const { signIn: ctxSignIn } = useContext(AuthContext);
+  const { ctxSignIn } = useContext(AuthContext);
+
   const signIn = useMutation<ISignInInput>(SIGNIN_MUTATION, {
     onCompleted: ({ signIn }) => {
       ctxSignIn(signIn.token);

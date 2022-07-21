@@ -2,8 +2,8 @@ import { UserType } from '../../pages/Auth/SignUp/formConfig';
 
 export interface IAuthContext {
   user: IUser | null;
-  signIn: (token?: string) => void;
-  signOut: () => void;
+  ctxSignIn: (token?: string) => void;
+  ctxSignOut: () => void;
 }
 
 export enum AuthAction {

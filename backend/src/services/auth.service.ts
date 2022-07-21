@@ -2,7 +2,7 @@ import moment from 'moment-timezone';
 import jwt from 'jsonwebtoken';
 
 import tokenService from './token.service';
-import { IGenerateTokensResult, IUser, Role } from './interfaces';
+import {IGenerateTokensResult, IUser, Role } from './interfaces';
 import { IResetPasswordRequest, ISignInRequest, ISignUpRequest } from '../models/request/auth.request';
 import ApiErrorService from './apiError.service';
 import apiErrorService from './apiError.service';
@@ -19,7 +19,7 @@ import UserDto from '../dtos/user.dto';
 class AuthService {
   async register(data: ISignUpRequest): Promise<void> {
     const { name: userName, email: userEmail, password, type } = data;
-    const user = await User.findOne({ email: userEmail });
+    const user = await User.findOne({ where: { email: userEmail, type } });
 
     if (user) {
       throw new Error(EXIST_EMAIL);

@@ -21,14 +21,3 @@ export const ActionDiv = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
-export const ItemWrapperDiv = styled.div`
-  position: relative;
-`;
-
-export const ErrorDiv = styled.div`
-  color: ${theme.colors.red};
-  position: absolute;
-  top: 45px;
-  left: 0;
-`;

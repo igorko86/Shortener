@@ -14,9 +14,7 @@ export class User extends CreateUpdateDate {
   @Column()
   password: string;
 
-  @Column({
-    unique: true,
-  })
+  @Column()
   email: string;
 
   @Column({

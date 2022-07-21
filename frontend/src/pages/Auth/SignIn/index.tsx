@@ -10,7 +10,7 @@ import { useSignIpMutation } from '../../../shared/graphql/auth/useAuthMutations
 import { INPUT_FIELD_REQUIRED } from '../SignUp/formConfig';
 
 import { ContainerDiv, RegBlkDiv, AuthImage, ImgBlkDiv, TitleH2 } from '../styles';
-import { SIgnInForm, ActionDiv, ErrorDiv, ItemWrapperDiv, SignInContentDiv } from './styles';
+import { SIgnInForm, ActionDiv, SignInContentDiv } from './styles';
 
 const SignIn = () => {
   const [form] = Form.useForm();
@@ -60,16 +60,13 @@ const SignIn = () => {
             >
               <Input placeholder="Your Email" />
             </Form.Item>
-            <ItemWrapperDiv>
-              <Form.Item
-                label={<LockFilled />}
-                name="password"
-                rules={[{ required: true, message: INPUT_FIELD_REQUIRED }]}
-              >
-                <Input.Password placeholder="Password" />
-              </Form.Item>
-              {!!signInError && <ErrorDiv>{signInError}</ErrorDiv>}
-            </ItemWrapperDiv>
+            <Form.Item
+              label={<LockFilled />}
+              name="password"
+              rules={[{ required: true, message: INPUT_FIELD_REQUIRED }]}
+            >
+              <Input.Password placeholder="Password" />
+            </Form.Item>
             <ActionDiv>
               <Button type="primary" htmlType="submit" loading={loading}>
                 Sign in

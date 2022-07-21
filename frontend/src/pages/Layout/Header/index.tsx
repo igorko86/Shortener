@@ -4,14 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AppPagePath } from '../../AppPagePath';
 import Auth from '../../Auth';
 import { AuthContext } from '../../../shared/context/authContext';
+import { useSignOutMutation } from '../../../shared/graphql/auth/useAuthMutations';
 
 import { LogoDiv, AppHeader, HeaderContentDiv, NavListUl, ItemNavLink } from './styles';
 import { AppWrapperDiv } from '../styles';
-import { useSignOutMutation } from '../../../shared/graphql/auth/useAuthMutations';
 
 const Header: FC = () => {
   const navigate = useNavigate();
-  const { user, signOut: ctxSignOut } = useContext(AuthContext);
+  const { user, ctxSignOut } = useContext(AuthContext);
   const [signOut] = useSignOutMutation();
   const activeItem = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : '');
 

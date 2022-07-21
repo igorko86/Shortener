@@ -2,8 +2,6 @@ import { createContext, useReducer } from 'react';
 import jwtDecode from 'jwt-decode';
 
 import { Actions, AuthAction, IAuthContext, IInitialState, ISignIn, ISignOut, IUser } from './interfaces';
-import { useNavigate } from 'react-router-dom';
-import { AppPagePath } from '../../pages/AppPagePath';
 import { AUTH_TOKEN_KEY } from '../constants';
 
 const setUser = (token?: string) => {
@@ -24,8 +22,8 @@ const initialState: IInitialState = {
 
 export const AuthContext = createContext<IAuthContext>({
   user: null,
-  signIn: (token?: string) => {},
-  signOut: () => {},
+  ctxSignIn: (token?: string) => {},
+  ctxSignOut: () => {},
 });
 
 const authReducer = (state: IInitialState, { type, payload }: Actions) => {
@@ -65,5 +63,5 @@ export const AuthProvider = (props: any) => {
     } as ISignOut);
   };
 
-  return <AuthContext.Provider value={{ user: state.user, signIn, signOut }} {...props} />;
+  return <AuthContext.Provider value={{ user: state.user, ctxSignIn: signIn, ctxSignOut: signOut }} {...props} />;
 };

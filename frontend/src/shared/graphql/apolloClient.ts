@@ -3,16 +3,9 @@ import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 
 import { AUTH_TOKEN_KEY } from '../constants';
+import { errorHandler } from './errorHandler';
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  console.log(graphQLErrors);
-  if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) =>
-      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
-    );
-
-  if (networkError) console.log(`[Network error]: ${networkError}`);
-});
+const errorLink = onError(errorHandler);
 
 const httpLink = createHttpLink({
   uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,
