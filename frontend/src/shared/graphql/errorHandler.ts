@@ -1,8 +1,8 @@
 import { ErrorResponse } from '@apollo/client/link/error';
+import { Observable } from '@apollo/client';
 
 import { Status } from '../interfaces';
 import { notificationWithIcon } from '../notification';
-import { Observable } from '@apollo/client';
 import { AUTH_TOKEN_KEY } from '../constants';
 import { QRAPHQL_SERVER_URI } from './apolloClient';
 import { AppPagePath } from '../../pages/AppPagePath';

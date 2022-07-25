@@ -7,9 +7,9 @@ export enum AppPagePath {
   SIGNUP = 'signup',
   SUCCESS = 'success',
   ACTIVATE_SUCCESS = 'signup/activate',
+  FORGOT_PASSWORD = 'forgot-password',
+  RESET_PASSWORD = 'reset-password',
   NEW_CARD = '/new-card',
   INFORMATION = '/information',
   STUDENTS = '/students',
-  FORGOT_PASSWORD = '/forgot-password',
-  RESET_PASSWORD = '/reset-password/:id',
 }

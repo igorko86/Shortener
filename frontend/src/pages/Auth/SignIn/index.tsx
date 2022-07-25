@@ -52,7 +52,7 @@ const SignIn = () => {
                 Sign in
               </Button>
               <span>
-                <Link to={`/${AppPagePath.SIGNUP}`}>Forgot password?</Link>
+                <Link to={`/${AppPagePath.FORGOT_PASSWORD}`}>Forgot password?</Link>
               </span>
             </ActionDiv>
           </SIgnInForm>

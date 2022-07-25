@@ -35,7 +35,8 @@ export const ButtonStyle = styled(ButtonAnt)`
     border: 0;
   }
 
-  &.ant-btn-primary:active {
+  &.ant-btn-primary:active,
+  &.ant-btn.ant-btn-loading {
     background: ${theme.colors.theme};
     border: 0;
   }

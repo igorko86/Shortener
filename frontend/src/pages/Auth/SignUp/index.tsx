@@ -9,8 +9,8 @@ import { config, FormItem, UserType } from './formConfig';
 import { AppPagePath } from '../../AppPagePath';
 import { useSignUpMutation } from '../../../shared/graphql/auth/useAuthMutations';
 
-import { ContainerDiv, ContentDiv, RegBlkDiv, AuthImage, AuthForm, ImgBlkDiv, TitleH2 } from '../styles';
-import { ImageWrapperDiv } from './styles';
+import { ContainerDiv, ContentDiv, RegBlkDiv, AuthImage, ImgBlkDiv, TitleH2 } from '../styles';
+import { ImageWrapperDiv, SignUpForm } from './styles';
 
 const SignUp = () => {
   const [form] = Form.useForm();
@@ -28,7 +28,7 @@ const SignUp = () => {
       <ContentDiv>
         <RegBlkDiv>
           <TitleH2>Sign Up</TitleH2>
-          <AuthForm onFinish={submit} form={form} name="register" scrollToFirstError autoComplete="off">
+          <SignUpForm onFinish={submit} form={form} name="register" scrollToFirstError autoComplete="off">
             <Form.Item label={<UserOutlined />} {...config[FormItem.NAME]}>
               <Input placeholder="Your Name" />
             </Form.Item>
@@ -50,7 +50,7 @@ const SignUp = () => {
             <Button type="primary" htmlType="submit" loading={loading}>
               Submit
             </Button>
-          </AuthForm>
+          </SignUpForm>
         </RegBlkDiv>
         <ImgBlkDiv>
           <ImageWrapperDiv>

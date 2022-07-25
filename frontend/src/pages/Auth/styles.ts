@@ -86,10 +86,6 @@ export const AuthForm = styled(Form)`
     margin-bottom: 45px;
   }
 
-  .ant-form-item:last-of-type {
-    border-bottom: 0;
-  }
-
   .ant-form-item-explain.ant-form-item-explain-connected {
     position: absolute;
     top: 38px;

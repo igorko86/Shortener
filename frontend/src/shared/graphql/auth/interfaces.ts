@@ -6,7 +6,15 @@ export interface ISignInInput {
   };
 }
 
-export interface SignUpResponse {
+export interface ISuccess {
   status: Status;
   message: string;
+}
+
+export interface IForgotPassword {
+  email: string;
+}
+
+export interface IResetPassword {
+  password: string;
 }

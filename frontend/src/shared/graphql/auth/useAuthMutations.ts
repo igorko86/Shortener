@@ -4,7 +4,7 @@ import { useMutation, gql } from '@apollo/client';
 
 import { AppPagePath } from '../../../pages/AppPagePath';
 import { AuthContext } from '../../context/authContext';
-import { ISignInInput, SignUpResponse } from './interfaces';
+import { IForgotPassword, IResetPassword, ISignInInput, ISuccess } from './interfaces';
 
 const SIGNUP_MUTATION = gql`
   mutation SignUp($input: SignUpInput!) {
@@ -17,7 +17,7 @@ const SIGNUP_MUTATION = gql`
 
 export const useSignUpMutation = () => {
   const navigate = useNavigate();
-  const signUp = useMutation<SignUpResponse>(SIGNUP_MUTATION, {
+  const signUp = useMutation<ISuccess>(SIGNUP_MUTATION, {
     onCompleted: () => navigate(`/${AppPagePath.SUCCESS}`),
   });
 
@@ -56,5 +56,31 @@ const SIGN_OUT_MUTATION = gql`
 `;
 
 export const useSignOutMutation = () => {
-  return useMutation(SIGN_OUT_MUTATION);
+  return useMutation<ISuccess>(SIGN_OUT_MUTATION);
+};
+
+const FORGOT_PASSWORD_MUTATION = gql`
+  mutation ForgotPassword($email: String!) {
+    forgotPassword(email: $email) {
+      status
+      message
+    }
+  }
+`;
+
+export const useForgotPasswordMutation = () => {
+  return useMutation<ISuccess, IForgotPassword>(FORGOT_PASSWORD_MUTATION);
+};
+
+const RESET_PASSWORD_MUTATION = gql`
+  mutation ResetPassword($password: String!) {
+    resetPassword(password: $password) {
+      status
+      message
+    }
+  }
+`;
+
+export const useResetPasswordMutation = () => {
+  return useMutation<ISuccess, IResetPassword>(RESET_PASSWORD_MUTATION);
 };
