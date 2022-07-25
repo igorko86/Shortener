@@ -18,7 +18,6 @@ export const authTypeDefs = `
 
     type Query {
        sayHello: String
-       activate(id: String!): Status
     }
 
     input SignUpInput {
@@ -36,7 +35,10 @@ export const authTypeDefs = `
     type Mutation {
         signUp(input: SignUpInput!): Status!
         signIn(input: SignInInput!): SignIn!
+        activate(id: String!): Status
         signOut: Status
         refresh: String!
+        forgotPassword(email: String!): Status
+        resetPassword(password: String!, id: String!): Status
     }
 `;

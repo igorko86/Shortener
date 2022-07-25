@@ -11,6 +11,7 @@ import Activate from './pages/Auth/Activate';
 import Contact from './pages/Contact';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import ResetPassword from './pages/Auth/ResetPassword';
+import NotFound from './pages/NotFound';
 import { AppPagePath } from './pages/AppPagePath';
 
 import './App.css';
@@ -30,6 +31,7 @@ function App() {
           <Route path={AppPagePath.FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route path={AppPagePath.RESET_PASSWORD} element={<ResetPassword />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </ThemeProvider>
   );

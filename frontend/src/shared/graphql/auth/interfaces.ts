@@ -6,7 +6,7 @@ export interface ISignInInput {
   };
 }
 
-export interface ISuccess {
+export interface IStatus {
   status: Status;
   message: string;
 }
@@ -17,4 +17,9 @@ export interface IForgotPassword {
 
 export interface IResetPassword {
   password: string;
+  id: string;
+}
+
+export interface IActivate {
+  activateId: string;
 }

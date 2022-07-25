@@ -4,7 +4,7 @@ import { useMutation, gql } from '@apollo/client';
 
 import { AppPagePath } from '../../../pages/AppPagePath';
 import { AuthContext } from '../../context/authContext';
-import { IForgotPassword, IResetPassword, ISignInInput, ISuccess } from './interfaces';
+import { IActivate, IForgotPassword, IResetPassword, ISignInInput, IStatus } from './interfaces';
 
 const SIGNUP_MUTATION = gql`
   mutation SignUp($input: SignUpInput!) {
@@ -17,11 +17,24 @@ const SIGNUP_MUTATION = gql`
 
 export const useSignUpMutation = () => {
   const navigate = useNavigate();
-  const signUp = useMutation<ISuccess>(SIGNUP_MUTATION, {
+  const signUp = useMutation<IStatus>(SIGNUP_MUTATION, {
     onCompleted: () => navigate(`/${AppPagePath.SUCCESS}`),
   });
 
   return signUp;
+};
+
+const ACTIVATE_MUTATION = gql`
+  mutation Activate($activateId: String!) {
+    activate(id: $activateId) {
+      status
+      message
+    }
+  }
+`;
+
+export const useActivateMutation = () => {
+  return useMutation<IStatus, IActivate>(ACTIVATE_MUTATION);
 };
 
 const SIGNIN_MUTATION = gql`
@@ -56,7 +69,7 @@ const SIGN_OUT_MUTATION = gql`
 `;
 
 export const useSignOutMutation = () => {
-  return useMutation<ISuccess>(SIGN_OUT_MUTATION);
+  return useMutation<IStatus>(SIGN_OUT_MUTATION);
 };
 
 const FORGOT_PASSWORD_MUTATION = gql`
@@ -69,12 +82,12 @@ const FORGOT_PASSWORD_MUTATION = gql`
 `;
 
 export const useForgotPasswordMutation = () => {
-  return useMutation<ISuccess, IForgotPassword>(FORGOT_PASSWORD_MUTATION);
+  return useMutation<IStatus, IForgotPassword>(FORGOT_PASSWORD_MUTATION);
 };
 
 const RESET_PASSWORD_MUTATION = gql`
-  mutation ResetPassword($password: String!) {
-    resetPassword(password: $password) {
+  mutation ResetPassword($password: String!, $id: String!) {
+    resetPassword(password: $password, id: $id) {
       status
       message
     }
@@ -82,5 +95,5 @@ const RESET_PASSWORD_MUTATION = gql`
 `;
 
 export const useResetPasswordMutation = () => {
-  return useMutation<ISuccess, IResetPassword>(RESET_PASSWORD_MUTATION);
+  return useMutation<IStatus, IResetPassword>(RESET_PASSWORD_MUTATION);
 };

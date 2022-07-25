@@ -74,7 +74,7 @@ export const forgotPasswordMailHtml = ({ link }: { link: string }) => {
   return `
         <div>
             <h1>To reset password, follow the link</h1>
-            <a href="${link}">${link}</a>
+            <a href="${link}">here</a>
         </div>
       `;
 };

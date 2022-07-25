@@ -7,16 +7,7 @@ export const authResolvers = {
   Query: {
     sayHello: async (_: any, args: any, { req }: any) => {
       const userData = await checkAccess(req);
-      console.log(userData);
-    },
-    activate: async (_: any, args: { id: string }) => {
-      await authService.activate(args.id);
-
-      return {
-        status: 200,
-        message: 'Success',
-      };
-    },
+    }
   },
   Mutation: {
     signUp: async (_: any, args: { input: ISignUpRequest }) => {
@@ -36,6 +27,14 @@ export const authResolvers = {
         token: accessToken,
       };
     },
+    activate: async (_: any, args: { id: string }) => {
+      await authService.activate(args.id);
+
+      return {
+        status: 200,
+        message: 'Success',
+      };
+    },
     signOut: async (_: any, args: any, { req, res }: any) => {
       await authService.logout(req.cookies.refreshToken);
 
@@ -52,6 +51,22 @@ export const authResolvers = {
       cookieService.setCookie(res, refreshToken);
 
       return accessToken;
+    },
+    forgotPassword: async (_: any, args: any) => {
+      await authService.forgotPassword(args.email);
+
+      return {
+        status: 200,
+        message: 'Success',
+      };
+    },
+    resetPassword: async (_: any, args: any) => {
+      await authService.resetPassword(args);
+
+      return {
+        status: 200,
+        message: 'Success',
+      };
     },
   },
 };

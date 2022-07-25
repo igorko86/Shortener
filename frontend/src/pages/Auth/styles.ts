@@ -30,7 +30,6 @@ export const SinkUpLink = styled(SinkInLink)`
 
 export const ContainerDiv = styled.div`
   max-width: 900px;
-  background: #fff;
   margin: 0 auto;
   box-shadow: 0px 15px 16.83px 0.17px rgb(0 0 0 / 5%);
   background: ${theme.colors.light5};
