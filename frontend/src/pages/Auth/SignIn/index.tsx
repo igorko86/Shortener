@@ -14,24 +14,11 @@ import { SIgnInForm, ActionDiv, SignInContentDiv } from './styles';
 
 const SignIn = () => {
   const [form] = Form.useForm();
-  const [signIn, { loading, error }] = useSignIpMutation();
-  const [signInError, setSignInError] = useState('');
-
-  useEffect(() => {
-    if (error?.message) {
-      setSignInError(error.message);
-    }
-  }, [error?.message]);
+  const [signIn, { loading }] = useSignIpMutation();
 
   const submit = (values: any) => {
     signIn({ variables: { input: values } });
     form.resetFields();
-  };
-
-  const handleFieldsChange = () => {
-    if (signInError) {
-      setSignInError('');
-    }
   };
 
   return (
@@ -45,14 +32,7 @@ const SignIn = () => {
         </ImgBlkDiv>
         <RegBlkDiv>
           <TitleH2>Sign In</TitleH2>
-          <SIgnInForm
-            onFinish={submit}
-            onFieldsChange={handleFieldsChange}
-            form={form}
-            name="login"
-            scrollToFirstError
-            autoComplete="off"
-          >
+          <SIgnInForm onFinish={submit} form={form} name="login" scrollToFirstError autoComplete="off">
             <Form.Item
               label={<MailOutlined />}
               name="email"

@@ -37,5 +37,6 @@ export const authTypeDefs = `
         signUp(input: SignUpInput!): Status!
         signIn(input: SignInInput!): SignIn!
         signOut: Status
+        refresh: String!
     }
 `;

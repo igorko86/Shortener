@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Result } from 'antd';
+
 import { AppPagePath } from '../../AppPagePath';
-import { useActivateQuery } from '../../../shared/graphql/auth/useAuthMutations';
 import Loader from '../../../components/Loader';
+import { useActivateQuery } from '../../../shared/graphql/auth/useAuthQueries';
 
 const Activate: FC = () => {
   const [searchParams] = useSearchParams();

@@ -46,5 +46,12 @@ export const authResolvers = {
         message: 'Success',
       };
     },
+    refresh: async (_: any, args: any, { req, res }: any) => {
+      const { refreshToken, accessToken } =  await authService.refresh(req.cookies.refreshToken);
+
+      cookieService.setCookie(res, refreshToken);
+
+      return accessToken;
+    },
   },
 };

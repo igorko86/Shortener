@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, gql, useQuery, useLazyQuery } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
 
 import { AppPagePath } from '../../../pages/AppPagePath';
 import { AuthContext } from '../../context/authContext';
@@ -44,23 +44,6 @@ export const useSignIpMutation = () => {
   });
 
   return signIn;
-};
-
-const ACTIVATE_QUERY = gql`
-  query Activate($activateId: String!) {
-    activate(id: $activateId) {
-      status
-      message
-    }
-  }
-`;
-
-export const useActivateQuery = (activateId: string) => {
-  return useQuery(ACTIVATE_QUERY, {
-    variables: {
-      activateId,
-    },
-  });
 };
 
 const SIGN_OUT_MUTATION = gql`

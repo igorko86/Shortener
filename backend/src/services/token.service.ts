@@ -7,7 +7,7 @@ import UserDto from '../dtos/user.dto';
 
 class TokenService {
   generateTokens(payload: IUser): IGenerateTokensResult {
-    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET as string, {
+    const accessToken = jwt.sign(payload, (process.env.JWT_ACCESS_SECRET as string), {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRES,
     });
 
@@ -21,9 +21,8 @@ class TokenService {
     };
   }
 
-  async saveRefreshToken(refreshToken: string) {
-    const tokenData = await Token.findOne({ refreshToken });
-
+  async saveRefreshToken(refreshToken: string, oldToken= '') {
+    const tokenData = await Token.findOne({ refreshToken: oldToken });
     if (tokenData) {
       tokenData.refreshToken = refreshToken;
 
@@ -48,7 +47,7 @@ class TokenService {
     const userDto = new UserDto(entity);
     const tokens = this.generateTokens({ ...userDto } as unknown as IUser);
 
-    await this.saveRefreshToken(tokens.refreshToken);
+    // await this.saveRefreshToken(tokens.refreshToken);
 
     return tokens;
   }

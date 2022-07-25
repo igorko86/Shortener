@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { ApolloProvider } from '@apollo/client';
 
 import { client } from './shared/graphql/apolloClient';
-import { ApolloProvider } from '@apollo/client';
 import { AuthProvider } from './shared/context/authContext';
 import App from './App';
 

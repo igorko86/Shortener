@@ -1,8 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request } from 'express';
 
 import tokenService from '../services/token.service';
 import { UNAUTHORIZED } from '../shared/errorHandler';
 import { UserType } from '../services/interfaces';
+import { AuthenticationError } from 'apollo-server-express';
 
 interface IUserData {
   type: UserType;
@@ -13,10 +14,9 @@ interface IUserData {
 
 export const checkAccess = async (req: Request): Promise<IUserData> => {
   const barerToken = req.headers.authorization;
-  console.log('HERERERER', req.headers);
 
   if (!barerToken || !req.cookies.refreshToken) {
-    throw new Error(UNAUTHORIZED);
+    throw new AuthenticationError(UNAUTHORIZED);
   }
   const [, accessToken] = barerToken.split(' ');
 

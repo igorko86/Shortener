@@ -5,10 +5,12 @@ import { onError } from '@apollo/client/link/error';
 import { AUTH_TOKEN_KEY } from '../constants';
 import { errorHandler } from './errorHandler';
 
+export const QRAPHQL_SERVER_URI = `${process.env.REACT_APP_SERVER_URL}/graphql`;
+
 const errorLink = onError(errorHandler);
 
 const httpLink = createHttpLink({
-  uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,
+  uri: QRAPHQL_SERVER_URI,
   credentials: 'include',
 });
 
@@ -24,6 +26,6 @@ const authLink = setContext((_, { headers }) => {
 });
 
 export const client = new ApolloClient({
-  link: from([errorLink, httpLink.concat(authLink)]),
+  link: from([errorLink, authLink.concat(httpLink)]),
   cache: new InMemoryCache(),
 });

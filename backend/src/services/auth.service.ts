@@ -2,24 +2,23 @@ import moment from 'moment-timezone';
 import jwt from 'jsonwebtoken';
 
 import tokenService from './token.service';
-import {IGenerateTokensResult, IUser, Role } from './interfaces';
+import { IGenerateTokensResult, IUser, Role } from './interfaces';
 import { IResetPasswordRequest, ISignInRequest, ISignUpRequest } from '../models/request/auth.request';
 import ApiErrorService from './apiError.service';
 import apiErrorService from './apiError.service';
-import { Token } from '../db/entites/Token';
 import { User } from '../db/entites/User';
 import bcrypt from 'bcrypt';
 import { ACTIVATION, RESET_PASSWORD } from './common/links';
 import { forgotPasswordMailHtml, registerMailHtml } from './common/mailHtmls';
 import mailService from './mail.service';
-import { ACTIVATION_LINK_ERROR } from './constants';
+import {ACTIVATION_LINK_ERROR, UNAUTHORIZED} from './constants';
 import { EXIST_EMAIL, ACTIVATE_ERROR, LOGIN_ERROR } from '../shared/errorHandler';
 import UserDto from '../dtos/user.dto';
 
 class AuthService {
   async register(data: ISignUpRequest): Promise<void> {
     const { name: userName, email: userEmail, password, type } = data;
-    const user = await User.findOne({ where: { email: userEmail, type } });
+    const user = await User.findOne({ email: userEmail });
 
     if (user) {
       throw new Error(EXIST_EMAIL);
@@ -79,26 +78,30 @@ class AuthService {
 
   async refresh(currentRefreshToken: string): Promise<IGenerateTokensResult> {
     if (!currentRefreshToken) {
-      throw ApiErrorService.unauthorized();
+      throw new Error(UNAUTHORIZED);
     }
 
     const userData = tokenService.validateToken(
       currentRefreshToken,
       process.env.JWT_REFRESH_SECRET as unknown as string
     );
-    const tokenFromDB = await Token.findOne({ refreshToken: currentRefreshToken });
 
-    if (!userData || !tokenFromDB) {
-      throw ApiErrorService.unauthorized();
+    if (!userData) {
+      throw new Error(UNAUTHORIZED);
     }
 
     const user = await User.findOne(userData.id);
 
     if (!user) {
-      throw ApiErrorService.unauthorized();
+      throw new Error(UNAUTHORIZED);
     }
 
-    return tokenService.generateSaveTokens(user);
+    const userDto = new UserDto(user);
+    const tokens = tokenService.generateTokens({ ...userDto } as unknown as IUser);
+
+    await tokenService.saveRefreshToken(tokens.refreshToken, currentRefreshToken);
+
+    return tokens;
   }
 
   async forgotPassword(email: string): Promise<void> {

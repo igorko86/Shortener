@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 import { CreateUpdateDate } from '../common/CreateUpdateDate';
 import { UserType } from '../../services/interfaces';
@@ -14,7 +14,9 @@ export class User extends CreateUpdateDate {
   @Column()
   password: string;
 
-  @Column()
+  @Column({
+    unique: true,
+  })
   email: string;
 
   @Column({
