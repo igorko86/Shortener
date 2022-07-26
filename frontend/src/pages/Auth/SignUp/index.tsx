@@ -5,9 +5,10 @@ import { LockFilled, LockOutlined, MailOutlined, UserOutlined, UserSwitchOutline
 import Button from '../../../components/Button';
 import RadioButton from '../../../components/RadioButton';
 import signUpImg from '../../../assets/img/signUp.png';
-import { config, FormItem, UserType } from './formConfig';
+import { config, FormItem } from './formConfig';
 import { AppPagePath } from '../../AppPagePath';
 import { useSignUpMutation } from '../../../shared/graphql/auth/useAuthMutations';
+import { UserType } from '../../../shared/interfaces';
 
 import { ContainerDiv, ContentDiv, RegBlkDiv, AuthImage, ImgBlkDiv, TitleH2 } from '../styles';
 import { ImageWrapperDiv, SignUpForm } from './styles';
@@ -20,7 +21,7 @@ const SignUp = () => {
     const { name, type, password, email } = values;
 
     signUp({ variables: { input: { name, type, password, email } } });
-    // form.resetFields();
+    form.resetFields();
   };
 
   return (

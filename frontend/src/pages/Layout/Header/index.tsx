@@ -1,25 +1,17 @@
 import { FC, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { AppPagePath } from '../../AppPagePath';
 import Auth from '../../Auth';
 import { AuthContext } from '../../../shared/context/authContext';
-import { useSignOutMutation } from '../../../shared/graphql/auth/useAuthMutations';
 
 import { LogoDiv, AppHeader, HeaderContentDiv, NavListUl, ItemNavLink } from './styles';
 import { AppWrapperDiv } from '../styles';
+import Avatar from './Avatar';
 
 const Header: FC = () => {
-  const navigate = useNavigate();
-  const { user, ctxSignOut } = useContext(AuthContext);
-  const [signOut] = useSignOutMutation();
+  const { user } = useContext(AuthContext);
   const activeItem = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : '');
-
-  const handleSignOut = () => {
-    signOut();
-    ctxSignOut();
-    navigate(`/${AppPagePath.SIGNIN}`);
-  };
 
   return (
     <AppHeader>
@@ -47,7 +39,7 @@ const Header: FC = () => {
               </li>
             </NavListUl>
           </nav>
-          {!user ? <Auth /> : <div onClick={handleSignOut}>{user.name}</div>}
+          {user ? <Avatar name={user.name} /> : <Auth />}
         </HeaderContentDiv>
       </AppWrapperDiv>
     </AppHeader>

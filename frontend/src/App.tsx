@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { theme } from './theme';
@@ -22,6 +22,7 @@ function App() {
       <Routes>
         <Route path={AppPagePath.ROOT} element={<Layout />}>
           <Route path={AppPagePath.HOME} element={<Home />} />
+          <Route path="/" element={<Navigate replace to={AppPagePath.HOME} />} />
           <Route path={AppPagePath.CONTACT} element={<Contact />} />
           <Route path={AppPagePath.ABOUT} element={<div>ABOUT US</div>} />
           <Route path={AppPagePath.ACTIVATE_SUCCESS} element={<Activate />} />

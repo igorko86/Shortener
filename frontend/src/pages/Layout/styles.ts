@@ -4,6 +4,6 @@ export const AppWrapperDiv = styled.div`
   margin: 0 20px;
 `;
 
-export const AppWMain = styled.main`
+export const AppMain = styled.main`
   min-height: calc(100vh - 160px);
 `;

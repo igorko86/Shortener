@@ -21,3 +21,5 @@ export const DEVICE: Record<Keys, string> = {
 };
 
 export const AUTH_TOKEN_KEY = 'token';
+
+export const SOMETHING_WENT_WRONG = 'Something went wrong';

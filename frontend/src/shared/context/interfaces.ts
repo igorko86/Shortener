@@ -1,4 +1,4 @@
-import { UserType } from '../../pages/Auth/SignUp/formConfig';
+import { UserType } from '../interfaces';
 
 export interface IAuthContext {
   user: IUser | null;

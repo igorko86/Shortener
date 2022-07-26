@@ -3,15 +3,16 @@ import { Outlet } from 'react-router-dom';
 
 import Header from './Header';
 import Footer from './Footer';
-import { AppWMain } from './styles';
+
+import { AppMain } from './styles';
 
 const Layout: FC = () => {
   return (
     <>
       <Header />
-      <AppWMain>
+      <AppMain>
         <Outlet />
-      </AppWMain>
+      </AppMain>
       <Footer />
     </>
   );

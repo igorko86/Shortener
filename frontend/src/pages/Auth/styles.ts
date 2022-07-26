@@ -11,14 +11,14 @@ export const AuthNavDiv = styled.div`
   gap: 10px;
 `;
 
-export const SinkInLink = styled(RoutLink)`
+export const SinInLink = styled(RoutLink)`
   color: ${theme.colors.white};
   &:hover {
     color: ${theme.colors.light4};
   }
 `;
 
-export const SinkUpLink = styled(SinkInLink)`
+export const SinUpLink = styled(SinInLink)`
   padding: 5px 8px;
   border-radius: 6px;
   border: 1px solid ${theme.colors.white};

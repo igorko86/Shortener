@@ -1,12 +1,12 @@
 import React from 'react';
 import { AppPagePath } from '../AppPagePath';
-import { AuthNavDiv, SinkInLink, SinkUpLink } from './styles';
+import { AuthNavDiv, SinInLink, SinUpLink } from './styles';
 
 const Auth = () => {
   return (
     <AuthNavDiv>
-      <SinkInLink to={AppPagePath.SIGNIN}>Sign in</SinkInLink>
-      <SinkUpLink to={AppPagePath.SIGNUP}>Sign up</SinkUpLink>
+      <SinInLink to={AppPagePath.SIGNIN}>Sign in</SinInLink>
+      <SinUpLink to={AppPagePath.SIGNUP}>Sign up</SinUpLink>
     </AuthNavDiv>
   );
 };

@@ -3,7 +3,7 @@ import { Observable } from '@apollo/client';
 
 import { Status } from '../interfaces';
 import { notificationWithIcon } from '../notification';
-import { AUTH_TOKEN_KEY } from '../constants';
+import { AUTH_TOKEN_KEY, SOMETHING_WENT_WRONG } from '../constants';
 import { QRAPHQL_SERVER_URI } from './apolloClient';
 import { AppPagePath } from '../../pages/AppPagePath';
 
@@ -46,7 +46,7 @@ const getToken = async () => {
   return data.refresh;
 };
 
-export const errorHandler = ({ graphQLErrors, operation, forward }: ErrorResponse) => {
+export const errorHandler = ({ graphQLErrors, networkError, operation, forward }: ErrorResponse) => {
   if (graphQLErrors) {
     const er = graphQLErrors as any;
 
@@ -86,5 +86,8 @@ export const errorHandler = ({ graphQLErrors, operation, forward }: ErrorRespons
         }
       }
     }
+  }
+  if (networkError) {
+    return notificationWithIcon('error', SOMETHING_WENT_WRONG);
   }
 };

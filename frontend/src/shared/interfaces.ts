@@ -4,3 +4,9 @@ export enum Status {
   Error = 500,
   Unauthorized = 401,
 }
+
+export enum UserType {
+  Learner = 'learner',
+  Tutor = 'tutor',
+  Unknown = 'unknown',
+}
