@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { AppPagePath } from '../../AppPagePath';
 import Auth from '../../Auth';
 import { AuthContext } from '../../../shared/context/authContext';
+import Avatar from './Avatar';
 
 import { LogoDiv, AppHeader, HeaderContentDiv, NavListUl, ItemNavLink } from './styles';
 import { AppWrapperDiv } from '../styles';
-import Avatar from './Avatar';
 
 const Header: FC = () => {
   const { user } = useContext(AuthContext);
