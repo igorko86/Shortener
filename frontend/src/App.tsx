@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { theme } from './theme';
+import { AppPagePath } from './pages/AppPagePath';
 import Home from './pages/Home';
 import Signup from './pages/Auth/SignUp';
 import Layout from './pages/Layout';
@@ -12,7 +13,8 @@ import Contact from './pages/Contact';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import ResetPassword from './pages/Auth/ResetPassword';
 import NotFound from './pages/NotFound';
-import { AppPagePath } from './pages/AppPagePath';
+import Cards from './pages/Cards';
+import Students from './pages/Students';
 
 import './App.css';
 
@@ -31,6 +33,9 @@ function App() {
           <Route path={AppPagePath.SIGNUP} element={<Signup />} />
           <Route path={AppPagePath.FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route path={AppPagePath.RESET_PASSWORD} element={<ResetPassword />} />
+          {/* TODO implement access function*/}
+          <Route path={AppPagePath.CARDS} element={<Cards />} />
+          <Route path={AppPagePath.STUDENTS} element={<Students />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -35,7 +35,7 @@ const Library: FC<IProps> = ({ setIsLibraryOpen }) => {
       {[].map((card: LibraryCardType, index: number) => {
         return (
           <List.Item key={card.id}>
-            <LibraryCard card={card} libraryCardIndex={index} />
+            <LibraryCard {...card} libraryCardIndex={index} />
           </List.Item>
         );
       })}

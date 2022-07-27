@@ -7,8 +7,13 @@ export const AppHeader = styled.header`
   background: ${theme.colors.dark2};
 `;
 
+export const AppSubHeaderNav = styled.nav`
+  background: ${theme.colors.theme};
+`;
+
 export const HeaderContentDiv = styled.div`
-  min-height: 80px;
+  min-height: 60px;
+  background: ${theme.colors.dark2};
   display: flex;
   align-items: center;
   justify-content: space-between;

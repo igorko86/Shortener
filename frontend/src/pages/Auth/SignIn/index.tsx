@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input } from 'antd';
 import { LockFilled, MailOutlined } from '@ant-design/icons';
@@ -12,7 +12,7 @@ import { INPUT_FIELD_REQUIRED } from '../SignUp/formConfig';
 import { ContainerDiv, RegBlkDiv, AuthImage, ImgBlkDiv, TitleH2 } from '../styles';
 import { SIgnInForm, ActionDiv, SignInContentDiv } from './styles';
 
-const SignIn = () => {
+const SignIn: FC = () => {
   const [form] = Form.useForm();
   const [signIn, { loading }] = useSignIpMutation();
 

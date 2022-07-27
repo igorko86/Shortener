@@ -17,6 +17,7 @@ interface IProps {
 const Library: FC<IProps> = ({ header }) => {
   return (
     <LibrarySection>
+      <div></div>
       <div>Library</div>
       <LibraryCollapse>
         <Panel header={header} key="collapse">

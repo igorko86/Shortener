@@ -15,9 +15,9 @@ const Home: FC = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
+      {user?.type === UserType.Tutor && <Tutor />}
       <WrapperDiv>
         {!user && <User />}
-        {user?.type === UserType.Tutor && <Tutor />}
         {user?.type === UserType.Learner && <Learner />}
         {/* <GerundsInfinitives />*/}
       </WrapperDiv>

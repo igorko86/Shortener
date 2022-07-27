@@ -40,4 +40,15 @@ export const ButtonStyle = styled(ButtonAnt)`
     background: ${theme.colors.theme};
     border: 0;
   }
+
+  &.ant-btn.ant-btn-background-ghost {
+    border: 1px solid ${theme.colors.white};
+  }
+
+  &.ant-btn.ant-btn-background-ghost:focus,
+  &.ant-btn.ant-btn-background-ghost:hover {
+    background: ${theme.colors.theme};
+    color: ${theme.colors.light4};
+    border-color: ${theme.colors.light4};
+  }
 `;

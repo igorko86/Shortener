@@ -10,3 +10,9 @@ export enum UserType {
   Tutor = 'tutor',
   Unknown = 'unknown',
 }
+
+export enum ItemTypeCard {
+  CARD = 'Card',
+  SUB_CARD = 'SubCard',
+  LIBRARY_CARD = 'LibraryCard',
+}

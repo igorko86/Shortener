@@ -1,46 +1,33 @@
 import { FC } from 'react';
 import { useDrag } from 'react-dnd';
 
-import useCheckAccess from '../../../shared/hooks/useCheckAccess';
-import Card from '../Card';
+import { ItemTypeCard } from '../../../shared/interfaces';
 
-export interface ISubCard {
-  id: string;
-  cardId?: string;
-  description: string;
-  name: string;
-}
-export type LibraryCardType = Omit<ISubCard, 'cardId'>;
+import { CardDiv, TitleSpan, DescriptionSpan } from './styles';
 
-export enum ItemTypeCard {
-  CARD = 'Card',
-  SUB_CARD = 'SubCard',
-  LIBRARY_CARD = 'LibraryCard',
-}
 interface IProps {
-  card: LibraryCardType;
+  id: string;
+  name: string;
+  description: string;
   libraryCardIndex: number;
 }
 
-const LibraryCard: FC<IProps> = ({ card, libraryCardIndex }) => {
-  const forbidDrag = useCheckAccess(['tutor', 'learner']);
-
-  const [{ isDragging }, drag] = useDrag({
+const LibraryCard: FC<IProps> = ({ id, name, description, libraryCardIndex }) => {
+  const [_, drag] = useDrag({
     type: ItemTypeCard.LIBRARY_CARD,
-    item: { id: card.id, libraryCardIndex },
-    canDrag: forbidDrag,
+    item: { id, libraryCardIndex },
+    canDrag: true,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
-  const handleShowContent = () => {
-    // if (!loadingCard) {
-    //   setActiveCardId(card.id);
-    // }
-  };
-
-  return <Card isDragging={isDragging} drag={drag} card={card} isDescription onShowContent={handleShowContent} />;
+  return (
+    <CardDiv ref={drag}>
+      <TitleSpan>{name}</TitleSpan>
+      <DescriptionSpan>{description}</DescriptionSpan>
+    </CardDiv>
+  );
 };
 
 export default LibraryCard;

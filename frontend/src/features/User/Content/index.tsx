@@ -30,6 +30,7 @@ const Content: FC = () => {
       {/*    {loadingContent && <Loader position={'relative'} />}*/}
       {/*  </TabPane>*/}
       {/* </Tabs>*/}
+      Content
     </ContentSection>
   );
 };

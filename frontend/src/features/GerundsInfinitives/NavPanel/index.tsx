@@ -5,7 +5,7 @@ import { Space } from 'antd';
 import { PlayCircleOutlined, PauseCircleOutlined, MenuOutlined } from '@ant-design/icons';
 import CircleIconButton from '../../../components/CircleIconButton';
 import { theme } from '../../../theme';
-import CircleStop from '../../../assets/icons/CircleStop';
+import CircleStop from '../../../assets/icons/circleStop';
 import PopConfirm from '../../../components/PopConfirm';
 import CustomModal from '../../../components/Modals/CustomModal';
 import PopoverSelectActive from '../PopoverSelectActive';

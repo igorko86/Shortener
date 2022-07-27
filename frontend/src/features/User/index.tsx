@@ -1,17 +1,28 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 import Content from './Content';
 import MyLibrary from './MyLibrary';
 import PublicLibrary from './PublicLibrary';
 
-import { UserDiv } from './styles';
+import { ContentBlockDiv, GridBlock, LibraryBlockDiv, MyLibraryBlockDiv, UserDiv } from './styles';
 
 const User: FC = () => {
+  const [isLibraryOpened, setIsLibraryOpened] = useState(false);
+  const [isMyLibraryOpened, setIsMyLibraryOpened] = useState(false);
+
   return (
     <UserDiv>
-      <Content />
-      <MyLibrary />
-      <PublicLibrary />
+      <GridBlock isLibraryOpened={isLibraryOpened} isMyLibraryOpened={isMyLibraryOpened}>
+        <MyLibraryBlockDiv>
+          <MyLibrary />
+        </MyLibraryBlockDiv>
+        <LibraryBlockDiv>
+          <PublicLibrary />
+        </LibraryBlockDiv>
+        <ContentBlockDiv>
+          <Content />
+        </ContentBlockDiv>
+      </GridBlock>
     </UserDiv>
   );
 };
