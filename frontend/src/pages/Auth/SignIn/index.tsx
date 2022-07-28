@@ -7,7 +7,7 @@ import Button from '../../../components/Button';
 import signInImg from '../../../assets/img/signIn.png';
 import { AppPagePath } from '../../AppPagePath';
 import { useSignIpMutation } from '../../../shared/graphql/auth/useAuthMutations';
-import { INPUT_FIELD_REQUIRED } from '../SignUp/formConfig';
+import { INPUT_FIELD_REQUIRED } from '../../../shared/formConfig';
 
 import { ContainerDiv, RegBlkDiv, AuthImage, ImgBlkDiv, TitleH2 } from '../styles';
 import { SIgnInForm, ActionDiv, SignInContentDiv } from './styles';

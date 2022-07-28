@@ -4,7 +4,7 @@ import { Form, Input } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
 
 import forgotPasswordImg from '../../../assets/img/forgotPassword.png';
-import { config, FormItem } from '../SignUp/formConfig';
+import { config, FormItem } from '../../../shared/formConfig';
 import Button from '../../../components/Button';
 import { useForgotPasswordMutation } from '../../../shared/graphql/auth/useAuthMutations';
 import { AppPagePath } from '../../AppPagePath';

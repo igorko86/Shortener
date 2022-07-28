@@ -1,6 +1,6 @@
 import { StoreValue } from 'antd/lib/form/interface';
 import { InternalFormInstance, RuleObject } from 'rc-field-form/lib/interface';
-import { formFormat } from '../../../shared/regexes';
+import { formFormat } from './regexes';
 
 export enum FormItem {
   EMAIL = 'email',

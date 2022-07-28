@@ -26,94 +26,26 @@ ol, ul, dl {
     margin-bottom: 0;
 }
 
-/*!* animation on click *!*/
-/*html {*/
-/*    --antd-wave-shadow-color: var(--silver);*/
-/*}*/
 
-/* background page */
-/*.ant-layout {*/
-/*    background: var(--mainColor);*/
-/*}*/
+/* Modal */
+.ant-modal-mask {
+    background-color: rgb(0 0 0 / 72%);
+}
 
-/*!* popover *!*/
+.ant-modal-header {
+    background: #2e4a62;
+}
 
-/*.ant-popover-inner {*/
-/*    max-width: 300px;*/
-/*    min-width: 100px;*/
-/*    border-radius: var(--borderRadius);*/
-/*    border: var(--border);*/
-/*    background: var(--lightGray);*/
-/*}*/
+.ant-modal-title {
+    color: #fff;
+}
 
-/*.ant-popover-inner-content {*/
-/*    padding: 0;*/
-/*}*/
-
-/*.ant-popover-inner-content p {*/
-/*    color: var(--midnight);*/
-/*    font-size: 14px;*/
-/*    border-bottom: var(--border);*/
-/*    margin: 0;*/
-/*    padding: 2px 5px;*/
-/*}*/
-
-/*.ant-popover-inner-content p:last-child {*/
-/*    border-bottom: none;*/
-/*}*/
-
-/*.ant-popover-arrow-content {*/
-/*    background: var(--silver);*/
-/*}*/
-
-/*.ant-popover-placement-bottomRight .ant-popover-arrow {*/
-/*    top: 2px;*/
-/*}*/
-
-/*.ant-popover-placement-bottom .ant-popover-arrow-content,*/
-/*.ant-popover-placement-bottomLeft .ant-popover-arrow-content,*/
-/*.ant-popover-placement-bottomRight .ant-popover-arrow-content {*/
-/*    transform: translateY(3.242641px) rotate(*/
-/*            45deg);*/
-/*}*/
-
-/*.ant-btn {*/
-/*    line-height: 0;*/
-/*    !*background: 0;*!*/
-/*    border: none;*/
-/*    box-shadow: none;*/
-
-/*    padding: 4px 5px;*/
-/*}*/
-
-/*.ant-btn:hover, .ant-btn:focus, .ant-btn:active {*/
-/*    border-radius: var(--borderRadius);*/
-/*    border-color: var(--silver);*/
-/*    background: var(--brightGray);*/
-/*}*/
-
-
-/*!* Header *!*/
-
-/*.ant-layout-header {*/
-/*    height: 50px;*/
-/*    line-height: 50px;*/
-/*}*/
-
-/*!* search *!*/
-
-/*.ant-input-group-addon {*/
-/*    !*background: white;*!*/
-/*}*/
-
-/*.anticon-search path {*/
-/*    fill: var(--brightGray);*/
-/*}*/
-
-/*.ant-input-search-button, .ant-input-search-with-button .ant-input {*/
-/*    height: 30px;*/
-/*    border: none;*/
-/*}*/
-
-
-
+.anticon-close {
+    color: #fff;
+}
+.ant-modal-body {
+    padding: 0 24px 24px;
+}
+.ant-modal-content {
+    background: #f0f4f8;
+}

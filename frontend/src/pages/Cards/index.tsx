@@ -1,21 +1,39 @@
 import { FC, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 
 import Button from '../../components/Button';
 import CreateCard from './CreateCard';
+import GerundsInfinitives from '../../features/GerundsInfinitives';
+import Modal from '../../components/Modal';
 
 const Cards: FC = () => {
   const [isCreateCard, setIsCreateCard] = useState(false);
-  const handleClickCreateCard = () => {
-    setIsCreateCard((prev) => !prev);
+
+  const handleShowCreateCardModal = () => {
+    setIsCreateCard(true);
   };
+
+  const handleCancelCreateCardModal = () => {
+    setIsCreateCard(false);
+  };
+
   return (
     <div>
-      {isCreateCard ? (
-        <CreateCard onCreateCard={handleClickCreateCard} />
-      ) : (
-        <Button onClick={handleClickCreateCard}>Create Card</Button>
-      )}
+      <Button onClick={handleShowCreateCardModal}>Create Card</Button>
+      <Button type="primary">Create Card</Button>
+
+      <Modal
+        visible={isCreateCard}
+        // visible
+        title="New Card"
+        onCancel={handleCancelCreateCardModal}
+        onOk={() => console.log('OK')}
+        maskClosable={false}
+        footer={null}
+        width={1800}
+      >
+        <CreateCard onClose={handleCancelCreateCardModal} />
+      </Modal>
+      <GerundsInfinitives />
     </div>
   );
 };

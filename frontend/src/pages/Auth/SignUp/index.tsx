@@ -5,7 +5,7 @@ import { LockFilled, LockOutlined, MailOutlined, UserOutlined, UserSwitchOutline
 import Button from '../../../components/Button';
 import RadioButton from '../../../components/RadioButton';
 import signUpImg from '../../../assets/img/signUp.png';
-import { config, FormItem } from './formConfig';
+import { config, FormItem } from '../../../shared/formConfig';
 import { AppPagePath } from '../../AppPagePath';
 import { useSignUpMutation } from '../../../shared/graphql/auth/useAuthMutations';
 import { UserType } from '../../../shared/interfaces';

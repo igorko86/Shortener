@@ -5,5 +5,5 @@ export const AppWrapperDiv = styled.div`
 `;
 
 export const AppMain = styled.main`
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 190px);
 `;

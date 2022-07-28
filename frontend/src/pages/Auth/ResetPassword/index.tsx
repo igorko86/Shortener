@@ -5,7 +5,7 @@ import { LockFilled, LockOutlined } from '@ant-design/icons';
 import jwt from 'jwt-decode';
 
 import resetPasswordImg from '../../../assets/img/resetPassword.png';
-import { config, FormItem } from '../SignUp/formConfig';
+import { config, FormItem } from '../../../shared/formConfig';
 import Button from '../../../components/Button';
 import { useResetPasswordMutation } from '../../../shared/graphql/auth/useAuthMutations';
 import { AppPagePath } from '../../AppPagePath';

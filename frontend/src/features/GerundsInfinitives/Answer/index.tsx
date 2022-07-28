@@ -16,17 +16,17 @@ const Answer: FC<IProps> = ({ setAnswer, disabled, ...props }) => {
   return (
     <AnswerDiv size="large">
       <AnswerHok {...props} answerButton={VerbForm.Infinitive}>
-        <AnswerButton disabled={disabled} onClick={() => setAnswer(VerbForm.Infinitive)}>
+        <AnswerButton type="primary" disabled={disabled} onClick={() => setAnswer(VerbForm.Infinitive)}>
           infinitive
         </AnswerButton>
       </AnswerHok>
       <AnswerHok {...props} answerButton={VerbForm.BareInfinitive}>
-        <AnswerButton disabled={disabled} onClick={() => setAnswer(VerbForm.BareInfinitive)}>
+        <AnswerButton type="primary" disabled={disabled} onClick={() => setAnswer(VerbForm.BareInfinitive)}>
           bare infinitive
         </AnswerButton>
       </AnswerHok>
       <AnswerHok {...props} answerButton={VerbForm.Gerund}>
-        <AnswerButton disabled={disabled} onClick={() => setAnswer(VerbForm.Gerund)}>
+        <AnswerButton type="primary" disabled={disabled} onClick={() => setAnswer(VerbForm.Gerund)}>
           gerund
         </AnswerButton>
       </AnswerHok>
